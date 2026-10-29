@@ -1,0 +1,21 @@
+custom:
+  TL_Number: 753
+  GNB_Friendly_TL_Name: 'TL753'
+  GNB_Architecture: 'CLASSICAL'
+  vert_axis_config: 'vertical_axis.ini'
+  rota_axis_config: 'rotation_axis.ini'
+  festo_PC_IP: '10.0.97.65'
+  festo_PC_user: 'ftps5g'
+  festo_PC_pswd: 'Fr@TelS6'
+  vert_svr_PORT: 59030
+  rota_svr_PORT: 59031
+  rota_panels_offSet:
+    band:
+      28G: 
+        Main: 0
+        Ext1: 0
+        Ext2: 0
+      39G:
+        Main: 0
+        Ext1: 0
+        Ext2: 0

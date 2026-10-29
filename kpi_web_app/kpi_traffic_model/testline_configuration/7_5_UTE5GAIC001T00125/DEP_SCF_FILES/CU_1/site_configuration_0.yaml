@@ -1,0 +1,23 @@
+version: "0.0.1"
+CELL_LIST:
+  - NRCELL_1:
+     cellTechnology: TDD
+     scs: 30 KHz
+     lcrId: 1
+     physCellId: 403
+     freqBandIndicatorNR: 78
+     chBwDl: 50MHz
+     chBwUl: 50MHz
+     nrarfcnDl: 633000
+     nrarfcnUl: 633000
+  - NRCELL_2:
+     cellTechnology: FDD
+     scs: 30 KHz
+     lcrId: 2
+     physCellId: 404
+     freqBandIndicatorNR: 78
+     chBwDl: 50MHz
+     chBwUl: 50MHz
+     nrarfcnDl: 633000
+     nrarfcnUl: 633000
+     nrarfcn：633000

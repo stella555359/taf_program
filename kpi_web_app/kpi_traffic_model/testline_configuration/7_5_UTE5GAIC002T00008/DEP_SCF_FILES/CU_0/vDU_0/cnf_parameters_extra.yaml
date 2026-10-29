@@ -1,0 +1,40 @@
+global:
+  externalNetwork:
+    ahm-0:
+      fhm:
+      - defaultUnderlyingIface: ecpri4
+        vid: ""
+        vlName: fhmplane01
+      fhs:
+      - defaultUnderlyingIface: ecpri4
+        ipInfo:
+        - rangeEnd: ""
+          rangeStart: ""
+          role:
+          - fhsm
+          - fhss
+          subnet: ""
+      fhuc:
+      - defaultUnderlyingIface: ecpri4
+        pcp: "7"
+        vid: "301"
+        vlName: fhucplane01
+    f1:
+      ipInfo:
+      - rangeEnd: 10.108.227.130
+        rangeStart: 10.108.227.130
+        role:
+        - Tracing
+        - F1-U
+        subnet: 10.108.227.128/29
+        type: physical
+      vlanInfo:
+        defaultUnderlyingIface: f1
+        mtu: 1500
+        secUnderlyingIface: f1s
+        vid: 307
+        vlName: f1uplane
+  nodeSelector: {"kubernetes.io/hostname": "master0.hztt-vrf2-10-108-227-98.ocp.hz.nsn-rdnet.net"}
+  upInstanceNodeSelector:
+    master0: vDU
+  fhmSiso: switch-network

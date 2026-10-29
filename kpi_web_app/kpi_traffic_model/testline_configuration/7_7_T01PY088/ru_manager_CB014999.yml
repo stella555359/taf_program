@@ -1,0 +1,19 @@
+#All Rmods:
+
+#AEHC below
+#L1204510662:
+
+#AHFIG below
+BL2235W2F2T:
+  verify_blackbox:
+    verify_alarm: True
+    verify_structure: False
+    verify_voltage: True
+
+#AHLOA below
+BL2138G1LC9:
+  verify_blackbox:
+    verify_alarm: True
+    verify_structure: False
+    verify_voltage: True
+

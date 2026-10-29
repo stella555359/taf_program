@@ -1,0 +1,81 @@
+[
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "actEarlyDrxSetup",
+				"value": "false",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_5QI-2",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nrDrbDN",
+				"value": "MRBTS-1/NRBTS-1/NRDRB-12",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_5QI-3",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nrDrbDN",
+				"value": "MRBTS-1/NRBTS-1/NRDRB-13",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB-19",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nrDrbMacDN",
+				"value": "MRBTS-1/NRBTS-1/NRDRB_MAC-1",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB-2",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB-3",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_MAC-6",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_MAC-7",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_PDCP-3",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_RLC_UM-1",
+		"operation": "delete",
+		"parameters": []
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRX-7",
+		"operation": "delete",
+		"parameters": []
+	}
+]

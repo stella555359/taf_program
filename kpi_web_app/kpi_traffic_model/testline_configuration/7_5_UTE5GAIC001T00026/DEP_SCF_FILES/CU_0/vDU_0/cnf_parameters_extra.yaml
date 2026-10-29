@@ -1,0 +1,10 @@
+# ======== configuration UP POD =========
+aic-vdu-up:
+
+ 
+
+ 
+
+ 
+
+  privilegedMode: "true"

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Portal{% endblock %}
+
+{% block content %}
+<main class="page-shell portal-shell">
+    <section class="hero-panel">
+        <div class="hero-copy">
+            <p class="eyebrow">Portal repository</p>
+            <h1>kpi-dashboard is now the web Portal shell.</h1>
+            <p class="hero-text">
+                This repository is reserved for the Portal itself. The actual business capabilities stay in sibling repositories
+                and are surfaced here as separate modules.
+            </p>
+            <p class="hero-text">Auther: stella.lin@nokia.com 🍏</p>
+        </div>
+        <div class="hero-card">
+            <p class="card-label">Module layout</p>
+            <dl class="dashboard-notes">
+                <div>
+                    <dt>Portal repo</dt>
+                    <dd><strong>kpi-dashboard</strong> holds Flask UI, routing, adapters, and future job orchestration.</dd>
+                </div>
+                <div>
+                    <dt>Capability repo 1</dt>
+                    <dd><strong>kpi-anomaly-detector</strong> stays focused on anomaly analysis.</dd>
+                </div>
+                <div>
+                    <dt>Capability repo 2</dt>
+                    <dd><strong>kpi-generator</strong> stays focused on Compass KPI report generation and merge orchestration.</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="module-grid">
+        {% for module in modules %}
+        <article class="module-card">
+            <p class="eyebrow">Module</p>
+            <h2>{{ module.title }}</h2>
+            <p class="module-summary">{{ module.summary }}</p>
+            <div class="module-meta">
+                <span class="meta-chip{% if module.repo_exists %} ok-chip{% else %} warn-chip{% endif %}">Repo {{ 'ready' if module.repo_exists else 'missing' }}</span>
+                <span class="meta-chip{% if module.entry_count %} ok-chip{% else %} warn-chip{% endif %}">Entrypoints {{ module.entry_count }}</span>
+            </div>
+            <p class="module-path">{{ module.repo_path }}</p>
+            <a class="button-link" href="{{ url_for(module.route_name) }}">Open module</a>
+        </article>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

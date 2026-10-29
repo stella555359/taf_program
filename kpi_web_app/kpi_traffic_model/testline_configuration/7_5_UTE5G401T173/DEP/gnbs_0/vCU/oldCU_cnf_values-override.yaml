@@ -1,0 +1,1092 @@
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+# - values-override.yaml will overwrite the values.yaml file.
+# - Operator need to set the following values base on the real scenario.
+
+# - Description: securityContext configuration for vCU uid/gid/groups
+securityContext:
+  # - Description: Define the uid and gid for pod, uid/gid with non zero the container start with
+  #     non-root user, if the uid/gid is zero will start with root user.
+  uid: &uid 9999
+  gid: &gid 9999
+  # - Description: Define the group of mounted volumes for pod, containers started with non-root
+  #     need to make sure their gid can access expected volume.
+  groups: &groups 9999
+
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+
+  # - Description: registry of image
+  # - Support Value: "bcmt-registry:5000/dep" for NCS, "registry.kube-system.svc.nokia.net:5555/dep" for NCIR,  image-registry.openshift-image-registry.svc:5000/<namespace> for ocp
+  image:
+    registry: "image-registry.openshift-image-registry.svc:5000/tl173"
+
+  # timezone
+  timezone: "Asia/Shanghai"
+
+  # - Description: securiryContext configuration for vCU uid/gid/groups
+  securityContext:
+    # - Description: Define the uid and gid for pod, uid/gid with non zero the container start with
+    #                non-root user, if the uid/gid is zero will start with root user.
+    runAsUser: *uid
+    runAsGroup: *gid
+    # - Description: Define the group of mounted volumes for pod, containers started with non-root
+    #                need to make sure their gid can access expected volume.
+    fsGroup: *groups
+  # - Description: the number of CPUE Pods. If cnfLayout is basic, [1, 8] is officially supported; if cnfLayout is redundant, [2, 8] is officially supported.
+  # - Note: If cnfLayout is redundant and cpuecount is 1, it will be modified to 2 automatically.
+  cpuecount: 1
+  # - Description: the number of UPUE Pods. If cnfLayout is basic, [1, 44] is officially supported; if cnfLayout is redundant, [2, 44] is officially supported.
+  # - Note: If cnfLayout is redundant and upuecount is 1, it will be modified to 2 automatically.
+  upuecount: 1
+
+  # - Description: Define the minimum number of these N+ Pods to support the capacity requirement of the operator. Currently during startup, vCU checks if the threshold (MIN_CAPACITY_CPUE/MIN_CAPACITY_UPUE)is met. In case the threshold is not met, the capacity reduction alarm is posted. This functionality is also applied during run-time.
+  #   For minCapacityCPUE, if cnfLayout is basic, [1, 8] is officially supported; if cnfLayout is redundant, [2, 8] is officially supported.
+  #   For minCapacityUPUE, if cnfLayout is basic, [1, 44] is officially supported; if cnfLayout is redundant, [2, 44] is officially supported.
+  # - Note: If cnfLayout is redundant and minCapacityCPUE or minCapacityUPUE is 1, it will be modified to 2 automatically.
+  # - Feature ID: CB007467-F,CB007890
+  # - Default value: 1
+  minCapacityCPUE: 1
+  minCapacityUPUE: 1
+
+  # - Description: the layout of the CU. Redundant means CU supports high availability.
+  # - Support Value: basic or redundant
+  cnfLayout: "basic"
+
+  # - Description: the name of RuntimeClass which is used for high performance
+  # - Default value: "nokia-performance"
+  highPerformanceRunTimeClass: "nokia-performance"
+
+  # - Description: Source name of vCU for data monitor, show the Unique Identification of vCU
+  siteDescription: "gNB5G"
+
+  # - Description:
+  #   the sriov interface device pool list include fast path and slow path, support link redundancy
+  # - Note:
+  #     if fastPathDevicePoolBackup and slowPathDevicePoolBackup are empty, will not use link redundancy
+  #     all the deivepool values should same as the values in aic-vcu-prerequisite/values-override.yaml
+  # - Support values:
+  #   get values by command "kubectl describe node|grep "Allocatable:" -A 10|grep sriov"
+  #   fastPathDevicePool and fastPathDevicePoolBackup which need dpdk bond
+  #   fastPathDevicePool and fastPathDevicePoolBackup examples as followed:
+  #     - for Intel NIC which support host dpdk bond, should include "vfio" e.g  openshift.io/sriov_vfio_ens9f0
+  #     - for Mellanox NIC which not support host dpdk bond, e.g openshift.io/sriov_netdevice_ens34f0
+  #   slowPathDevicePool and slowPathDevicePoolBackup which don't need dpdk bond, examples as followed:
+  #     - openshift.io/sriov_netdevice_ens34f0
+  devicePoolList:
+    # The SR-IOV Device Pool used by s1u,x2u,f1u,xnu,ngu networks (fast path)
+    fastPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+    # The SR-IOV Backup Device Pool used by s1u-s,x2u-s,f1u-s,xnu-s,ngu-s networks (fast path),should be different with fastPathDevicePool
+    fastPathDevicePoolBackup: ""
+    # The SR-IOV Device Pool used by oam,tracing,f1c,x2c,xnc,ngc,internale1 networks (slow path)
+    slowPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+    # The SR-IOV Device Pool used by oam-s,f1c-s,x2c-s,xnc-s,ngc-s networks (slow path),should be different with slowPathDevicePool
+    slowPathDevicePoolBackup: ""
+
+  # - Description: external network configuration for each network interface
+  #   List of parameters for each network interface
+  # -------------------------------------------------------------------------------------------------------------
+  # | key                    | description                                                                      |
+  # -------------------------------------------------------------------------------------------------------------
+  # | vlName                 | VLAN interface name for which modification is not recommended                    |
+  # -------------------------------------------------------------------------------------------------------------
+  # | defaultUnderlyingIface | default underlying Ethernet interface for which modification is not recommended  |
+  # -------------------------------------------------------------------------------------------------------------
+  # | secUnderlyingIface     | secondary underlying Ethernet interface for which modification is not recommended|
+  # -------------------------------------------------------------------------------------------------------------
+  # | vid                    | VLAN ID                                                                          |
+  # |                        | MUST be configured if you want to create this interface otherwise leave it empty  |
+  # -------------------------------------------------------------------------------------------------------------
+  # | rangeStart             | start IP address in the IP range which can be IPv4 or IPv6                       |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0"), IPv6 FORMAT (e.g. "2001:db8::0")                  |
+  # |                        | MUST be configured if you want to create this interface otherwise leave it empty  |
+  # -------------------------------------------------------------------------------------------------------------
+  # | rangeEnd               | end IP address in the IP range which can be IPv4 or IPv6                         |
+  # |                        | MUST be configured if you want to create this interface otherwise leave it empty  |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0"), IPv6 FORMAT (e.g. "2001:db8::0")                  |
+  # |                        | - for interfaces s1u/x2u/ngu/f1u/xnu                                             |
+  # |                        |   if "upuecount" = 1, the "rangeEnd" should be same as "rangeStart"              |
+  # |                        |   if "upuecount" > 1, the ip address count of range between "rangeStart"         |
+  # |                        |   and "rangeEnd" should equal "upuecount"                                      |
+  # |                        | - for interfaces f1c/x2c/xnc/ngc/oam/tracing                                     |
+  # |                        |   the "rangeEnd" should be same as "rangeStart"                                  |
+  # -------------------------------------------------------------------------------------------------------------
+  # | subnet                 | the subnet of the network which can be ipv4 or ipv6                              |
+  # |                        | MUST be configured if you want to create this interface otherwise leave it empty  |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0/24"),IPv6 FORMAT(e.g. "2001:db8::0/112")             |
+  # -------------------------------------------------------------------------------------------------------------
+  # | role                   | IP role for the IP address                                                       |
+  # -------------------------------------------------------------------------------------------------------------
+  externalNetwork:
+    oam:
+      vlanInfo:
+      - vlName: "oamvlan"
+        defaultUnderlyingIface: "oam"
+        secUnderlyingIface: "oams"
+        vid: 2661
+        ipInfo:
+        - rangeStart: "10.57.179.18"
+          rangeEnd: "10.57.179.18"
+          subnet: "10.57.179.0/27"
+          role:
+          - "oam"
+          - "certman-server"
+          - "tracecontroller"
+      policyRouteInfo:
+      - gateway: "10.57.179.1"
+        # - Description: the orderNumber of oam route
+        # Note: should different from orderNumber in the SCF file to avoid conflict
+        orderNumber: "5"
+        # - Description: the table id of oam route
+        # recommend not to modify
+        table: "2"
+    # Note: please do not modify "Tracing" role, it's a WA in 22R2 and will be removed in later release.
+    tracing:
+      vlanInfo:
+      - vlName: "tracing"
+        defaultUnderlyingIface: "trace"
+        vid: 2663
+        ipInfo:
+        - rangeStart: "10.57.179.82"
+          rangeEnd: "10.57.179.82"
+          subnet: "10.57.179.64/27"
+          role:
+          - "Tracing"
+    cp:
+      vlanInfo:
+      - vlName: "f1c"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: 2669
+        ipInfo:
+        - rangeStart: "10.57.180.32"
+          rangeEnd: "10.57.180.32"
+          subnet: "10.57.180.0/26"
+          role:
+          - 'F1-C'
+      - vlName: "x2c"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: 2670
+        ipInfo:
+        - rangeStart: "10.57.180.96"
+          rangeEnd: "10.57.180.96"
+          subnet: "10.57.180.64/26"
+          role:
+          - 'X2-C'
+      - vlName: "ngc"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: 2671
+        ipInfo:
+        - rangeStart: "10.57.180.160"
+          rangeEnd: "10.57.180.160"
+          subnet: "10.57.180.128/26"
+          role:
+          - 'NG-C'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C'
+      - vlName: "xnc"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: 2672
+        ipInfo:
+        - rangeStart: "10.57.180.224"
+          rangeEnd: "10.57.180.224"
+          subnet: "10.57.180.192/26"
+          role:
+          - 'Xn-C'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C'
+      #  RAN sharing for operator1, if not open RAN sharing function, no need to configure
+      - vlName: "x2c_op1"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-C_1'
+      - vlName: "ngc_op1"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_1'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_1'
+      - vlName: "xnc_op1"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_1'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_1'
+      #  RAN sharing for operator2, if not open RAN sharing function, no need to configure
+      - vlName: "x2c_op2"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-C_2'
+      - vlName: "ngc_op2"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_2'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_2'
+      - vlName: "xnc_op2"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_2'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_2'
+      #  RAN sharing for operator3, if not open RAN sharing function, no need to configure
+      - vlName: "x2c_op3"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-C_3'
+      - vlName: "xnc_op3"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_3'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_3'
+      - vlName: "ngc_op3"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_3'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_3'
+      #  RAN sharing for operator4, if not open RAN sharing function, no need to configure
+      - vlName: "x2c_op4"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-C_4'
+      - vlName: "xnc_op4"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_4'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_4'
+      - vlName: "ngc_op4"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_4'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_4'
+      #  RAN sharing for operator5, if not open RAN sharing function, no need to configure
+      - vlName: "x2c_op5"
+        defaultUnderlyingIface: "mhc"
+        secUnderlyingIface: "mhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-C_5'
+      - vlName: "ngc_op5"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_5'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-C_5'
+      - vlName: "xnc_op5"
+        defaultUnderlyingIface: "bhc"
+        secUnderlyingIface: "bhcs"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_5'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-C_5'
+    up:
+      vlanInfo:
+      - vlName: "f1u"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: 2669
+        ipInfo:
+        - rangeStart: "10.57.180.33"
+          rangeEnd: "10.57.180.33"
+          subnet: "10.57.180.0/26"
+          role:
+          - 'F1-U'
+          - 'Tracing'
+      - vlName: "x2u"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: 2670
+        ipInfo:
+        - rangeStart: "10.57.180.97"
+          rangeEnd: "10.57.180.97"
+          subnet: "10.57.180.64/26"
+          role:
+          - 'X2-U'
+      - vlName: "s1u"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: 2662
+        ipInfo:
+        - rangeStart: "10.57.179.50"
+          rangeEnd: "10.57.179.50"
+          subnet: "10.57.179.32/27"
+          role:
+          - 'S1-U'
+      - vlName: "ngu"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: 2671
+        ipInfo:
+        - rangeStart: "10.57.180.161"
+          rangeEnd: "10.57.180.161"
+          subnet: "10.57.180.128/26"
+          role:
+          - 'NG-U'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U'
+      - vlName: "xnu"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: 2672
+        ipInfo:
+        - rangeStart: "10.57.180.225"
+          rangeEnd: "10.57.180.225"
+          subnet: "10.57.180.192/26"
+          role:
+          - 'Xn-U'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U'
+      #  - Description: Network slice for F1-U,here just list one example for one slice
+      #    support 20 SA slices and 20 NSA slices for F1-U
+      #    Add one network slice for F1-U according to following instruction.
+      #      1. copy the whole section from "- vlName: "f1u_slice1"" to "- 'F1-U_slice1'" including all the spaces
+      #      2. paste the whole section after line "- 'F1-U_slice1'"
+      #      3. modify vlName and role
+      #      4. configure vid( vlan id), rangeStart,rangeEnd,subnet
+      #  - Feature ID: CB008473
+      #  - Note:
+      #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+      #    vlName should be unique and can be defined by user, please not exceed 15 characters
+      #    role should be unique and format like "F1-U_X"
+      #    X is the dynamic part which can be customized by operator. The maximum length for X is 24 and the allowed characters can include [A-Za-z0-9]
+      - vlName: "f1u_slice1"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_slice1'
+      #  - Description: Network slice for S1-U,here just list one example for one slice
+      #    Add one network slice for S1-U according to following instruction.
+      #    support 20 slices for S1-U
+      #      1. copy the whole section from "- vlName: "s1u_slice1"" to "- 'S1-U_slice1'" including all the spaces
+      #      2. paste the whole section after line "- 'S1-U_slice1'"
+      #      3. modify vlName and role
+      #      4. configure vid( vlan id), rangeStart,rangeEnd,subnet
+      #  - Feature ID: CB008473
+      #  - Note:
+      #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+      #    vlName should be unique and can be defined by user, please not exceed 15 characters
+      #    role should be unique and format like "S1-U_X"
+      #    X is the dynamic part which can be customized by operator. The maximum length for X is 24 and the allowed characters can include [A-Za-z0-9]
+      - vlName: "s1u_slice1"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_slice1'
+      #  - Description: Network slice for NG-U,here just list one example for one slice
+      #    Add one network slice for NG-U according to following instruction.
+      #    support 20 slices for NG-U
+      #      1. copy the whole section from "- vlName: "ngu_slice1"" to "- 'NG-U_slice1'" including all the spaces
+      #      2. paste the whole section after line "- 'NG-U_slice1'"
+      #      3. modify vlName and role
+      #      4. configure vid( vlan id), rangeStart,rangeEnd,subnet
+      #  - Feature ID: CB008473
+      #  - Note:
+      #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+      #    vlName should be unique and can be defined by user, please not exceed 15 characters
+      #    role should be unique and format like "NG-U_X"
+      #    X is the dynamic part which can be customized by operator. The maximum length for X is 24 and the allowed characters can include [A-Za-z0-9]
+      - vlName: "ngu_slice1"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_slice1'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_slice1'
+      #  - Description: RAN sharing for operator1, if not open RAN sharing function, no need to configure
+      #  - Feature ID: 5GC001734
+      - vlName: "f1u_op1"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_1'
+      - vlName: "x2u_op1"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-U_1'
+      - vlName: "s1u_op1"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_1'
+      - vlName: "ngu_op1"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_1'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_1'
+      - vlName: "xnu_op1"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_1'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_1'
+      #  - Description: RAN sharing for operator2, if not open RAN sharing function, no need to configure
+      #  - Feature ID: 5GC001734
+      - vlName: "f1u_op2"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_2'
+      - vlName: "x2u_op2"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-U_2'
+      - vlName: "s1u_op2"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_2'
+      - vlName: "ngu_op2"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_2'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_2'
+      - vlName: "xnu_op2"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_2'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_2'
+      #  - Description: RAN sharing for operator3, if not open RAN sharing function, no need to configure
+      #  - Feature ID: 5GC001734
+      - vlName: "f1u_op3"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_3'
+      - vlName: "x2u_op3"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-U_3'
+      - vlName: "s1u_op3"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_3'
+      - vlName: "ngu_op3"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_3'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_3'
+      - vlName: "xnu_op3"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_3'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_3'
+      #  - Description: RAN sharing for operator4, if not open RAN sharing function, no need to configure
+      #  - Feature ID: 5GC001734
+      - vlName: "f1u_op4"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_4'
+      - vlName: "x2u_op4"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-U_4'
+      - vlName: "s1u_op4"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_4'
+      - vlName: "ngu_op4"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_4'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_4'
+      - vlName: "xnu_op4"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_4'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_4'
+      #  - Description: RAN sharing for operator5, if not open RAN sharing function, no need to configure
+      #  - Feature ID: 5GC001734
+      - vlName: "f1u_op5"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'F1-U_5'
+      - vlName: "x2u_op5"
+        defaultUnderlyingIface: "mhu"
+        secUnderlyingIface: "mhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'X2-U_5'
+      - vlName: "s1u_op5"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'S1-U_5'
+      - vlName: "ngu_op5"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_5'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'NG-U_5'
+      - vlName: "xnu_op5"
+        defaultUnderlyingIface: "bhu"
+        secUnderlyingIface: "bhus"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_5'
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - 'Xn-U_5'
+    twamp:
+      vlanInfo:
+      #  - Description: this is only one twamp vlan interface example
+      #    Add one vlan interface for the Measurement network as followed steps
+      #      1. copy the whole section from "- vlName: "twamp_f1c"" to "- 'twamp_f1c'" including all the spaces
+      #      2. paste the whole section after line "- 'twamp_f1c'"
+      #      3. modify vlName and role
+      #      4. configure vid( vlan id), rangeStart,rangeEnd,subnet
+      #  - Feature ID: CB008468
+      #  - Note:
+      #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+      #    vlName should be unique under twamp section and can be defined by user, please not exceed 15 characters
+      #    role should be unique and same in the SCF file
+      #    subnet should be same as the Measurement network
+      - vlName: "twamp_f1c"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: ""
+        ipInfo:
+        - rangeStart: ""
+          rangeEnd: ""
+          subnet: ""
+          role:
+          - "twamp_f1c"
+
+  # - Description: internal-e1 network configuration for cpnrt and cpif internal communication
+  # --------------------------------------------------------------------------------------------------------------
+  # | key                    | description                                                                       |
+  # --------------------------------------------------------------------------------------------------------------
+  # | vlName                 | VLAN interface name for which modification is not recommended                     |
+  # --------------------------------------------------------------------------------------------------------------
+  # | defaultUnderlyingIface | default underlying Ethernet interface for which modification is not recommended   |
+  # --------------------------------------------------------------------------------------------------------------
+  # | secUnderlyingIface     | secondary underlying Ethernet interface for which modification is not recommended |
+  # --------------------------------------------------------------------------------------------------------------
+  # | vid                    | VLAN ID of internale1, it's mandatory                                             |
+  # --------------------------------------------------------------------------------------------------------------
+  # | rangeStart             | start IP address in the IP range which can be IPv4 or IPv6                        |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0"), IPv6 FORMAT (e.g. "2001:db8::0")                   |
+  # |                        | it's mandatory                                                                    |
+  # --------------------------------------------------------------------------------------------------------------
+  # | rangeEnd               | end IP address in the IP range which can be IPv4 or IPv6                          |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0"), IPv6 FORMAT (e.g. "2001:db8::0")                   |
+  # |                        | it's mandatory                                                                    |
+  # --------------------------------------------------------------------------------------------------------------
+  # | subnet                 | the subnet of the network which can be IPv4 or IPv6                               |
+  # |                        | IPv4 FORMAT (e.g. "10.0.0.0/24"), IPv6 FORMAT (e.g. "2001:db8::0/112")            |
+  # |                        | it's mandatory                                                                    |
+  # --------------------------------------------------------------------------------------------------------------
+  # | role                   | IP role for the IP address                                                        |
+  # --------------------------------------------------------------------------------------------------------------
+  internale1Network:
+    internale1:
+      vlanInfo:
+      - vlName: "internale1"
+        defaultUnderlyingIface: "e1"
+        secUnderlyingIface: "e1s"
+        vid: 1215
+        ipInfo:
+        - subnet: "192.168.200.0/24"
+          role:
+          - "E1-C"
+          ipAddress:
+            cpif:
+              rangeStart: "192.168.200.4"
+              rangeEnd: "192.168.200.4"
+            cpnrt:
+              rangeStart: "192.168.200.5"
+              rangeEnd: "192.168.200.5"
+      # - Description: this parameter is only for internale1 LRIP configuration
+      # - Feature ID: CNI-74580
+      # - Note: this gateway also should be configured on the switch
+      lripInternalE1Info:
+        gatewayList:
+        - "192.168.200.1"
+
+  # - Description: this is WA for adding seLinuxOptions into securityContext
+  #   type:spc_t/level: s0
+  #   true means WA is applied.SeLinux can be enforced and neither isolation/violation nor audit log is generated
+  #   false means WA is removed and seLinux should be permissive or disabled. audit log can be found in case of permissive mode.
+  seLinux: "true"
+  # - Description: The collection of stack trace needs to be enabled as alternative for debugging program crashes only when core dump files are not achievable.
+  # - Supported values: type string "true" or "false"
+  # - Default value: "false"
+  stackTraceEnabled: "false"
+  # - Description: the directory for hostpath volume to storage the coredump info
+  # - Note: the default value of coredumppath is set to "", means coredump will not be saved
+  # -       this config is for internal troubleshooting if set to host path
+  # -       example: coredumppath: "/tmp/cdump"
+  coredumppath: ""
+
+  # - Description: the storageclass configuration of persistent volume
+  storageClass:
+    # - Description: the storageclass name of persistent volume. Will use default storageclass in case not filled.
+    # - Values:
+    #     OCP multi-node, the storageClassName value should be "ocs-storagecluster-cephfs", and the accessModes value should be "ReadWriteMany"
+    #     OCP single node, the storageClassName value should be "localfs-lvm-sc", and the accessModes value should be "ReadWriteOnce"
+    storageClassName: &sc "ocs-storagecluster-cephfs"
+    accessModes: &am "ReadWriteMany"
+
+  # - Description: convention of name
+  # - Note: The sum of all characters in the each prefix list should be less than 32 bytes.
+  name_convention:
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+
+rcpsdl:
+  cluster:
+    # when deployed on single node hardAntiAffinity should set to false, otherwise set to true.
+    # support value : true or false
+    # default value : true
+    hardAntiAffinity: true
+  securityContext:
+    uid: *uid
+    gid: *gid
+healing-controller:
+  storage:
+    # - Description: The healing-controller supports the redundant/basic mode which is enabled by parameter cnfLayout.
+    # - Feature ID: CB007406-5G
+    # - Note:
+    #    for redundant, the storageClassName must support the RWX mode.
+    #    for basic, the storageClassName should support the RWO mode.
+    storageClassName: *sc
+  securityContext:
+    uid: *uid
+    gid: *gid
+    groups: *groups
+
+aic-vcu-upue:
+  # - Description: LRIP roundcheck configure, one instance for one eth pair
+  #                for default setting upue pod have two eth pairs include mhu/mhus and bhu/bhus
+  #                this is optional setting, if have set vlanId values, the LRIP rouncheck function will be enabled
+  #                the vlanId depends on the lab network plan
+  # - Feature ID: 5GC001999
+  lripRoundcheckInfo:
+  - instanceId: "1"
+    vlanId: ""
+  - instanceId: "2"
+    vlanId: ""
+
+  # - Description: pdump logging settings. It is internal use for debugging.
+  # - Feature ID: CB008529-A
+  # - Note:
+  #    pdump logging pv will shared by all l2hicu containers in every UPUE Pods
+  pdumpLogging:
+    # enable pdump logging in l2hicu container(s)
+    # support value : true or false
+    # default value : true
+    enabled: true
+    # storage settings
+    # The accessModes and storageClassName should be configured by user.
+    # - Note:
+    #    OCP multi-node, the storageClassName value should be "ocs-storagecluster-cephfs", and the accessModes value should be "ReadWriteMany"
+    #    OCP single node, the storageClassName value should be "localfs-lvm-sc", and the accessModes value should be "ReadWriteOnce"
+    pvc:
+      size: 10Gi
+      storageClassName: *sc
+      accessModes: *am
+
+aic-vcu-cpif:
+  # - Description: LRIP roundcheck configure, one instance for one eth pair
+  #                for default setting cpif pod have two eth pairs include mhc/mhcs and bhc/bhcs
+  #                this is optional setting, if have set vlanId values, the LRIP rouncheck function will be enabled
+  #                the vlanId depends on the lab network plan
+  # - Feature ID: 5GC001999
+  lripRoundcheckInfo:
+  - instanceId: "1"
+    vlanId: ""
+  - instanceId: "2"
+    vlanId: ""
+aic-oamext:
+  # - Description: LRIP roundcheck configure, one instance for one eth pair
+  #                for default setting oamext pod have one eth pair include oam/oams
+  #                this is optional setting, if have set vlanId values, the LRIP rouncheck function will be enabled
+  #                the vlanId depends on the lab network plan
+  # - Feature ID: 5GC001999
+  lripRoundcheckInfo:
+  - instanceId: "1"
+    vlanId: ""
+lwsd:
+  securityContext:
+    uid: *uid
+    gid: *gid
+    groups: *groups
+rcpum:
+  securityContext:
+    runAsUser: *uid
+    runAsGroup: *gid
+  podSecurityContext:
+    fsGroup: *groups
+secret-storage-framework:
+  configuration:
+    uid: *uid
+    gid: *gid
+trsconfig:
+  securityContext:
+    uid: *uid
+    gid: *gid
+rcpfm:
+  securityContext:
+    uid: *uid
+    gid: *gid
+    groups: *groups
+logservice:
+  podSecurityContext:
+    fsGroup: *groups
+  securityContext:
+    runAsUser: *uid
+    runAsGroup: *gid
+pm:
+  securityContext:
+    uid: *uid
+    gid: *gid
+kubeapisymptomdataprovider:
+  podSecurityContext:
+    fsGroup: *groups
+  securityContext:
+    runAsGroup: *gid
+    runAsUser: *uid

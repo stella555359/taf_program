@@ -1,0 +1,3 @@
+config_bts_ci.env
+config_ext_net_ci.env
+config_flavor_ci.env

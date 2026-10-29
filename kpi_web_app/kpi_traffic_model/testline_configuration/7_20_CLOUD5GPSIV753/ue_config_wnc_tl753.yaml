@@ -1,0 +1,52 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:                                    # UE name - change if you want
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x56F64B                     # Cell ID to which UE should attach in hex
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to AndroidUe constructor
+                    serial_number: 'ef7ec702'           # UE serial number
+                    configuration:                        # By Default ue key
+                        chipset_NR5G_mode: 'SDX55'    # Ue logs collecting way (SDX50 or SDX55)
+                        serial_com: '4'                  # COM ID obtained from qualcomm modem
+                        diag_com: '17'                    # Diagnostic COM ID
+                        serial_baudrate: '11520'
+                        os_version: 'windows'
+                        ue_pc_ip: '10.14.33.48'           # UE PC IP address
+                        pyro_port: '5059'               # TCP Port number for Pyro server
+                        login: 'ftps5g'                     # SSH login to UE PC
+                        password: 'Fr@TelS6'              # SSH password to UE PC
+                        server_dir: 'c:/pyro_server'      # UE PC directory where all server files will be copied
+                        server_python: 'c:/Python27/python.exe'     # UE PC python location
+                        qcat_exe_path: 'c:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE
+                        diag_cfg_path: 'c:/pyro_server/DIAG_5G.cfg'         # PATH to DIAG.cfg file on UE PC
+                        clear_logs: 'yes'
+                        clear_server_files: 'yes'
+                        enable_disable_cfun: 'yes'    # enables CFUN (AT+CFUN=1) before attach, disables (AT+CFUN=0)
+                        is_qualcomm:  'yes'
+                        network_mode_switch_method: 'adb'       # method for change network mode keyword
+                        processes_to_kill:   # phrases based on which processes names will be found
+                            - 'putty'        # and killed before test (case insensitive)
+                            - 'QXDM'
+                            - 'adb'
+                            - 'iperf'
+                            - 'QPSTConfig'
+                            - 'QMITestPro'
+                        data_transfer:                    # Application Server (for Iperf) details
+                            iperf_path: '/data/data/com.nokia.syve.uemanager.mobile/'     # iperf binary location
+                            iperf_interface_ip: '10.11.70.83'       # to bind interface by ip address
+                            ssh:
+                                host: '10.14.42.199'       # Application Server IP
+                                user: 'lscore'             # Application Server SSH login
+                                password: 'LScore123!'      # Application Server SSH password
+                            iperf_options:
+                                packet: '1400B'
+                                buffer: '20M'
+                            iperf_interval: '1'           # Iperf interval in seconds. Default: 1 ; 0 - no intervals
+                            ping:
+                                ping_host_ip: '10.11.70.83' # Remote host for ping (Start Data Transfer icmp protocol)
+                                ping_count: '10'            # ping -c (count) option
+                                allowed_packet_loss: '5'    # Allowed packet loss in %

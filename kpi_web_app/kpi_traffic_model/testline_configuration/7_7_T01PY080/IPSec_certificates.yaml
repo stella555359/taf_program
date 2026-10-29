@@ -1,0 +1,21 @@
+CERTIFICATES:
+  - gnb: 0
+    cert_file: netact_tls.p12
+    cert_type: BtsTrustChain
+    password: "Nokia@123"
+    key_pool_type: RSA
+  - gnb: 0
+    cert_file: ca_1_cert.pem
+    cert_type: AdditionalCa
+    password: null
+    key_pool_type: ECDSA
+  - gnb: 1
+    cert_file: netact_tls.p12
+    cert_type: BtsTrustChain
+    password: "Nokia@123"
+    key_pool_type: RSA
+  - gnb: 1
+    cert_file: ca_1_cert.pem
+    cert_type: AdditionalCa
+    password: null
+    key_pool_type: ECDSA

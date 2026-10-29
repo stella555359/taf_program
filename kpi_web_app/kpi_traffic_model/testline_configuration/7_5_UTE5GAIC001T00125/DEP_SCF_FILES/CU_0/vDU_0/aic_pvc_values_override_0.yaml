@@ -1,0 +1,8 @@
+# No variable needs to be declared for PVC in NCS or NCIRCaas.
+
+# In third-party kubernetes platform
+# If variable storageClassName isn't declared, the default storage class will be used in PVC.
+# If variable storageClassName is declared, the specific storage class will be used in PVC.
+# The backend persistentVolume resources must support the ReadWriteMany access mode.
+
+# storageClassName: "csi-cephfs"

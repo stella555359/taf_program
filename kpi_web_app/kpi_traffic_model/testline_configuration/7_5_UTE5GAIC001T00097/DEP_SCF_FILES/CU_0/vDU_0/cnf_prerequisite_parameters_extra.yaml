@@ -1,0 +1,6 @@
+aic-intnet:
+  devicePoolList:
+    fastPathCommonPool: "openshift.io/sriov_vfio_ens35f0"
+    slowPathCommonPool: "openshift.io/sriov_netdevice_ens35f0"
+    fastPathFhPool: "openshift.io/sriov_vfio_ens37"
+    slowPathFhPool: "openshift.io/sriov_netdevice_ens37"

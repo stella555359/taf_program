@@ -1,0 +1,25 @@
+global:
+   fhmIpForDC:
+    ipAddress: 192.168.70.1/32
+   fhmSiso: direct-connect
+   externalNetwork:    
+    ahm-0:
+      fhuc:
+      - vlName: "fhucplane01"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "301"
+        pcp: "7"
+      - vlName: "fhucplane02"
+        defaultUnderlyingIface: "ecpri5"
+        vid: "301"
+        pcp: "7"
+      fhm:
+      - vlName: "fhmplane01"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "295"
+      - vlName: "fhmplane02"
+        defaultUnderlyingIface: "ecpri5"
+        vid: "295"
+    fhm:
+     vlanInfo:
+       pcp: ""

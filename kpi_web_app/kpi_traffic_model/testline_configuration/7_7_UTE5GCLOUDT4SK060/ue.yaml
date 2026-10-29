@@ -1,0 +1,44 @@
+app_server: &APP_SERVER
+    address: '10.84.168.120'   #TODO to change
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.60'
+    expected_prompt: ':~\$'
+
+UE_PC:
+    ue_pc_ip: '10.84.182.248'
+    ue_pc_login: 'user-lab0'
+    ue_pc_password: 'Bts2003'
+
+UE_POOLS:
+    TafUeAtPool:
+        inline_config:
+            UE_2_QC:
+                CAPABILITIES:
+                    - REAL_UE
+                    - AT_CMD_UE1
+                    - QC_2
+                STARTING_CELL: 1232961
+                STARTING_CELL_5G_ID: 1232961
+                CLASS: AtCmdUe
+                CONSTRUCTOR_PARAMETERS:
+                    com_port: '30'
+                    serial_number: 'a471689'
+                    configuration:
+                        ue_pc_address: 'plkr-wmp-ue25.intra.noklab.net'
+                        ue_pc_ip: '10.84.182.248'  # to change
+                        login: 'user-lab0'  # to change
+                        password: 'Bts2003'  # to change
+                        ue_pc_login: 'user-lab0'
+                        ue_pc_password: 'Bts2003'
+                        ue_pc_port: '80'
+                        ue_pc_expected_prompt: 'user-lab0@PLKR-WMP-UE25$'
+                        server_dir: '/cygdrive/c/auto/'
+                        server_python: '/cygdrive/c/Users/pzkrk/appdata/local/programs/python/python38/python.exe'
+                        qcat_exe_path: '/cygdrive/c/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER
+                                binary_path: '/cygdrive/c/iperf/'
+                                interface_name: 'Cellular 7'
+                                dt_from_uepc: True

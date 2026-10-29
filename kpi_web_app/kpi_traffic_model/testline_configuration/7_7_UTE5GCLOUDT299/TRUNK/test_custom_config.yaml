@@ -1,0 +1,12 @@
+---
+nodes:
+   - node_id: 1
+     files:
+      - file_type: "scfc"
+        file_path: "../Auto5G/robotws5g/testline_configuration/7_7_UTE5GCLOUDT299/TRUNK/du_scfc.xml"
+        hw_id: 1
+        hw_type: "du"
+      - file_type: "scfc"
+        file_path: "../Auto5G/robotws5g/testline_configuration/7_7_UTE5GCLOUDT299/TRUNK/cu_scfc.xml"
+        hw_id: 1
+        hw_type: "cu"

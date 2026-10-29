@@ -1,0 +1,22 @@
+Gear: 'ELGC-TB-KF-60-2000'
+Axis_Type: 'Vartical Axis (2000mm)'
+device_id : 2
+SERVER_HOST : '192.168.0.1'
+SERVER_PORT : 502
+max_velocity : 135
+default_velocity : 60
+default_acceleration : 1.0
+max_acceleration : 15000
+max_limit : 1000.0
+min_limit : -1000.0
+ref_point : 0.0
+unit_factor : 1000.0
+invert_axis : true
+err_margin : 0.5
+measurment_unit : 'mm'
+velocity_unit : 'mm/s'
+accelration_unit : 'mm/s²'
+festo_PC_IP: '10.0.97.65'
+festo_PC_user: 'ftps5g'
+festo_PC_pswd: 'Fr@TelS6'
+festo_PC_Port: 59030

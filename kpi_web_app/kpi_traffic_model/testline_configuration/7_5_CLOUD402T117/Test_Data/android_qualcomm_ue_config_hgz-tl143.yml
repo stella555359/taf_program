@@ -1,0 +1,71 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:                                    # UE name - change if you want 
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x0127                     # Cell ID to which UE should attach
+
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '2dedc3c2'           # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                        # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_ip: '10.106.211.184'           # UE PC IP address
+                        pyro_port: '8080'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'noklab+QT-tester'                     # SSH login to UE PC
+                        password: 'Nokia123!'              # SSH password to UE PC
+                        server_dir: '/cygdrive/c/pyro_server'      # UE PC directory where all server files will be copied
+                        server_python: 'C:/Python27/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        data_transfer:                    # Application Server (for Iperf) details
+                            ssh:
+                                host: '10.108.184.234'       # Application Server IP
+                                user: 'root'             # Application Server SSH login
+                                password: 'nokia123'      # Application Server SSH password
+                            iperf_interface_ip: '10.108.184.234'         # Application Server interface used for data transfer (-B iperf parameter)
+                            ping:
+                                ping_host_ip: '10.108.184.234' # Remote host for ping (Start Data Transfer icmp protocol)
+                                ping_count: '10'            # ping -c (count) option
+                                allowed_packet_loss: '10'    # Allowed packet loss in %
+
+            UE_2:                                    # UE name - change if you want
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - QUALCOMM_UE
+                STARTING_CELL: 0x0001                    # Cell ID to which UE should attach
+
+                CLASS: QualcommNoLicenseUe                # UE type is Qualcomm
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to QualcommNoLicenseUe constructor when Ue instance is created.
+                    configuration:
+                        serial_com: '6'                  # COM ID obtained from qualcomm modem
+                        diag_com: '7'                    # Diagnostic COM ID
+                        interface_name: 'Mobile Broadband Connection'    # UE PC Qualcomm network interface name
+                        ue_pc_ip: '10.106.211.184'           # UE PC IP address
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'nokilab+QT-tester'                # SSH login to UE PC
+                        password: 'Nokia123!'              # SSH password to UE PC
+                        server_dir: '/cygdrive/c/pyro_server'      # UE PC directory where all server files will be copied
+                        server_python: 'C:/Python27/python.exe'     # UE PC python location
+                        clear_logs: 'yes'                 # clears server_dir/logs folder before connecting to server
+                        clear_server_files: 'yes'         # clears server_dir/ta_ue_plugin_android folder on UE PC, forcing new files upload
+                        turn_off_on_firewall: 'yes'       # turn off firewall before connecting to server and on before shutdown. Windows only (UAC disabled)
+                        enable_disable_cfun: 'yes'        # enables CFUN (AT+CFUN=1) before attach, disables (AT+CFUN=0) after detach
+                        processes_to_kill:                # phrases based on which processes names will be found and killed before test (case insensitive)
+                            - 'putty'
+                            - 'QXDM'
+                            - 'adb'
+                            - 'iperf'
+                            - 'QPSTConfig'
+                            - 'QMITestPro'
+                        data_transfer:                    # Iperf endpoint details
+                            ssh:
+                                host: '10.108.184.234'       # Iperf endpoint IP
+                                user: 'root'         # Iperf endpoint SSH login
+                                password: 'nokia123'      # Iperf endpoint SSH password
+                            iperf_path: 'C:\iperf\'       # Iperf.exe location on UE PC
+                            iperf_interface_ip: '10.'
+                            iperf_interval: '1'           # Iperf interval in seconds. Default: 1 ; 0 - no intervals
+                            traffic_type: 'nbiot'         # available: nbiot. Changes output parsing.
+                            iperf_options:
+                                packet: '150B'

@@ -1,0 +1,184 @@
+    ngc:
+      vlanInfo:
+        vlName: "ngc"
+        defaultUnderlyingIface: "extc"
+        secUnderlyingIface: "extcs"
+        vid: 82
+      ipInfo:
+      - rangeStart: "10.110.233.23"
+        rangeEnd: "10.110.233.23"
+        subnet: "10.110.233.16/28"
+        role:
+        - "NG-C"
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:c07"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:c07"
+        subnet: "2a00:8a00:8000:5801:0:28:0:c00/120"
+        role:
+        - "NG-C"
+    xnc:
+      vlanInfo:
+        vlName: "xnc"
+        defaultUnderlyingIface: "extc"
+        secUnderlyingIface: "extcs"
+        vid: 83
+      ipInfo:
+      - rangeStart: "10.110.233.39"
+        rangeEnd: "10.110.233.39"
+        subnet: "10.110.233.32/28"
+        role:
+        - "Xn-C"
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:d07"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:d07"
+        subnet: "2a00:8a00:8000:5801:0:28:0:d00/120"
+        role:
+        - "Xn-C"
+    ngu:
+      vlanInfo:
+        vlName: "ngu"
+        defaultUnderlyingIface: "extu"
+        secUnderlyingIface: "extus"
+        vid: 85
+      ipInfo:
+      - rangeStart: "10.110.233.71"
+        rangeEnd: "10.110.233.71"
+        subnet: "10.110.233.64/28"
+        role:
+        - "NG-U"
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:f07"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:f07"
+        subnet: "2a00:8a00:8000:5801:0:28:0:f00/120"
+        role:
+        - "NG-U"
+    xnu:
+      vlanInfo:
+        vlName: "xnu"
+        defaultUnderlyingIface: "extu"
+        secUnderlyingIface: "extus"
+        vid: 86
+      ipInfo:
+      - rangeStart: "10.110.233.87"
+        rangeEnd: "10.110.233.87"
+        subnet: "10.110.233.80/28"
+        role:
+        - "Xn-U"
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:1007"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:1007"
+        subnet: "2a00:8a00:8000:5801:0:28:0:1000/120"
+        role:
+        - "Xn-U"
+    #  - Description: this is only one twamp vlan interface example
+    #    Add one vlan interface for the Measurement network as followed steps
+    #      1. copy the whole section from "twampF1c:" to "- "twamp_f1c"" including all the spaces
+    #      2. paste the whole section after line "- "twamp_f1c""
+    #      3. modify key name "twamp_f1c", vlName and role
+    #      4. configure vid( vlan id), rangeStart,rangeEnd,subnet
+    #  - Feature ID: CB008468
+    #  - Note:
+    #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+    #    key name and vlName should be unique and can be defined by user, for vlName please not exceed 15 characters
+    #    role should be unique and same in the SCF file
+    #    subnet should be same as the Measurement network
+    twampF1c:
+      vlanInfo:
+        vlName: "twamp_f1c"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "81"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:b0e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:b0e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:b00/120"
+        role:
+        - "twamp_f1c"
+    twampF1u:
+      vlanInfo:
+        vlName: "twamp_f1u"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "84"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:e0e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:e0e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:e00/120"
+        role:
+        - "twamp_f1u"
+    twampOm:
+      vlanInfo:
+        vlName: "twamp_om"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "87"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:110e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:110e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:1100/120"
+        role:
+        - "twamp_om"
+    twampNgc:
+      vlanInfo:
+        vlName: "twamp_ngc"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "82"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:c0e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:c0e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:c00/120"
+        role:
+        - "twamp_ngc"
+      - rangeStart: "10.110.233.30"
+        rangeEnd: "10.110.233.30"
+        subnet: "10.110.233.16/28"
+        role:
+        - "twamp_ngc"
+    twampNgu:
+      vlanInfo:
+        vlName: "twamp_ngu"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "85"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:f0e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:f0e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:f00/120"
+        role:
+        - "twamp_ngu"
+      - rangeStart: "10.110.233.78"
+        rangeEnd: "10.110.233.78"
+        subnet: "10.110.233.64/28"
+        role:
+        - "twamp_ngu"
+    twampXnc:
+      vlanInfo:
+        vlName: "twamp_xnc"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "83"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:d0e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:d0e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:d00/120"
+        role:
+        - "twamp_xnc"
+      - rangeStart: "10.110.233.46"
+        rangeEnd: "10.110.233.46"
+        subnet: "10.110.233.32/28"
+        role:
+        - "twamp_xnc"
+    twampXnu:
+      vlanInfo:
+        vlName: "twamp_xnu"
+        defaultUnderlyingIface: "twamp"
+        secUnderlyingIface: "twamps"
+        vid: "86"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:5801:0:28:0:100e"
+        rangeEnd: "2a00:8a00:8000:5801:0:28:0:100e"
+        subnet: "2a00:8a00:8000:5801:0:28:0:1000/120"
+        role:
+        - "twamp_xnu"
+      - rangeStart: "10.110.233.94"
+        rangeEnd: "10.110.233.94"
+        subnet: "10.110.233.80/28"
+        role:
+        - "twamp_xnu"

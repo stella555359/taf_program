@@ -1,0 +1,10 @@
+aic-intnet:
+  devicePoolList:
+    fastPathCommonPool: openshift.io/sriov_vfio_1
+    slowPathCommonPool: openshift.io/sriov_netdevice_1
+    fastPathRanNicPool: nokia.com/sriov_rinline_up
+    slowPathRanNicPool: nokia.com/sriov_rinline_cp
+global:
+  accessModes: ReadWriteOnce
+  storageClassName: lvms-vg1
+

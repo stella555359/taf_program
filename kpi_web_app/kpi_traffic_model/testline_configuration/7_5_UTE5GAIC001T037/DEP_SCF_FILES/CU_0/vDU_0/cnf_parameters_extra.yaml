@@ -1,0 +1,19 @@
+aic-vdu-up:
+  l1hi:
+    l1_default_scs: "30"
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+global:
+  devicePoolList:
+    fastPathCommonPool: "openshift.io/sriov_vfio_ens1f0"
+    slowPathCommonPool: "openshift.io/sriov_netdevice_ens1f0"
+    fastPathFhPool: "openshift.io/sriov_vfio_ens43f0"
+    slowPathFhPool: "openshift.io/sriov_netdevice_ens43f0"

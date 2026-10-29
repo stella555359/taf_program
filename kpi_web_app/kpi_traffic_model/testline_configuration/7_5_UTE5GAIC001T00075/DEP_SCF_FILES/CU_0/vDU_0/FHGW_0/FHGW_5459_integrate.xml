@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<raml xmlns="raml21.xsd" version="2.1">
+ <cmData type="plan" scope="all" name="MRBTS-5459-FHGW-plan-new">
+ <managedObject class="com.nokia.nms.integration:NE3SINT" distName="FHGW-5459/NE3SINT-PREDEFINED" operation="create" version="1.0">
+ <p name="host">10.71.160.195</p>
+ <p name="port">8080</p>
+ <p name="neType">FHGW</p>
+ <p name="neId">5459</p>
+ <p name="username">root</p>
+ <p name="password">root</p>
+ <p name="sbiNetConnectedTo">sbi-default-ipv4</p>
+ <p name="timezone">Europe/Helsinki</p>
+ </managedObject>
+ </cmData>
+</raml>

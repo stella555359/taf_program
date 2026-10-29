@@ -1,0 +1,26 @@
+vlan:
+  oam: 1516
+  f1: 1515
+  l1bip: 1512
+  l2bip: 1513
+  xpbip: 1515
+  internal_range: 1511-1511
+  tracing: 1514
+network:
+  host_device_1: openshift.io/sriov_vfio_ens1f1
+  host_device_2: openshift.io/sriov_netdevice_ens1f1
+  f1subnet: 10.71.178.200/29
+  oamsubnet: 10.71.178.208/29
+  oam_ordernumber: 5 
+  tracingsubnet: 10.71.178.216/29
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: vdupvc
+  fecVFNum: 0
+  timezone: UTC
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+  deployment_type: OE19
+  storage_class_name: localfs-lvm-sc
+oct_server: 10.109.3.195

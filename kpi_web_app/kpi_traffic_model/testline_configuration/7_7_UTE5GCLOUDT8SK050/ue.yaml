@@ -1,0 +1,103 @@
+AppServer1: &APP_1
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:.*\$\s+'
+
+UE_PC:
+    ue_pc_address: '10.84.129.87'
+    ue_pc_ip: '10.84.129.87'
+    ue_pc_login: 'pzkrk'
+    ue_pc_password: 'NokiaBts2003'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            OnePlus:
+                CAPABILITIES:
+                    - REAL_ANDROID_UE
+                    - COMMERCIAL
+                    - REAL_SAMSUNG_UE
+                STARTING_CELL: '323789060'
+                STARTING_CELL_5G_PCI: 260
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CT915AXMW'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: '10.84.129.87'
+                        login: 'pzkrk'                # SSH login to UE PC
+                        password: 'NokiaBts2003'               # SSH password to UE PC
+                        # ue_pc_port: '8080'
+                        proxy_mngr_port: '9955'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/Users/user-lab0/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+    TafUeAtPool:
+        inline_config:
+            Thinkstro:
+                CAPABILITIES:
+                    - REAL_UE
+                    - AT_CMD_UE1
+                    - QC_2
+                STARTING_CELL: 1232961
+                STARTING_CELL_5G_ID: 1232961
+                CLASS: Quectel
+                CONSTRUCTOR_PARAMETERS:
+                    com_port: '23'
+                    serial_number: '04D328104'
+                    configuration:
+                        ue_pc_address: '10.84.129.87'
+                        ue_pc_ip: '10.84.129.87'
+                        login: 'pzkrk'
+                        password: 'NokiaBts2003'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        # ue_pc_port: '80'
+                        proxy_mngr_port: '9955'
+                        ue_pc_expected_prompt: ':~\$'
+                        server_dir: '/cygdrive/c/auto/'
+                        server_python: '/cygdrive/c/Users/pzkrk/appdata/local/programs/python/python38/python.exe'
+                        qcat_exe_path: '/cygdrive/c/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                binary_path: '/cygdrive/c/iperf/'
+                                interface_name: 'Mobile Broadband adapter'
+                                dt_from_uepc: True
+            UE_2_QC:
+                CAPABILITIES:
+                    - REAL_UE2
+                    - AT_CMD_UE2
+                    - CPE
+                STARTING_CELL: 1232961
+                STARTING_CELL_5G_ID: 1232961
+                CLASS: AtUe
+                CONSTRUCTOR_PARAMETERS:
+                    com_port: '4'
+                    serial_number: '96652457'
+                    configuration:
+                        ue_pc_address: '10.84.129.87'  #'PLKR-WMP-UE16.intra.noklab.net'
+                        ue_pc_ip: '10.84.129.87'
+                        login: 'pzkrk'
+                        password: 'NokiaBts2003'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        # ue_pc_port: '80'
+                        proxy_mngr_port: '9955'
+                        ue_pc_expected_prompt: ':~\$'
+                        server_dir: '/cygdrive/c/auto/'
+                        server_python: '/cygdrive/c/Users/pzkrk/appdata/local/programs/python/python38/python.exe'
+                        qcat_exe_path: '/cygdrive/c/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                binary_path: '/cygdrive/c/iperf/'
+                                interface_name: 'Cellular 4'
+                                dt_from_uepc: True

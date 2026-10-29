@@ -1,0 +1,71 @@
+APP_SERVER:
+    ssh: &APP_SERV_CRED
+        address: '10.84.168.121'
+        user: '5g'
+        password: '5g'
+        bind_interface_ip : '10.84.169.61'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            SDX_75:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: '19727105'
+                STARTING_CELL_5G_PCI: 51
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: '438c6940'         #'1b3a4ff3'
+                    configuration:
+                        ue_pc_address: 'plkr-wmp-ue27.intra.noklab.net'
+                        ue_pc_port: '8080'                        # TCP Port number on UE PC on which Pyro server will be started
+                        qualcomm_prototype: 'yes'               # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb'        # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        service_call_attach: '16'               # service call which will be used for attaching UE. Use this or airplane_mode_switcher_text
+                        service_call_detach: '16'               # service call which will be used for detaching UE. Use this or airplane_mode_switcher_text
+                        voice_call_dialing_timeout: '30'        # Timeout for dialing (calling) state
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERV_CRED
+                                binary_path: '/data/data/com.nokia.android.application/'
+            S21:
+                CAPABILITIES:
+                    - REAL_UE
+                    - COMMERCIAL
+                    - SAMSUNG_S21
+                STARTING_CELL: '19727106'
+                STARTING_CELL_5G_PCI: 61
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'RFCX204K36H'
+                    configuration:
+                        ue_pc_address: 'plkr-wmp-ue27.intra.noklab.net'
+                        ue_pc_port: '8080'                        # TCP Port number on UE PC on which Pyro server will be started
+                        qualcomm_prototype: 'no'               # set to 'yes' if this is a Qualcomm prototype
+#                        network_mode_switch_method: 'Airplane mode'       # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+#                        path_to_network_mode_type: 'Connections/'
+#                        airplane_mode_confirm_button_text: 'OK'
+                        service_call_attach: '16'               # service call which will be used for attaching UE. Use this or airplane_mode_switcher_text
+                        service_call_detach: '16'               # service call which will be used for detaching UE. Use this or airplane_mode_switcher_text
+                        voice_call_dialing_timeout: '30'        # Timeout for dialing (calling) state
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERV_CRED
+                                binary_path: '/data/data/com.nokia.android.application/'
+
+CELLS:
+    GNB1:
+        CELL1:
+            PCI: 51
+        CELL5:
+            PCI: 61
+
+UE_PC:
+  host:                  plkr-wmp-ue27.intra.noklab.net
+  user:                  pzkrk
+  password:              NokiaBts2003
+  device:                ae64c48b
+  lk_path:               C:/Users/pzkrk/Desktop/QPM_LK3.1.2
+  lk_user:               mikolaj.borkowski@nokia.com
+  lk_password:           DajMiLicencje123!

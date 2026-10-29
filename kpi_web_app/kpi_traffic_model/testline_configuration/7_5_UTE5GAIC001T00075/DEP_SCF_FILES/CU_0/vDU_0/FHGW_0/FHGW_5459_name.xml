@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<raml version="2.1" xmlns="raml21.xsd">
+  <cmData type="plan" scope="changes" name="FHGW-5459_change_name">
+    <header>
+      <log action="update" dateTime="2020-05-22T08:57:52+02:00">Creating 1 MO(s)</log>
+    </header>
+	<managedObject distName="HQZ-FHGW/FHGW-5459" class="com.nokia.fhgw:FHGW" version="FHGW20B_2011_001" operation="UPDATE">
+        <p name="fhgwName">FHGW-5459_test</p>
+	</managedObject>
+
+</cmData>
+</raml>

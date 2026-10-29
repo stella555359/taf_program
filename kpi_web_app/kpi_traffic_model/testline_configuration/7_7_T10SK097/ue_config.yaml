@@ -1,0 +1,44 @@
+AppServer1: &APP_SERVER_1
+  address: '10.84.168.121'
+  user: '5g'
+  password: '5g'
+  bind_interface_ip: '10.84.169.61'
+  expected_prompt: '5g@SKA-HC14-16-AppServer2'
+
+AppServer2: &APP_SERVER_2
+  address: '10.84.168.120'
+  user: '5g'
+  password: '5g'
+  bind_interface_ip: '10.84.169.60'
+  expected_prompt: '5g@SKA-HC14-15-AppServer'
+
+UE_POOLS:
+  TafUeAtPool:
+    inline_config:
+      COM10:
+        CAPABILITIES:
+          - REAL_UE
+        CLASS: Quectel
+        CONSTRUCTOR_PARAMETERS:
+          #com_port: '6'
+          configuration:
+            ue_pc_address: 'PLKR-TP-UE124.p10.ska-lab.nsn-rdnet.net'
+            ue_pc_login: 'pzkrk'
+            ue_pc_password: 'NokiaBts2003'
+            proxy_mngr_port: '80'
+            ue_pc_expected_prompt: 'pzkrk@PLKR-TP-UE124 ~'
+            data_transfer:
+              iperf:
+                app_server: *APP_SERVER_1
+                interval: 1
+                server_close_delay: 50
+                #binary_path: '/cygdrive/c/iperf/'
+                binary_path: '/cygdrive/c/iperf_new/'
+                version: 3
+                #interface_name: 'Cellular'
+                dt_from_uepc: True
+              ping:
+                app_server: *APP_SERVER_1
+                interval: 1
+              ftp:
+                app_server: *APP_SERVER_1

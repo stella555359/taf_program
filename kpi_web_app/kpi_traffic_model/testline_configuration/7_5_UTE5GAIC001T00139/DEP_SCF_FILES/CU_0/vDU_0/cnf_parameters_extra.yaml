@@ -1,0 +1,46 @@
+aic-vdu-up:
+  l1hi:
+    l1_default_scs: "15"
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+  externalNetwork:
+    #  - Description: this is only one twamp vlan interface example
+    #    Add one vlan interface for the Measurement network as followed steps
+    #      1. copy the whole section from "twamp_f1" to "- 'twamp_f1'" including all the spaces
+    #      2. paste the whole section after line "- 'twamp_f1'"
+    #      3. modify the section key name "twamp_f1", align with the new vlName and role
+    #      4. configure vid( vlan id), pcp ,rangeStart,rangeEnd,subnet,family
+    #  - Feature ID: CB008468
+    #  - Note:
+    #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+    #    vlName should be unique under twamp section and can be defined by user, please not exceed 15 characters
+    #    role should be unique and same in the SCF file
+    #    subnet should be same as the Measurement network
+    #    if f1 and f1c use the same subnet, only need create one vlan interface here
+    twamp_f1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: "515"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:117:1:2:a47:b0cc"
+        rangeEnd: "2a00:8a00:8000:117:1:2:a47:b0cc"
+        subnet: "2a00:8a00:8000:117:1:2:a47:b0c8/125"
+        type: "physical"
+        role:
+        - "twamp_f1"
+    # - End example for twamp vlan interface

@@ -1,0 +1,39 @@
+UE_POOLS:
+    PrismaUePool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - PRISMA_UE
+                CLASS: PrismaUe
+                CONSTRUCTOR_PARAMETERS:
+                    configuration:
+                        prisma_config_file: prisma_cloudtl384.yml
+                        scripts_dir: scenario
+                        default_sid_file: TL384_Mathrakis_fullstack_22082019_v4.sid
+                        data_transfer:
+                            app_server:
+                                addr: '10.14.42.228'
+                                username: 'ran5g'
+                                password: 'nokia2018'
+                                iperf_port: '51001'
+                                iperf_path: 'iperf'
+                                iperf_interface_ip: '10.14.42.228'
+                            ue_host:
+                                addr: '10.14.42.156'
+                                username: 'ftp'
+                                password: 'ftp'
+                                iperf_port: '51002'
+                                iperf_path: 'iperf'
+                                iperf_interface_ip: '10.14.42.156'
+                            iperf_interval: '1'
+                            iperf_options:
+                                packet_size: '1024B'
+                                buffer: '41M'
+                            throughput_checkpointer:
+                                host: '192.168.253.20'
+                                user: 'toor4nsn'
+                                password: 'oZPS0POrRieRtu'
+                                proxy:
+                                    host: '192.168.255.129'
+                                    user: 'toor4nsn'
+                                    password: 'oZPS0POrRieRtu'

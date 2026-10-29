@@ -1,0 +1,90 @@
+# if start
+ENV:  env 1
+IP:  https://api-int.hztt15f-nh03-rm17-ocp.dyn.nesc.nokia.net:6443
+namespace:  cran6
+deploymentmode:  SA
+cnflayout:  basic
+cpuecount:  1
+upuecount:  1
+dedicatedCore:  nokia.k8s.io/exclusive_numa_0_pool
+vCU_network:
+  tracing_orderNumber:  1000
+  tracing_subnet:  10.110.24.0/23
+  tracing:  1001
+  tracing_oamext_start: 10.107.80.125
+  tracing_oamext_end: 10.107.80.125
+  tracing_oamasm_start: 10.107.80.126
+  tracing_oamasm_end: 10.107.80.126
+  tracing_oamcm_start: 10.107.80.127
+  tracing_oamcm_end: 10.107.80.127
+  tracing_oamconfig_start: 10.107.80.128
+  tracing_oamconfig_end: 10.107.80.128
+  tracing_oamfm_start: 10.107.80.129
+  tracing_oamfm_end: 10.107.80.129
+  tracing_oampm_start: 10.107.80.130
+  tracing_oampm_end: 10.107.80.130
+  tracing_cpif_start: 10.107.80.131
+  tracing_cpif_end: 10.107.80.131
+  tracing_cpcl_start: 10.107.80.132
+  tracing_cpcl_end: 10.107.80.132
+  tracing_cpnb_start: 10.107.80.133
+  tracing_cpnb_end: 10.107.80.133
+  tracing_cpnrt_start: 10.107.80.134
+  tracing_cpnrt_end: 10.107.80.134
+  tracing_cpue_start: 10.107.80.135
+  tracing_cpue_end: 10.107.80.135
+  oam_subnet: 10.110.74.96/27
+  oam:  1007
+  oam_start:  10.110.74.110
+  oam_end:  10.110.74.110
+  x2u_subnet: 10.20.146.80/29
+  x2u:  1005
+  x2u_start:  10.20.146.83
+  x2u_end:  10.20.146.83
+  x2c_subnet: 10.20.146.88/29
+  x2c:  1004
+  x2c_start: 10.20.146.90
+  x2c_end: 10.20.146.90
+  f1u_subnet: 10.110.74.128/25
+  f1u:  1003
+  f1u_start:  10.110.74.197
+  f1u_end:  10.110.74.199
+  f1c_subnet: 10.110.74.0/27
+  f1c:  1002
+  f1c_start: 10.110.74.14
+  f1c_end:  10.110.74.14
+  s1u_subnet: 10.20.146.104/29
+  s1u:  1006
+  s1u_start: 10.20.146.106
+  s1u_end: 10.20.146.106
+  ngu_subnet: 10.110.75.128/25
+  ngu:  1006
+  ngu_start: 10.110.75.197
+  ngu_end: 10.110.75.199
+  ngc_subnet:  10.110.74.64/27
+  ngc:  1008
+  ngc_start:   10.110.74.84
+  ngc_end:  10.110.74.85
+  xnu_subnet:  10.110.75.0/25
+  xnu:  1005
+  xnu_start: 10.110.75.69
+  xnu_end:  10.110.75.71
+  xnc_subnet:  10.110.74.32/27
+  xnc:  1004
+  xnc_start:  10.110.74.46
+  xnc_end:   10.110.74.47
+  internale1:  1106
+  fastPathDevicePool:  nokia.k8s.io/sriov_ens1f1
+  slowPathDevicePool:  nokia.k8s.io/sriov_ens1f1
+  fastPathDevicePoolBackup: ""
+  slowPathDevicePoolBackup: ""
+misc:
+  hardAntiAffinity:  TRUE
+  timezone:  UTC
+  platform_type:  OCP
+  storageClassName: "ocs-storagecluster-cephfs" 
+  accessModes:  ReadWriteOnce
+  securityContext:
+    uid: 9999
+    gid: 9999
+    groups: 9999

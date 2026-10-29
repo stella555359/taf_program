@@ -1,0 +1,69 @@
+global:
+  externalNetwork:
+    f1:
+      vlanInfo:
+        vlanId: "2315"
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ad8a'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ad8a'
+        subnet: '2a00:8a00:8000:117:1:2:a47:ad88/125'
+        type: physical
+    f1c:
+      vlanInfo:
+        vlanId: "2315"
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ad8b'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ad8b'
+        subnet: '2a00:8a00:8000:117:1:2:a47:ad88/125'
+        type: physical
+    oam:
+      vlanInfo:
+        vlanId: "2316"
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ad92'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ad92'
+        role:
+        - oam
+        - certman-server
+        subnet: '2a00:8a00:8000:117:1:2:a47:ad90/125'
+        type: physical
+      policyRouteInfo:
+      - gateway: '2a00:8a00:8000:117:1:2:a47:ad91'
+        orderNumber: '5'
+        table: '2'
+    tracing:
+      vlanInfo:
+        vlanId: "2314"
+      ipInfo:
+      - family: ipv6
+        ipAddress:
+          cprt:
+            rangeEnd: '2a00:8a00:8000:117:1:2:a47:ad9a'
+            rangeStart: '2a00:8a00:8000:117:1:2:a47:ad9a'
+          oam:
+            rangeEnd: '2a00:8a00:8000:117:1:2:a47:ad9b'
+            rangeStart: '2a00:8a00:8000:117:1:2:a47:ad9b'
+        role:
+        - Tracing
+        subnet: '2a00:8a00:8000:117:1:2:a47:ad98/125'
+        type: physical
+      policyRouteInfo:
+      - gateway: '2a00:8a00:8000:117:1:2:a47:ad99'
+        orderNumber: '1000'
+        table: '3'
+aic-vdu-up:
+  l1hi:
+    l1_default_scs: "15"
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"

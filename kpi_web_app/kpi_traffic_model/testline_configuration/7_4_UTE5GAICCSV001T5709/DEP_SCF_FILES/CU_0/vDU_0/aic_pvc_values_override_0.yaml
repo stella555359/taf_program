@@ -1,0 +1,7 @@
+# - Description: the name of persistent volume
+# -       consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+pvcName: vdu-5709
+accessModes: ReadWriteOnce
+storageClassName:
+oamnodeAffinityIP:
+upnodeAffinityIP:

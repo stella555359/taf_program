@@ -1,0 +1,331 @@
+# Copyright (c) Nokia 2020
+heat_template_version: 2016-10-14
+description: 'Template for creating network interfaces attached to RCP node'
+parameters:
+  count:
+    type: number
+    description: Number of interfaces
+  internal_port:
+    type: string
+    description: index of port attached to internal network
+    default: resource.0
+  networks:
+    type: json
+    description: network parameters
+  oam_port:
+    type: string
+    description: index of port attached to oam network
+    default: ''
+  fixed_ips_index:
+    type: number
+    description: index to fetch own parameters
+    default: 0
+  fixed_v6_ips_index:
+    type: number
+    description: index to fetch own parameters
+    default: 0
+  dual_stack:
+    type: string
+    description: configure single network or dual network
+    default: disabled
+    constraints:
+      - allowed_values: [disabled, enabled]
+  port_type:
+    type: string
+    description: configure port type as physical or logical
+    default: physical
+    constraints:
+      - allowed_values: [physical, logical]
+
+conditions:
+  internal_ports_type:
+    not:
+      equals:
+      - get_param:
+        - networks
+        - '0'
+        - uuid
+      - ''
+  internal_srv_ports_type:
+    not:
+      equals:
+      - get_param:
+        - networks
+        - '1'
+        - uuid
+      - ''
+  tracing_ports_type:
+    and:
+    - internal_ports_type
+    - not:
+        equals:
+        - get_param:
+          - networks
+          - '2'
+          - uuid
+        - ''
+  fronthaul_ports_type:
+    and:
+    - tracing_ports_type
+    - not:
+        equals:
+        - get_param:
+          - networks
+          - '3'
+          - uuid
+        - ''
+  backhaul_ports_type:
+    and:
+    - fronthaul_ports_type
+    - not:
+        equals:
+        - get_param:
+          - networks
+          - '4'
+          - uuid
+        - ''
+  x2_ports_type:
+    and:
+    - backhaul_ports_type
+    - not:
+        equals:
+        - get_param:
+          - networks
+          - '5'
+          - uuid
+        - ''
+
+resources:
+  ports_internal:
+    type: 5GBTS::Network::Interface
+    condition: internal_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 0
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+  ports_internal_srv:
+    type: 5GBTS::Network::Interface
+    condition: internal_srv_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 1
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+  ports_tracing:
+    type: 5GBTS::Network::Interface
+    condition: tracing_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 2
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+  ports_fronthaul:
+    type: 5GBTS::Network::Interface
+    condition: fronthaul_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 3
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+  ports_backhaul:
+    type: 5GBTS::Network::Interface
+    condition: backhaul_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 4
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+  ports_x2:
+    type: 5GBTS::Network::Interface
+    condition: x2_ports_type
+    properties:
+      fixed_ips_index: {get_param: fixed_ips_index}
+      fixed_v6_ips_index: {get_param: fixed_v6_ips_index}
+      index: 5
+      networks: {get_param: networks}
+      dual_stack: {get_param: dual_stack}
+      port_type: {get_param: port_type}
+
+outputs:
+  ports:
+    description: list of ports in format expected by networks property of OS::Nova::Server
+    value:
+      if:
+        - x2_ports_type
+        - - get_attr: [ports_internal, port]
+          - get_attr: [ports_internal_srv, port]
+          - get_attr: [ports_tracing, port]
+          - get_attr: [ports_fronthaul, port]
+          - get_attr: [ports_backhaul, port]
+          - get_attr: [ports_x2, port]
+        - if:
+            - backhaul_ports_type
+            - - get_attr: [ports_internal, port]
+              - get_attr: [ports_internal_srv, port]
+              - get_attr: [ports_tracing, port]
+              - get_attr: [ports_fronthaul, port]
+              - get_attr: [ports_backhaul, port]
+            - if:
+              - fronthaul_ports_type
+              - - get_attr: [ports_internal, port]
+                - get_attr: [ports_internal_srv, port]
+                - get_attr: [ports_tracing, port]
+                - get_attr: [ports_fronthaul, port]
+              - if:
+                - tracing_ports_type
+                - - get_attr: [ports_internal, port]
+                  - get_attr: [ports_internal_srv, port]
+                  - get_attr: [ports_tracing, port]
+                - if:
+                  - internal_srv_ports_type
+                  - - get_attr: [ports_internal, port]
+                    - get_attr: [ports_internal_srv, port]
+                  - if:
+                    - internal_ports_type
+                    - - get_attr: [ports_internal, port]
+                    - ''
+  ip-info:
+    description: ip-info metadata parameters
+    value:
+      if:
+        - x2_ports_type
+        - map_merge:
+          - get_attr: [ports_internal, ip-info]
+          - get_attr: [ports_internal_srv, ip-info]
+          - get_attr: [ports_tracing, ip-info]
+          - get_attr: [ports_fronthaul, ip-info]
+          - get_attr: [ports_backhaul, ip-info]
+          - get_attr: [ports_x2, ip-info]
+        - if:
+          - backhaul_ports_type
+          - map_merge:
+            - get_attr: [ports_internal, ip-info]
+            - get_attr: [ports_internal_srv, ip-info]
+            - get_attr: [ports_tracing, ip-info]
+            - get_attr: [ports_fronthaul, ip-info]
+            - get_attr: [ports_backhaul, ip-info]
+          - if:
+            - fronthaul_ports_type
+            - map_merge:
+              - get_attr: [ports_internal, ip-info]
+              - get_attr: [ports_internal_srv, ip-info]
+              - get_attr: [ports_tracing, ip-info]
+              - get_attr: [ports_fronthaul, ip-info]
+            - if:
+              - tracing_ports_type
+              - map_merge:
+                - get_attr: [ports_internal, ip-info]
+                - get_attr: [ports_internal_srv, ip-info]
+                - get_attr: [ports_tracing, ip-info]
+              - if:
+                - internal_srv_ports_type
+                - map_merge:
+                  - get_attr: [ports_internal, ip-info]
+                  - get_attr: [ports_internal_srv, ip-info]
+                - if:
+                  - internal_ports_type
+                  - map_merge:
+                    - get_attr: [ports_internal, ip-info]
+                  - ''
+  ext-ip-config:
+    description: external ipv4 configurations in dual_network;external ipv4/v6 configurations in signal_network
+    value:
+      if:
+        - x2_ports_type
+        - map_merge:
+          - get_attr: [ports_internal, ext-ip-config]
+          - get_attr: [ports_internal_srv, ext-ip-config]
+          - get_attr: [ports_tracing, ext-ip-config]
+          - get_attr: [ports_fronthaul, ext-ip-config]
+          - get_attr: [ports_backhaul, ext-ip-config]
+          - get_attr: [ports_x2, ext-ip-config]
+        - if:
+          - backhaul_ports_type
+          - map_merge:
+            - get_attr: [ports_internal, ext-ip-config]
+            - get_attr: [ports_internal_srv, ext-ip-config]
+            - get_attr: [ports_tracing, ext-ip-config]
+            - get_attr: [ports_fronthaul, ext-ip-config]
+            - get_attr: [ports_backhaul, ext-ip-config]
+          - if:
+            - fronthaul_ports_type
+            - map_merge:
+              - get_attr: [ports_internal, ext-ip-config]
+              - get_attr: [ports_internal_srv, ext-ip-config]
+              - get_attr: [ports_tracing, ext-ip-config]
+              - get_attr: [ports_fronthaul, ext-ip-config]
+            - if:
+              - tracing_ports_type
+              - map_merge:
+                - get_attr: [ports_internal, ext-ip-config]
+                - get_attr: [ports_internal_srv, ext-ip-config]
+                - get_attr: [ports_tracing, ext-ip-config]
+              - if:
+                - internal_srv_ports_type
+                - map_merge:
+                  - get_attr: [ports_internal, ext-ip-config]
+                  - get_attr: [ports_internal_srv, ext-ip-config]
+                - if:
+                  - internal_ports_type
+                  - map_merge:
+                    - get_attr: [ports_internal, ext-ip-config]
+                  - ''
+  ext-ip-config-v6:
+    description: external ipv6 configurations
+    value:
+      if:
+        - x2_ports_type
+        - map_merge:
+          - get_attr: [ports_internal, ext-ip-config-v6]
+          - get_attr: [ports_internal_srv, ext-ip-config-v6]
+          - get_attr: [ports_tracing, ext-ip-config-v6]
+          - get_attr: [ports_fronthaul, ext-ip-config-v6]
+          - get_attr: [ports_backhaul, ext-ip-config-v6]
+          - get_attr: [ports_x2, ext-ip-config-v6]
+        - if:
+          - backhaul_ports_type
+          - map_merge:
+            - get_attr: [ports_internal, ext-ip-config-v6]
+            - get_attr: [ports_internal_srv, ext-ip-config-v6]
+            - get_attr: [ports_tracing, ext-ip-config-v6]
+            - get_attr: [ports_fronthaul, ext-ip-config-v6]
+            - get_attr: [ports_backhaul, ext-ip-config-v6]
+          - if:
+            - fronthaul_ports_type
+            - map_merge:
+              - get_attr: [ports_internal, ext-ip-config-v6]
+              - get_attr: [ports_internal_srv, ext-ip-config-v6]
+              - get_attr: [ports_tracing, ext-ip-config-v6]
+              - get_attr: [ports_fronthaul, ext-ip-config-v6]
+            - if:
+              - tracing_ports_type
+              - map_merge:
+                - get_attr: [ports_internal, ext-ip-config-v6]
+                - get_attr: [ports_internal_srv, ext-ip-config-v6]
+                - get_attr: [ports_tracing, ext-ip-config-v6]
+              - if:
+                - internal_srv_ports_type
+                - map_merge:
+                  - get_attr: [ports_internal, ext-ip-config-v6]
+                  - get_attr: [ports_internal_srv, ext-ip-config-v6]
+                - if:
+                  - internal_ports_type
+                  - map_merge:
+                    - get_attr: [ports_internal, ext-ip-config-v6]
+                  - ''

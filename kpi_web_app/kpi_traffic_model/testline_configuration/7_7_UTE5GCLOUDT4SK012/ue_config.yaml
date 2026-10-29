@@ -1,0 +1,56 @@
+AppServer1: &APP_1
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61'
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:.*\$\s+'
+
+UE_POOLS:
+    TafUeAndroidPool:                               # Ue Pool class defined by library
+        inline_config:
+            ANDROID_UE_1:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_1
+                    - REAL_ANDROID_UE
+                    - SAMSUNG
+                    - R5CR50PM4TR
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number:  'R5CR50PM4TR'   # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'PLKR-SC5G-PC57.p04.ska-lab.nsn-rdnet.net'    # UE PC IP address
+                        login: 'PLKR-SC5G-PC57+user-lab0'              # SSH login to UE PC
+                        password: 'Bts2003'    # SSH password to UE PC
+                        ue_pc_port: '8080'
+                        service_call_attach: '14'
+                        service_call_detach: '14'
+                        network_mode_switch_method: 'ADB'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+
+            ANDROID_UE_2:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_2
+                    - REAL_ANDROID_UE
+                    - 23c1da12
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number:  '23c1da12'   # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'PLKR-SC5G-PC57.p04.ska-lab.nsn-rdnet.net'    # UE PC IP address
+                        login: 'PLKR-SC5G-PC57+user-lab0'              # SSH login to UE PC
+                        password: 'Bts2003'    # SSH password to UE PC
+                        ue_pc_port: '8080'
+                        service_call_attach: '14'
+                        service_call_detach: '14'
+                        network_mode_switch_method: 'ADB'
+                        qualcomm_prototype: TRUE
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+

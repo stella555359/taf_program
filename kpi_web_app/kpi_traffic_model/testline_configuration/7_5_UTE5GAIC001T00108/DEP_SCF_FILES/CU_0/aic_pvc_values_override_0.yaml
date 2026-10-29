@@ -1,0 +1,57 @@
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+# - values-override.yaml will overwrite the values.yaml file.
+# - Operator need to set the following values base on the real scenario.
+
+# - Description: the deployment mode of the CU, Non-Standalone(NSA) or Standalone mode(SA).
+# support values: NSA or SA
+aic-vcu-network:
+  deploymentmode: "SA"
+  # Precondition: tenant's configuration is ready before deploy internal network
+  # internal network
+  internalNetwork:
+  #Value range: string, no default value.
+  #Note: This value need to match with the tenant's configuration. eg."ens1f1"
+    internal:
+      devicePool: "ens1f1"
+
+  devicePoolList:
+    # - Description: The SR-IOV Device Pool used by uplane networks such as s1u,f1u,x2u
+    fastPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+    # - Description: The SR-IOV Device Pool used by oam,tracing,cplane,internal-e1 networks
+    slowPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+
+# In third-party kubernetes platform
+# If variable storageClassName isn't declared, the default storage class will be used in PVC.
+# If variable storageClassName is declared, the specific storage class will be used in PVC.
+# The backend persistentVolume resources must support the ReadWriteMany access mode.
+aic-vcu-pvc:
+  storageClassName: &storageClassName ""
+
+  logservice-pvc:
+    syslog:
+      storageClassName: *storageClassName
+    auditlog:
+      storageClassName: *storageClassName
+
+  pm-pvc:
+    hfrw:
+      storageClassName: *storageClassName
+    lfrw:
+      storageClassName: *storageClassName
+
+  rcpfm-pvc:
+    storageClassName: *storageClassName
+
+  rcpum-pvc:
+    storageClassName: *storageClassName
+
+  secret-storage-framework-pvc:
+    vaultmanagerpvc:
+      storageClassName: *storageClassName
+    vaultserverpvc:
+      storageClassName: *storageClassName
+
+  certificate-management-pvc:
+    certmantlsconfigpvc:
+      storageClassName: *storageClassName

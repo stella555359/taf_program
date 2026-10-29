@@ -1,0 +1,86 @@
+# if start
+ENV:  env 1
+IP:  https://api-int.hztt15f-nh03-rm17-ocp.dyn.nesc.nokia.net:6443
+namespace:  cran20
+deploymentmode:  SA
+cnflayout:  basic
+cpuecount:  1
+upuecount:  1
+dedicatedCore:  numa_0
+vCU network:
+  tracing orderNumber:  1000
+  tracing subnet:  10.107.136.0/23
+  tracing:  1001
+  tracing oamext start: "10.107.137.25"
+  tracing oamext end: "10.107.137.25"
+  tracing oamasm start: "10.107.137.26"
+  tracing oamasm end: "10.107.137.26"
+  tracing oamcm start: "10.107.137.27"
+  tracing oamcm end: "10.107.137.27"
+  tracing oamconfig start: "10.107.137.28"
+  tracing oamconfig end: "10.107.137.28"
+  tracing oamfm start: "10.107.137.29"
+  tracing oamfm end: "10.107.137.29"
+  tracing oampm start: "10.107.137.30"
+  tracing oampm end: "10.107.137.30"
+  tracing cpif start: "10.107.137.31"
+  tracing cpif end: "10.107.137.31"
+  tracing cpcl start: "10.107.137.32"
+  tracing cpcl end: "10.107.137.32"
+  tracing cpnb start: "10.107.137.33"
+  tracing cpnb end: "10.107.137.33"
+  tracing cpnrt start: "10.107.137.34"
+  tracing cpnrt end: "10.107.137.34"
+  tracing cpue start: "10.107.137.35"
+  tracing cpue end: "10.107.137.35"
+  oam subnet:  10.107.138.96/27
+  oam:  1007
+  oam start:  10.107.138.119
+  oam end:  10.107.138.119
+  x2u subnet: ""
+  x2u: ""
+  x2u start: ""
+  x2u end: ""
+  x2c subnet: ""
+  x2c: ""
+  x2c start: ""
+  x2c end: ""
+  f1u subnet:  10.107.138.128/25
+  f1u:  1003
+  f1u_start:  10.107.138.189
+  f1u_end:  10.107.138.189
+  f1c subnet:  10.107.138.0/27
+  f1c:  1002
+  f1c_start:  10.107.138.23
+  f1c_end:  10.107.138.23
+  s1u subnet: "" 
+  s1u: ""
+  s1u start: ""
+  s1u end: ""
+  ngu subnet:  10.107.135.128/25
+  ngu:  1006
+  ngu start:  10.107.135.189
+  ngu end:  10.107.135.189
+  ngc subnet:  10.107.138.64/27
+  ngc:  1008
+  ngc start:  10.107.138.87
+  ngc end:  10.107.138.87
+  xnu subnet:  10.107.135.0/25
+  xnu:  1005
+  xnu start:  10.107.135.61
+  xnu end:  10.107.135.61
+  xnc subnet:  10.107.138.32/27
+  xnc:  1004
+  xnc start:  10.107.138.55
+  xnc end:  10.107.138.55
+  internale1:  1120
+  fastPathDevicePool:  openshift.io/sriov_netdevice_ens1f0
+  slowPathDevicePool:  openshift.io/sriov_netdevice_ens1f0
+  fastPathDevicePoolBackup: ""
+  slowPathDevicePoolBackup: ""
+misc:
+  hardAntiAffinity:  TRUE
+  timezone:  "Asia/Shanghai"
+  platform_type:  OCP
+  storageClassName: ocs-storagecluster-cephfs
+  accessModes:  ReadWriteOnce

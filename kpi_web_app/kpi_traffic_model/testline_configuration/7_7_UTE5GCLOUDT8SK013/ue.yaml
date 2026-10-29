@@ -1,0 +1,42 @@
+AppServer1: &APP_SERVER_1                              # application server definition
+  address: '10.84.168.121'
+  user: '5g'
+  password: '5g'
+  bind_interface_ip: '10.84.169.61'                      # ip of interface used for LTE data transfer
+  expected_prompt: '5g@SKA-HC14-16-AppServer'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_ANDROID_UE
+#                STARTING_CELL: '1279803803'
+#                STARTING_CELL_5G_PCI: 48
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+#                    serial_number: '3cbffaa0' # 'f36a1370'  SDX70
+                    serial_number: '4e71d651' # 'f36a1370'
+                    configuration:
+                        chipset_NR5G_mode: 'SDX70'
+                        ue_pc_address: 'PLKR-SC5G-PC116.intra.noklab.net'
+                        login: 'noklab\pzkrk'
+                        password: 'NokiaBts2003'
+                        ue_pc_port: '80'
+                        # proxy_mngr_port: 9955
+                        server_python: 'C:/Users/user-lab0/AppData/Local/Programs/Python/Python39/python.exe'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'
+                        diag_cfg_path: 'C:/auto/DIAG.cfg'
+                        diag_com:    "COM10"
+                        dmc_path:    "C:/auto/CB008696_DMC.dmc"
+                        qcat_analyzer: 'QCAT Sample;NR5G RRC OTA Packet' # -analyzer value used in QCAT command
+                        voice_call_dialing_timeout: '30'
+                        qualcomm_prototype: 'yes'
+                        network_mode_switch_method: 'adb'
+                        clear_logs: 'yes'
+                        clear_server_files: 'yes'
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'

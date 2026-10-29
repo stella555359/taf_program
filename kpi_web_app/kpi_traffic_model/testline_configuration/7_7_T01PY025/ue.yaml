@@ -1,0 +1,36 @@
+APP_SERVER: &APP_SERVER
+    address: '10.83.249.130'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.83.249.189'
+
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_FOR_TA: # UE name
+                CAPABILITIES: # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 1229324291               # Cell ID to which UE should attach 1229324289
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS: # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: 'RFCWC0BTJRK'       # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        chipset_NR5G_mode: 'SDX65'
+                        ue_pc_address: 'PLKR-TP-UE121.intra.noklab.net'         # UE PC IP address
+                        ue_pc_port: '8080'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'pzkrk'                # SSH login to UE PC
+                        password: 'NokiaBts2003'               # SSH password to UE PC
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'no'          # set to 'yes' if this is a Qualcomm prototype
+                        clear_logs: 'yes'
+                        clear_server_files: 'yes'
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER
+                                iperf_interval: '1'
+                                binary_path: '/data/data/com.nokia.android.application/'
+                                iperf_options:
+                                    packet: '1200B'
+                                    buffer: '4M'

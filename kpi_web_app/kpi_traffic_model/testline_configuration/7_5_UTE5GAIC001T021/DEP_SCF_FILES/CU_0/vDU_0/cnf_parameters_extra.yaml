@@ -1,0 +1,15 @@
+global:
+  externalNetwork:
+    ahm-0:
+      fhuc:
+      - vlName: "fhucplane01"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "301"
+        pcp: "7"
+      fhm:
+      - vlName: "fhmplane01"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "295"
+  fhmSiso: "direct-connect"
+  image:
+    autoGetSecret: true

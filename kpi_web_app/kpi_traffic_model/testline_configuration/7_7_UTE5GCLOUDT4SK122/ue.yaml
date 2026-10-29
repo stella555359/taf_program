@@ -1,0 +1,33 @@
+# Draft
+
+APP_SERVER: &APP_1
+    address: '10.83.249.120'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.83.249.60'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_QUALCOMM_UE
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'e0fc022'
+                    configuration:
+                        ue_pc_address: 'plkr-wmp-ue45.intra.noklab.net'
+                        login: 'user-lab0'
+                        password: 'Bts2003'
+                        ue_pc_port: '80'
+                        network_mode_switch_method: 'ADB'
+                        qualcomm_prototype: 'yes'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+
+
+

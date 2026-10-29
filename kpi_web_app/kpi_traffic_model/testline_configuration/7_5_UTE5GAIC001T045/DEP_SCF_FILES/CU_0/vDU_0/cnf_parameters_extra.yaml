@@ -1,0 +1,47 @@
+# - Override values for deployment in cloud-development environment
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+  externalNetwork:
+    f1c:
+      vlanInfo:
+        vid: 615
+      ipInfo:
+        - rangeStart: "10.71.165.10"
+          rangeEnd: "10.71.165.10"
+          subnet: "10.71.165.8/29"
+          type: "physical"
+          role:
+            - "F1-C"
+    #  - Description: this is only one twamp vlan interface example
+    #    Add one vlan interface for the Measurement network as followed steps
+    #      1. copy the whole section from "twamp_f1" to "- 'twamp_f1'" including all the spaces
+    #      2. paste the whole section after line "- 'twamp_f1'"
+    #      3. modify the section key name "twamp_f1", align with the new vlName and role
+    #      4. configure vid( vlan id), pcp ,rangeStart,rangeEnd,subnet,family
+    #  - Feature ID: CB008468
+    #  - Note:
+    #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+    #    vlName should be unique under twamp section and can be defined by user, please not exceed 15 characters
+    #    role should be unique and same in the SCF file
+    #    subnet should be same as the Measurement network
+    #    if f1 and f1c use the same subnet, only need create one vlan interface here
+    twampF1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: "615"
+      ipInfo:
+      - rangeStart: "10.71.165.13"
+        rangeEnd: "10.71.165.13"
+        subnet: "10.71.165.8/29"
+        type: "physical"
+        role:
+        - "twamp_f1"
+    # - End example for twamp vlan interface

@@ -1,0 +1,99 @@
+APP_SERVER: &APP_SERVER
+    ssh: &APP_SERV_CRED
+        host: '10.84.168.120'
+        user: '5g'
+        password: '5g'
+        iperf_interface_ip: '10.84.169.60'
+    lte_network_ip: '10.84.169.60'
+
+UE_POOLS:
+    QualcommUePool:
+        inline_config:
+            QC_MTP_SDX60_A:                            # UE name
+                CAPABILITIES:                      # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - MTP
+                    - QUALCOMM_PLUGIN
+                STARTING_CELL: 0x1290701
+                CLASS: QualcommUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: '7445384d'
+                    configuration:
+                        ue_pc_host: 'plkr-wmp-ue55.intra.noklab.net'
+                        port_dict:                         # Dictionary containing ports that the UePcServer uses for QXDM control
+                            heartbeat: 6005               # Port for heartbeat messages
+                            server_command_input: 6007    # Port for command input
+                            server_qxdm_messages: 6008    # Port for QXDM messages output
+                            server_command_output: 6009    # Port for server command output
+                            message_stream_port: 6010
+                        login: 'PLKR-WMP-UE55+user-lab0'
+                        password: 'Bts2003'
+                        qxdm_version: 5
+                        licence_type: '5G'
+                        voice_call_technology_timeout: '65'
+                        com_port: 5
+                        ue_type: 'ANDROID'
+                        iperf_adb_dir: 'su 0 /data/iperf'
+                        data_transfer: *APP_SERVER
+    AndroidUePool:
+        inline_config:
+            QC_MTP_SDX60:
+                CAPABILITIES:
+                    - REAL_UE
+                    - MTP
+                    - ANDROID_PLUGIN
+                STARTING_CELL: '19716865'
+                STARTING_CELL_5G_PCI: 49
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: '7445384d'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_ip: 'plkr-wmp-ue55.intra.noklab.net'
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'PLKR-WMP-UE55+user-lab0'
+                        password: 'Bts2003'
+                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copied (create empty directory on UE-PC)
+                        server_python: 'C:/Python36/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'yes'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf_path: '/data/data/com.nokia.syve.uemanager.mobile/'
+                            app_servers:
+                                SKA_1: *APP_SERV_CRED
+                            iperf_interval: '1'
+                            iperf_options:
+                                packet: '1200B'
+                                buffer: '2M'
+            Samsung_S20:
+                CAPABILITIES:
+                    - REAL_UE
+                    - COMMERCIAL
+                    - ANDROID_PLUGIN
+                STARTING_CELL: '19716866'
+                STARTING_CELL_5G_PCI: 60
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R3CN90QJ3WX'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_ip: 'plkr-wmp-ue27.intra.noklab.net'
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'PLKR-WMP-UE27+user-lab0'
+                        password: 'Bts2003'
+                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copied (create empty directory on UE-PC)
+                        server_python: 'C:/Python36/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'no'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf_path: '/data/data/com.nokia.syve.uemanager.mobile/'
+                            app_servers:
+                                SKA_1: *APP_SERV_CRED
+                            iperf_interval: '1'
+                            iperf_options:
+                                packet: '1200B'
+                                buffer: '2M'

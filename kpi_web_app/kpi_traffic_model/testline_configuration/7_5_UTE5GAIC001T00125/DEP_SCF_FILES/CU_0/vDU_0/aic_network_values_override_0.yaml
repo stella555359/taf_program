@@ -1,0 +1,18 @@
+# - Description: the deployment mode of the CU, Non-Standalone(NSA) or Standalone mode(SA).
+# support values: NSA or SA
+deploymentmode: "NSA"
+# Precondition: tenant's configuration is ready before deploy internal network
+# internal network
+internalNetwork:
+  #Value range: string, no default value.
+  #Note: This value need to match with the tenant's configuration. eg."ens1f1"
+  internal:
+    devicePool: "ens1f1"
+
+devicePoolList:
+  # - Description: The SR-IOV Device Pool used by uplane networks such as s1u,f1u,x2u
+  fastPathDevicePool: "nokia.k8s.io/sriov_ens1f1"
+  # - Description: The SR-IOV Device Pool used by oam,tracing,cplane,internal-e1 networks
+  slowPathDevicePool: "nokia.k8s.io/sriov_ens1f1"
+
+

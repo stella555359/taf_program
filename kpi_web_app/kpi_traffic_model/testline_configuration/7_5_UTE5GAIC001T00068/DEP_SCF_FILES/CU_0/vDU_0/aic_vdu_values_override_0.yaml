@@ -1,0 +1,418 @@
+aic-vdu-cprt:
+  cloudInfraType: NCS
+  coredumppath: ''
+  cprtnodeAffinityIP: ''
+  givaxi:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  netConf:
+    f1c:
+      ippool:
+        ipv4:
+          end: 10.71.167.74
+          start: 10.71.167.74
+          subnet: 10.71.167.72/29
+        ipv6:
+          end: ''
+          start: ''
+          subnet: ''
+      mtu: '1500'
+      version: ipv4
+      vlanInfo:
+        vlanId: 215
+    tracing:
+      ippool:
+        ipv4:
+          end: 192.169.254.3
+          gateway: 192.169.254.1
+          start: 192.169.254.3
+          subnet: 192.169.254.0/26
+        ipv6:
+          end: ''
+          gateway: ''
+          start: ''
+          subnet: ''
+      mtu: '1500'
+      proute:
+        orderNumber: '1000'
+      version: ipv4
+      vlanInfo:
+        vlanId: 219
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  privilegedMode: 'false'
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-vdu-oam:
+  apigw:
+    persistentVolumeClaim:
+      size: 1500Mi
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  certman:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  cloudInfraType: NCS
+  coredumppath: ''
+  dhcp:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+    service:
+      option43_vendor_specific_information_master_agent_ip: 192.168.254.33
+      option43_vendor_specific_information_port_number: '13001'
+      v4Pools: 192.168.254.34-192.168.254.60
+      v4Subnet: 192.168.254.0/26
+  givaxi:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  httpd:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  netConf:
+    fhm:
+      ippool:
+        ipv4:
+          end: 192.168.254.33
+          start: 192.168.254.33
+          subnet: 192.168.254.0/26
+      vlanInfo:
+        pcp: 2
+        vlanId: 295
+    oam:
+      ippool:
+        ipv4:
+          end: 10.71.167.82
+          gateway: 10.71.167.81
+          start: 10.71.167.82
+          subnet: 10.71.167.80/29
+        ipv6:
+          end: ''
+          gateway: ''
+          start: ''
+          subnet: ''
+      mtu: '1500'
+      proute:
+        orderNumber: '5'
+      version: ipv4
+      vlanInfo:
+        vlanId: 216
+    tracing:
+      ippool:
+        ipv4:
+          end: 192.169.254.2
+          gateway: 192.169.254.1
+          start: 192.169.254.2
+          subnet: 192.169.254.0/26
+        ipv6:
+          end: ''
+          gateway: ''
+          start: ''
+          subnet: ''
+      mtu: '1500'
+      proute:
+        orderNumber: '1000'
+      version: ipv4
+      vlanInfo:
+        vlanId: 219
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  oam:
+    domainNumber: '24'
+  oamnodeAffinityIP: ''
+  privilegedMode: 'false'
+  providercontroller:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  vaultapp:
+    securityContex:
+      runAsGroup: 9999
+      runAsUser: 9999
+  vsftp:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+aic-vdu-up:
+  bipPdumpLogging:
+    persistentVolumeClaim:
+      accessModes: ReadWriteOnce
+      size: '10'
+      storageClassName: ''
+  cloudInfraType: NCS
+  coredumppath: ''
+  l1hi:
+    FHP_PRACH_RECEIVE_WIN_WORKAROUND_ENABLE: 'FALSE'
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+    fast_cplane_enabled: 'TRUE'
+    fhpconfig:
+      FHP_HOST_VLAN_ENABLE: 'FALSE'
+    l1_default_scs: '15'
+    resources:
+      limits:
+        dedicatedNum:
+          cpuManager: '7'
+          cpuPooler: '6'
+      requests:
+        dedicatedNum:
+          cpuManager: '7'
+          cpuPooler: '6'
+    securityContext:
+      privilegedMode: 'true'
+      runAsGroup: 9999
+      runAsUser: 9999
+  l2hi:
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+  l2rt:
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+  netConf:
+    f1:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      ippool:
+        ipv4:
+          end: 10.71.167.75
+          start: 10.71.167.75
+          subnet: 10.71.167.72/29
+        ipv6:
+          end: ''
+          start: ''
+          subnet: ''
+      mtu: '1500'
+      version: ipv4
+      vlanInfo:
+      - vlanId: 215
+        vlanName: f1uplane
+    fhuc:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      vlanInfo:
+      - pcp: 7
+        vlanId: 301
+        vlanName: fhucplane1
+    l1bipl1:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      vlanInfo:
+      - vlanId: 212
+        vlanName: vlanl1bipl1
+    l1biprt:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      vlanInfo:
+      - vlanId: 212
+        vlanName: vlanl1biprt
+    l2biphi:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      vlanInfo:
+      - vlanId: 213
+        vlanName: vlanl2biphi
+    l2biprt:
+      devicePool: nokia.k8s.io/sriov_vfio_ens1f1
+      vlanInfo:
+      - vlanId: 213
+        vlanName: vlanl2biprt
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  privilegedMode: 'false'
+  replicaCount: 1
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  upnodeAffinityIP: ''
+certman-auto-cmp:
+  configuration:
+    cmp:
+      ca_subject_name: null
+      cmp_secret_name: null
+      ee_subject_fqdn: []
+      ee_subject_ip_addr: []
+      ee_subject_name: null
+      ip: null
+      path: null
+      port: null
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+cloudInfraType: NCS
+coredumpPath: /tmp/cdump
+global:
+  agentIP: 10.71.167.82
+  ccsSupportResiliency: false
+  cpuDevicePlugin: ''
+  cpuDevicePool:
+    dedicatedCore: ''
+    sharedCore: ''
+  custom_extensions:
+    labels: {}
+  deploymentType: OE19
+  fecDevicePool:
+    fecVF: nokia.k8s.io/sriov_fec
+    fecVFNum: '0'
+  fpIfaceBindOnHost: 'true'
+  image:
+    registry: bcmt-registry:5000/dep
+  ipv6RxUdpZeroChecksum: enabled
+  ipv6TxUdpZeroChecksum: disabled
+  name_convention:
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+  netPF:
+    common: nokia.k8s.io/sriov_ens1f1
+    commonHostBind: nokia.k8s.io/sriov_vfio_ens1f1
+    fh: nokia.k8s.io/sriov_ens1f1
+    fhHostBind: nokia.k8s.io/sriov_vfio_ens1f1
+  psk:
+    certificatemanagement: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    httpd: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    ne3sagent: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    providercontroller: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+  ptpSolution: ''
+  pvcName: bat
+  siteDescription: MRBTS-1234
+  storageClass:
+    accessMode: ReadWriteOnce
+    storageClassName: ''
+  timezone: UTC
+  urlNMS: ''
+healing-controller:
+  custom:
+    criticalContainersCauseVNFRestart: []
+    serviceAccount: healing-controller
+  securityContext:
+    gid: 9999
+    groups: 9999
+    uid: 9999
+  storage:
+    persistentVolume:
+      size: 1500Mi
+kubeapisymptomdataprovider:
+  podSecurityContext:
+    fsGroup: 9999
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+logservice:
+  podSecurityContext:
+    fsGroup: 9999
+  pvc:
+    auditlog:
+      storage: 1500Mi
+      storageClassName: ''
+    syslog:
+      storage: 1500Mi
+      storageClassName: ''
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+lwsd:
+  securityContext:
+    gid: 9999
+    groups: 9999
+    uid: 9999
+mtu: '1500'
+pm:
+  pvc:
+    hfrw:
+      capacity: 1500Mi
+      storageClassName: ''
+    lfrw:
+      capacity: 1500Mi
+      storageClassName: ''
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpStorage: 1500Mi
+rcpfm:
+  pvc:
+    storage: 1500Mi
+    storageClassName: ''
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpsdl:
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpum:
+  podSecurityContext:
+    fsGroup: 9999
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+  storage:
+    persistentVolume:
+      size: 1500Mi
+secret-storage-framework:
+  configuration:
+    gid: 9999
+    uid: 9999
+  vaultmanagerpvc:
+    name: vaultmanagerpvc
+    storage: 1500Mi
+    storageClassName: ''
+  vaultserverpvc:
+    name: vaultserverpvc
+    storage: 1500Mi
+    storageClassName: ''
+securityContext:
+  gid: 9999
+  groups: 9999
+  uid: 9999
+swm:
+  privilegedMode: 'false'
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+trsconfig:
+  securityContext:
+    gid: 9999
+    uid: 9999

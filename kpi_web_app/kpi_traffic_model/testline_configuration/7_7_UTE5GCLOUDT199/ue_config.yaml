@@ -1,0 +1,35 @@
+AppServer1: &APP_SERVER_1
+   address: '10.83.249.134'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.83.249.164'
+   expected_prompt: '5g@KRK-SB18s16-App4'
+
+
+UE_POOLS:
+    TafUeAtPool:
+        inline_config:
+            QUECTEL_UE:
+                CAPABILITIES:
+                    - QUECTEL_UE
+                CLASS: AtUe
+                CONSTRUCTOR_PARAMETERS:
+                    com_port: '15'
+                    configuration:
+                        ue_pc_address: 'PLKR-SG07-31.intra.noklab.net'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        ue_pc_port: 80
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG07-31'
+                        expected_prompt: 'pzkrk@PLKR-SG07-31'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                interface_name: 'Cellular 4'
+                                dt_from_uepc: True
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1

@@ -1,0 +1,47 @@
+AppServer1: &APP_1
+   address: '10.83.249.133'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.83.249.163'
+   expected_prompt: '5g@KRK-SB18s16-App3:.*\$\s+'
+
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: '20036100'
+                STARTING_CELL_5G_PCI: 266
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CT4235YGM'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'PLKR-SC5G-PC66.sc5g.krk-lab.nsn-rdnet.net'
+                        login: 'user-lab0'                # SSH login to UE PC
+                        password: 'Bts2003'               # SSH password to UE PC
+                        ue_pc_port: '8080'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/Users/user-lab0/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        service_call_attach: '16'
+                        service_call_detach: '16'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+
+CELLS:
+    GNB1:
+        CELL1:
+            ID: 1
+            PCI: 266
+        CELL2:
+            ID: 2
+            PCI: 267
+        CELL3:
+            ID: 3
+            PCI: 291

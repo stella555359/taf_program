@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Workspace{% endblock %}
+
+{% block head_extra %}
+    {% if has_active_jobs %}
+    <meta http-equiv="refresh" content="8">
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<main id="page-top" class="page-shell" data-dashboard-auto-refresh="{{ 'true' if has_active_jobs else 'false' }}" data-active-count="{{ active_analysis_count }}">
+    <section class="hero-panel workspace-hero">
+        <div class="hero-copy">
+            <p class="eyebrow">KPI workspace</p>
+            <h1>Run detector jobs inside the new Flask portal.</h1>
+            <p class="hero-text">
+                This module keeps the existing KPI anomaly detector workflow intact while exposing it as a portal workspace
+                with searchable history, reruns, recycle bin recovery, and report artifact hosting.
+            </p>
+            <div class="workspace-links">
+                <a class="button-link ghost-link" href="{{ url_for('portal.home') }}">Back to portal</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <form class="upload-form" action="{{ url_for('kpi.upload_file') }}" method="post" enctype="multipart/form-data">
+                <label class="file-picker" for="file-input">
+                    <span>Select one or more KPI Excel files</span>
+                    <input id="file-input" type="file" name="files" accept=".xlsx" multiple required>
+                </label>
+                <p class="upload-hint">You can queue a single file or multiple .xlsx files in one submission.</p>
+                <button type="submit">Start Analysis</button>
+            </form>
+            <div id="flash-stack" class="flash-stack">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}{% if category == 'success' %} flash-banner{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+            <dl class="dashboard-notes">
+                <div>
+                    <dt>Module path</dt>
+                    <dd>This workspace now lives under <strong>/kpi</strong> inside the Flask portal shell.</dd>
+                </div>
+                <div>
+                    <dt>Storage model</dt>
+                    <dd>HTML and Excel stay on disk, run metadata is stored in SQLite.</dd>
+                </div>
+                <div>
+                    <dt>Hide vs Delete</dt>
+                    <dd><span class="legend-chip legend-hide">Hide</span> removes a run from Latest 50 only. <span class="legend-chip legend-delete">Delete</span> permanently removes files and JSON history.</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="table-panel latest-runs-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recent analyses</p>
+                <h2>Latest runs</h2>
+            </div>
+            <p class="panel-hint">
+                {% if total_visible %}
+                Showing {{ page_start }}-{{ page_end }} of {{ total_visible }} runs.
+                {% elif has_active_jobs %}
+                Running jobs are refreshing automatically.
+                {% else %}
+                Submit a new file to create the first record.
+                {% endif %}
+            </p>
+        </div>
+
+        <form class="search-form" action="{{ url_for('kpi.index') }}" method="get">
+            <label class="search-field" for="search-input">
+                <span>Search by filename</span>
+                <input id="search-input" type="search" name="q" value="{{ search_query }}" placeholder="e.g. T076.SCF or trend_viewer" />
+            </label>
+            <label class="search-field narrow-field" for="env-input">
+                <span>Environment</span>
+                <input id="env-input" type="search" name="env" value="{{ environment_query }}" placeholder="e.g. T076 or T813" list="environment-options" />
+            </label>
+            <label class="search-field narrow-field" for="scenario-input">
+                <span>Scenario</span>
+                <input id="scenario-input" type="search" name="scenario" value="{{ scenario_query }}" placeholder="e.g. 7UEs_SFTPDL" list="scenario-options" />
+            </label>
+            <datalist id="environment-options">
+                {% for option in environment_options %}
+                <option value="{{ option }}"></option>
+                {% endfor %}
+            </datalist>
+            <datalist id="scenario-options">
+                {% for option in scenario_options %}
+                <option value="{{ option }}"></option>
+                {% endfor %}
+            </datalist>
+            <input type="hidden" name="sort" value="{{ sort_key }}" />
+            <input type="hidden" name="order" value="{{ sort_order }}" />
+            <div class="search-actions">
+                <button type="submit">Search</button>
+                {% if search_query or environment_query or scenario_query %}
+                <a class="button-link ghost-link" href="{{ url_for('kpi.index', sort=sort_key, order=sort_order) }}">Clear</a>
+                {% endif %}
+            </div>
+        </form>
+
+        {% if hidden_count %}
+        <div class="recycle-summary">
+            <span class="recycle-count">Show hidden count: {{ hidden_count }}</span>
+            <span class="panel-hint">Hidden runs stay recoverable in the recycle bin below.</span>
+        </div>
+        {% endif %}
+
+        {% if analyses %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <a class="sort-link" href="{{ url_for('kpi.index', q=search_query, env=environment_query, scenario=scenario_query, sort='created', order='asc' if sort_key == 'created' and sort_order == 'desc' else 'desc', page=1) }}">
+                                Created{% if sort_key == 'created' %} <span class="sort-indicator">{{ '↓' if sort_order == 'desc' else '↑' }}</span>{% endif %}
+                            </a>
+                        </th>
+                        <th>Original File</th>
+                        <th>Status</th>
+                        <th>Regression</th>
+                        <th>Suspicious</th>
+                        <th>NoHistory</th>
+                        <th>Artifacts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for analysis in analyses %}
+                    <tr id="analysis-{{ analysis.id }}">
+                        <td>{{ analysis.created_at }}</td>
+                        <td class="filename-cell">
+                            <a class="text-link filename-link" href="{{ url_for('kpi.analysis_detail', analysis_id=analysis.id) }}">{{ analysis.original_filename|highlight_match(search_query) }}</a>
+                            {% if analysis.history_context %}
+                            <div class="history-tags compact-tags">
+                                {% if analysis.history_context.get('environment') %}
+                                <span class="history-tag">Env {{ analysis.history_context.get('environment') }}</span>
+                                {% endif %}
+                                {% if analysis.history_context.get('scenario') %}
+                                <span class="history-tag">Scenario {{ analysis.history_context.get('scenario') }}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            {% if analysis.history_context_failed %}
+                            <div class="history-tags compact-tags">
+                                <span class="history-tag error-tag">file name incorrect</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="status-chip status-{{ analysis.status }}">{{ analysis.status }}</span>
+                        </td>
+                        <td>{{ analysis.stats.get('severity_regression', '-') }}</td>
+                        <td>{{ analysis.stats.get('severity_suspicious', '-') }}</td>
+                        <td>{{ analysis.stats.get('severity_nohistory', '-') }}</td>
+                        <td class="artifact-links">
+                            {% if analysis.report_html_path %}
+                            <a href="{{ url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='html', data_script=url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='data')) }}" target="_blank">HTML</a>
+                            {% endif %}
+                            {% if analysis.report_excel_path %}
+                            <a href="{{ url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='excel') }}">Excel</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if analysis.status in active_statuses %}
+                            <span class="action-disabled">Busy</span>
+                            {% else %}
+                            <div class="action-group">
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_delete', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="delete_mode" value="soft">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="soft-delete-button" type="submit" onclick='return confirm({{ ("Hide " ~ analysis.original_filename ~ " from Latest 50 runs? Files and JSON history will be kept.")|tojson }});'>Hide</button>
+                                </form>
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_rerun', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="return_anchor" value="analysis-{{ analysis.id }}">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="rerun-button" type="submit">Rerun detector</button>
+                                </form>
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_delete', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="delete_mode" value="hard">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="delete-button" type="submit" onclick='return confirm({{ ("Delete " ~ analysis.original_filename ~ " and remove its files and JSON history?")|tojson }});'>Delete</button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if total_pages > 1 %}
+        <nav class="pagination" aria-label="Latest runs pages">
+            {% if current_page > 1 %}
+            <a class="page-link" href="{{ url_for('kpi.index', q=search_query, env=environment_query, scenario=scenario_query, sort=sort_key, order=sort_order, page=current_page - 1) }}#page-top">Previous</a>
+            {% else %}
+            <span class="page-link disabled">Previous</span>
+            {% endif %}
+
+            <div class="page-window">
+                {% for page_number in range(1, total_pages + 1) %}
+                    {% if page_number == current_page or page_number == 1 or page_number == total_pages or (page_number >= current_page - 2 and page_number <= current_page + 2) %}
+                        {% if page_number == current_page %}
+                        <span class="page-link active">{{ page_number }}</span>
+                        {% else %}
+                        <a class="page-link" href="{{ url_for('kpi.index', q=search_query, env=environment_query, scenario=scenario_query, sort=sort_key, order=sort_order, page=page_number) }}#page-top">{{ page_number }}</a>
+                        {% endif %}
+                    {% elif page_number == current_page - 3 or page_number == current_page + 3 %}
+                        <span class="page-ellipsis">...</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if current_page < total_pages %}
+            <a class="page-link" href="{{ url_for('kpi.index', q=search_query, env=environment_query, scenario=scenario_query, sort=sort_key, order=sort_order, page=current_page + 1) }}#page-top">Next</a>
+            {% else %}
+            <span class="page-link disabled">Next</span>
+            {% endif %}
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>{% if search_query %}No matching runs{% else %}No analysis records yet{% endif %}</h3>
+            <p>{% if search_query %}Try a different filename fragment.{% else %}Upload one or more .xlsx files to generate the first reports.{% endif %}</p>
+        </div>
+        {% endif %}
+    </section>
+
+    {% if hidden_analyses %}
+    <section class="table-panel recycle-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recycle bin</p>
+                <h2>Hidden runs</h2>
+            </div>
+            <p class="panel-hint">Restore a hidden run to return it to Latest 50, or permanently delete it here.</p>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <a class="sort-link" href="{{ url_for('kpi.index', q=search_query, env=environment_query, scenario=scenario_query, sort='created', order='asc' if sort_key == 'created' and sort_order == 'desc' else 'desc', page=current_page) }}">
+                                Created{% if sort_key == 'created' %} <span class="sort-indicator">{{ '↓' if sort_order == 'desc' else '↑' }}</span>{% endif %}
+                            </a>
+                        </th>
+                        <th>Original File</th>
+                        <th>Status</th>
+                        <th>Regression</th>
+                        <th>Suspicious</th>
+                        <th>NoHistory</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for analysis in hidden_analyses %}
+                    <tr id="analysis-{{ analysis.id }}">
+                        <td>{{ analysis.created_at }}</td>
+                        <td class="filename-cell">
+                            {{ analysis.original_filename|highlight_match(search_query) }}
+                            {% if analysis.history_context %}
+                            <div class="history-tags compact-tags">
+                                {% if analysis.history_context.get('environment') %}
+                                <span class="history-tag">Env {{ analysis.history_context.get('environment') }}</span>
+                                {% endif %}
+                                {% if analysis.history_context.get('scenario') %}
+                                <span class="history-tag">Scenario {{ analysis.history_context.get('scenario') }}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            {% if analysis.history_context_failed %}
+                            <div class="history-tags compact-tags">
+                                <span class="history-tag error-tag">file name incorrect</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td><span class="status-chip status-{{ analysis.status }}">{{ analysis.status }}</span></td>
+                        <td>{{ analysis.stats.get('severity_regression', '-') }}</td>
+                        <td>{{ analysis.stats.get('severity_suspicious', '-') }}</td>
+                        <td>{{ analysis.stats.get('severity_nohistory', '-') }}</td>
+                        <td>
+                            <div class="action-group">
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_restore', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="restore-button" type="submit" onclick='return confirm({{ ("Restore " ~ analysis.original_filename ~ " to Latest 50 runs?")|tojson }});'>Restore</button>
+                                </form>
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_rerun', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="return_anchor" value="analysis-{{ analysis.id }}">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="rerun-button" type="submit">Rerun detector</button>
+                                </form>
+                                <form class="inline-form" action="{{ url_for('kpi.analysis_delete', analysis_id=analysis.id) }}" method="post">
+                                    <input type="hidden" name="delete_mode" value="hard">
+                                    <input type="hidden" name="return_q" value="{{ search_query }}">
+                                    <input type="hidden" name="return_env" value="{{ environment_query }}">
+                                    <input type="hidden" name="return_scenario" value="{{ scenario_query }}">
+                                    <input type="hidden" name="return_sort" value="{{ sort_key }}">
+                                    <input type="hidden" name="return_order" value="{{ sort_order }}">
+                                    <input type="hidden" name="return_page" value="{{ current_page }}">
+                                    <button class="delete-button" type="submit" onclick='return confirm({{ ("Delete " ~ analysis.original_filename ~ " permanently from recycle bin and remove its files and JSON history?")|tojson }});'>Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function() {
+        const successFlash = document.querySelector('.flash-success');
+        if (!successFlash) {
+            return;
+        }
+
+        const top = document.getElementById('page-top');
+        if (top) {
+            top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        successFlash.classList.add('flash-highlight');
+    })();
+
+    (function() {
+        const root = document.querySelector('[data-dashboard-auto-refresh]');
+        if (!root || root.dataset.dashboardAutoRefresh !== 'true') {
+            return;
+        }
+
+        async function pollDashboardStatus() {
+            try {
+                const response = await fetch('{{ url_for('kpi.dashboard_status') }}', { cache: 'no-store' });
+                if (!response.ok) {
+                    window.setTimeout(pollDashboardStatus, 5000);
+                    return;
+                }
+
+                const payload = await response.json();
+                if ((payload.active_count || 0) === 0) {
+                    window.location.reload();
+                    return;
+                }
+
+                window.setTimeout(pollDashboardStatus, 3000);
+            } catch (_error) {
+                window.setTimeout(pollDashboardStatus, 5000);
+            }
+        }
+
+        window.setTimeout(pollDashboardStatus, 3000);
+    })();
+</script>
+{% endblock %}

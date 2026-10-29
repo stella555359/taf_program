@@ -1,0 +1,121 @@
+AppServer1: &APP_SERVER_1                             # 1st application server definition
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'              # OPTIONAL ip of interface used for LTE data transfe
+   expected_prompt: '5g@SKA-HC14-15-AppServer:.*\$\s+'
+UePC1: &UE_PC_1
+  ue_pc_address: 'PLKR-SG01-26.intra.noklab.net'    # UE PC IP address
+  ue_pc_login: 'pzkrk'
+  ue_pc_password: 'NokiaBts2003'
+  ue_pc_port: '8080'
+  ue_pc_expected_prompt: '.*@PLKR-SG01-26$'           # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+UePC2: &UE_PC_2
+  ue_pc_address: 'PLKR-TP-ZA14-2.intra.noklab.net'    # UE PC IP address
+  ue_pc_login: 'pzkrk'
+  ue_pc_password: 'NokiaBts2003'
+  ue_pc_port: '80'
+UePC3: &UE_PC_3
+  ue_pc_address: 'PLKR-SG01-09.intra.noklab.net'    # UE PC IP address
+  ue_pc_login: 'pzkrk'
+  ue_pc_password: 'NokiaBts2003'
+  ue_pc_port: '80'
+  ue_pc_expected_prompt: '.*@PLKR-SG01-09$'           # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+UE_POOLS:
+    TafUeAtPool:                          # Ue Pool class defined by library
+        inline_config:
+            COM33:                        # UE name
+                CAPABILITIES:             # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_1
+                CLASS: Quectel
+                CONSTRUCTOR_PARAMETERS:   # Parameters that will be passed to AtUe constructor when Ue instance is created.
+                    com_port: '22'        # OPTIONAL if is only one UE on UE PC, in other case number of com port supporting AT commands
+                    configuration:
+                        << : *UE_PC_1           # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+                        data_transfer:                                      # data transfer protocols
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                server_close_delay: 50
+                                binary_path: ''
+                                dt_from_uepc: True
+            Waveshare:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_3
+                CLASS: Quectel                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    com_port: '38'
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        << : *UE_PC_3
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                interface_name: 'Cellular 7'
+                                dt_from_uepc: True
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1
+                        #   ========= At specific: =========
+                        ue_pc_login: 'pzkrk'            # SSH login to UE PC
+                        ue_pc_password: 'NokiaBts2003'         # SSH password to UE PC
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG01-09$'              # OPTIONAL, but if you want to run data transfer from UE PC interface is mandatory
+    TafUeAndroidPool:                                  # Ue Pool class defined by library
+        inline_config:
+            ANDROID_UE:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_2
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '3cbffaa0'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        << : *UE_PC_2
+                        qualcomm_prototype: True
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+
+
+
+
+#********************Marka
+
+#AppServer1: &APP_SERVER_1
+#   address: '10.84.168.120'
+#   user: '5g'
+#   password: '5g'
+#   bind_interface_ip: '10.84.169.60'
+#   expected_prompt: '5g@SKA-HC14-15-AppServer:.*\$\s+'
+#
+#UE_POOLS:
+#    TafUeAtPool:                                  # Ue Pool class defined by library
+#        inline_config:
+#            Waveshare:                           # UE name
+#                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+#                    - REAL_UE
+#                CLASS: Quectel                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+#                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+#                    com_port: '38'
+#                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+#                        ue_pc_address: 'PLKR-SG01-09.intra.noklab.net'    # UE PC IP address
+#                        ue_pc_port: '80'           # TCP Port number on UE PC on which Pyro server will be started
+#                        login: 'pzkrk'            # SSH login to UE PC
+#                        password: 'NokiaBts2003'         # SSH password to UE PC
+#                        data_transfer:
+#                            iperf:
+#                                app_server: *APP_SERVER_1
+#                                interval: '1'           # Iperf interval in seconds (default: 1)
+#                                interface_name: 'Cellular 7'
+#                                dt_from_uepc: True
+#                            ping:
+#                                app_server: *APP_SERVER_1
+#                                interval: 1
+#                            ftp:
+#                                app_server: *APP_SERVER_1
+#                        #   ========= At specific: =========
+#                        ue_pc_login: 'pzkrk'            # SSH login to UE PC
+#                        ue_pc_password: 'NokiaBts2003'         # SSH password to UE PC
+#                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG01-09$'              # OPTIONAL, but if you want to run data transfer from UE PC interface is mandatory

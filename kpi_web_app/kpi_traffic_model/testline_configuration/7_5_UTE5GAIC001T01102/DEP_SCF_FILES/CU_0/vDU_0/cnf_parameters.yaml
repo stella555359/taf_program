@@ -1,0 +1,40 @@
+l2rtCount: 1
+l2nrtCount: 1
+vlan:
+  oam: 916
+  f1: 915
+  l1bip: 912
+  l2bip: 913
+  xpbip: 915
+  internal_range: 911-911
+  tracing: 914
+network:
+  # fast path device
+  fastPathCommonPool: openshift.io/sriov_vfio_ens43f0
+
+  #slow path device
+  slowPathCommonPool: openshift.io/sriov_netdevice_ens43f0
+  fastPathRANNICPool: nokia.com/sriov_rinline_up
+  slowPathRANNICPool: nokia.com/sriov_rinline_cp
+  f1subnet: 10.108.204.152/29
+  f1usubnet: 10.108.204.152/29
+  f1csubnet: 10.108.204.152/29
+  oamsubnet: 10.108.204.160/29
+  oam_ordernumber: 5
+  tracingsubnet: 10.107.80.0/23
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: ocp10861
+  fecVFNum: 0
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+  storage_class_name: localfs-lvm-sc
+  deployment_type: OE20
+  l2rtDeploymentType: NR_L2RT_2CL2PS_2CL2LO
+  l2nrtDeploymentType: NR_L2NRT_3CL2HI
+  upCellFlag: single
+  upActiveSiblingCore: false
+oct_server: 10.109.3.195
+cloudRanVersion: 4.0

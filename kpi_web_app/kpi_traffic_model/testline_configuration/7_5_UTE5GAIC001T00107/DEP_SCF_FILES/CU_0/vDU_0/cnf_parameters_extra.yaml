@@ -1,0 +1,38 @@
+# it's just a example, please make sure it's match to real environment
+global:
+  externalNetwork:
+    fhuc1:
+      vlanInfo:
+         vid: "302"
+    fhuc2:
+      vlanInfo:
+         vid: "302"
+    fhuc3:
+      vlanInfo:
+         vid: "302"
+    # - fhuc4-fhuc6 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-1 pod
+    fhuc4:
+      vlanInfo:
+         vid: "302"
+    fhuc5:
+      vlanInfo:
+         vid: "302"
+    fhuc6:
+      vlanInfo:
+         vid: "302"
+    # - fhuc7-fhuc9 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-2 pod
+    fhuc7:
+      vlanInfo:
+         vid: "302"
+    fhuc8:
+      vlanInfo:
+         vid: "302"
+    fhuc9:
+      vlanInfo:
+         vid: "302"
+    fhm:
+      vlanInfo:
+         vid: 296
+    f1c:
+      vlanInfo:
+         vid: 115

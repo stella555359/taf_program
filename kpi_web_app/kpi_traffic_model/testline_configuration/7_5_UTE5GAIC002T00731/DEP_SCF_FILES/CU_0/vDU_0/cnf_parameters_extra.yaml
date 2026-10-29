@@ -1,0 +1,33 @@
+global:
+  fhmSiso: switch-network
+  devicePoolList:
+    fastPathBipPool: openshift.io/sriov_vfio_0
+    fastPathF1uPool: openshift.io/sriov_vfio_1
+    fastPathF1uPoolBackup: ""
+    slowPathCommonPool: openshift.io/sriov_netdevice_1
+    slowPathCommonPoolBackup: ""
+  externalNetwork:
+    ahm-0:
+      fhuc:
+      - vlName: "fhucplane01"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "301"
+        pcp: "7"
+      - vlName: "fhucplane02"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "302"
+        pcp: "7"
+      - vlName: "fhucplane03"
+        defaultUnderlyingIface: "ecpri4"
+        vid: "303"
+        pcp: "7"
+    fhm:
+      ipInfo:
+      - rangeEnd: 192.168.254.35
+        rangeStart: 192.168.254.35
+        role:
+        - fhm
+        subnet: 192.168.254.0/26
+        type: physical
+
+

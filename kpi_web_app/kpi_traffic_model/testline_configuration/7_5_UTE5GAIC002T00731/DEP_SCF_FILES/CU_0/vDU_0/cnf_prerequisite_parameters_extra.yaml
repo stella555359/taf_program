@@ -1,0 +1,12 @@
+aic-intnet:
+  devicePoolList:
+    # The SR-IOV Device Pool used by bip networks (fast path)
+    fastPathBipPool: "openshift.io/sriov_vfio_0"
+    # The SR-IOV Device Pool used by f1 networks (fast path)
+    fastPathF1uPool: "openshift.io/sriov_vfio_1"
+    # The SR-IOV Device Pool used by f1s networks (fast path), which is backup of fastPathF1uPool
+    # default value is empty, if set this parameter, will enable link redundancy function
+    # Note: must different with fastPathF1uPool
+    fastPathF1uPoolBackup: ""
+    # The SR-IOV Device Pool used by oam/f1c/fhm/twamp networks (slow path)
+    slowPathCommonPool: "openshift.io/sriov_netdevice_1"

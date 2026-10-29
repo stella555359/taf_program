@@ -1,0 +1,63 @@
+# - Override values for deployment in cloud-development environment
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+
+# - Description: Infrasturcture type. Support value: NCIR_CaaS or WebScale_CaaS
+# - Default value: NCIR_CaaS
+cloudInfraType: "WebScale_CaaS"
+
+# NCIR specific parameters
+# Preconditon: tenant's configuration is ready before deploy internal network
+# internal network
+internal:
+  #Description: the master interface of ipvlan, mandatory.
+  #Value range: string, no default value.
+  #Note: This value need to match with the tenant's configuration. eg."ens1f1"
+  hostDevice: "ens1f1"
+
+  #Description: IPv4 allocation pool, mandatory.
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.0/24"
+  cidr: "192.168.1.0/24"
+
+  #Description: IPv4 allocation pool start, optional, must be used together with cidr and allocationPoolEnd.
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.2"
+  allocationPoolStart: "192.168.1.2"
+
+  #Description: IPv4 allocation pool end, optional, must be used together with cidr and allocationPoolStart.
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.254"
+  allocationPoolEnd: "192.168.1.254"
+
+# TPI3 specific parameters
+# - Description: Host VLAN network or Guest VLAN network. Support value: HOST and GUEST
+# - Default value: GUEST
+bipVLANMode: "HOST"
+f1VLANMode: "HOST"
+fhmVLANMode: "HOST"
+fhucVLANMode: "HOST"
+oamVLANMode: "HOST"
+
+# TPI3 specific parameters
+netPF:
+    # - Description: The SR-IOV Device Pool used by f1 and bip networks (fast path) for Guest VLAN (HOST-DPDK binding)
+    commonHostBind: ""
+  # - Description: Device Pool for Host VLAN (Guest Binding) or Slow path
+    common: "intel.com/pci_sriov_net_physnet0"
+    # - Description: The SR-IOV Device Pool used by fhuc network (fast path) for Guest VLAN (HOST-DPDK binding)
+    fhHostBind: ""
+    # - Description: Device Pool for Host VLAN (Guest Binding) or Slow path used by fh
+    fh: "intel.com/pci_sriov_net_physnet1"
+
+# TPI3 Guest VLAN specific parameters
+# Define the VLAN ID for Host VLAN mode
+VLANID:
+  l1bip: "912"
+  l2bip: "913"
+  xpbip: "919"
+  oam: "916"
+  f1: "915"
+  fhm: "295"
+  fhuc: "301"

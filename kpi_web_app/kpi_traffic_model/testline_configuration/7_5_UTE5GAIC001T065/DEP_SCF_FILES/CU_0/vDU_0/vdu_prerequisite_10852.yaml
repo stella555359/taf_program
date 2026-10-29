@@ -1,0 +1,32 @@
+USER-SUPPLIED VALUES:
+aic-intnet:
+  VlanID:
+    f1: "315"
+    f1c: "315"
+    fhm: "295"
+    l2bip: "313"
+    oam: "316"
+  bipVlanMode: GUEST
+  devicePoolList:
+    fastPathBipPool: openshift.io/sriov_vfio_0
+    fastPathF1uPool: openshift.io/sriov_vfio_1
+    fastPathF1uPoolBackup: ""
+    slowPathCommonPool: openshift.io/sriov_netdevice_1
+    slowPathCommonPoolBackup: ""
+  f1VlanMode: GUEST
+  f1cVlanMode: GUEST
+  fhmVlanMode: GUEST
+  oamVlanMode: GUEST
+aic-pvc:
+  pvcName: pvc10852
+global:
+  accessModes: ReadWriteOnce
+  fastPathBipPool: openshift.io/sriov_vfio_0
+  fastPathF1uPool: openshift.io/sriov_vfio_1
+  fastPathF1uPoolBackup: ""
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace
+      }}
+  nodeSelector: {}
+  slowPathCommonPool: openshift.io/sriov_netdevice_1
+  storageClassName: lvms-vg1

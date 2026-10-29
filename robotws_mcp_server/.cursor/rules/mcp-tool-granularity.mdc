@@ -1,0 +1,35 @@
+---
+description: MCP tool design granularity for RobotWS MCP Server
+alwaysApply: true
+---
+
+# MCP Tool Granularity
+
+When designing or implementing MCP tools, split tools by the LLM's query or decision action, not by internal code functions.
+
+Use small, explicit tools with:
+
+- clear input parameters
+- stable structured output
+- one understandable query, explanation, or decision per tool
+- bounded result size
+- actionable error messages
+- composable behavior across tools
+
+Do not expose internal implementation steps as tools unless they are useful decisions for the LLM. Examples that should usually remain internal:
+
+- AST token extraction
+- control wrapper splitting
+- domain inference helper functions
+- record id generation
+- SQLite write helpers
+
+Prefer tools such as:
+
+- `search_layer1_records`
+- `get_testcase_steps`
+- `get_keyword_steps`
+- `get_parse_issues`
+- `explain_allowed_boundary`
+
+Avoid making tools so tiny that the LLM must chain many calls to answer one normal question. A good tool is small enough to be predictable and large enough to return a useful fact.

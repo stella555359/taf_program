@@ -1,0 +1,123 @@
+#APP_SERVER: &APP_SERVER
+#    address: '10.84.168.70'
+#    user: '5g'
+#    password: '5g'
+#    bind_interface_ip: '10.84.169.54'
+
+APP_SERVER: &APP_SERVER1
+    address: '10.84.168.121'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.61'
+
+UE_POOLS:
+  TafUeAndroidPool:
+    inline_config:
+      UE_FOR_TA:
+        CAPABILITIES:
+          - REAL_UE
+          - REAL_ANDROID_UE
+        STARTING_CELL: '19730689'
+        CLASS: AndroidUe
+        CONSTRUCTOR_PARAMETERS:
+          serial_number: 'R5CT51E5Y0W'
+          configuration:
+            ue_pc_address: 'PLKR-SC5G-UE5.intra.noklab.net'
+            login: 'user-lab0'
+            password: 'Bts2003'
+            ue_pc_port: '8080'
+            qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+            diag_cfg_path: 'C:/Users/user-lab0/DIAG.cfg'
+            voice_call_dialing_timeout: '30'
+            network_mode_switch_method: 'adb'
+            data_transfer:
+              iperf:
+                app_server: *APP_SERVER1
+                interface_name: '5gkrk2/rmnet_data'
+                binary_path: '/data/data/com.nokia.android.application/'
+      SM_UE_FOR_TA:
+        CAPABILITIES:
+          - COMMERCIAL
+        STARTING_CELL: '19730433'                  #'19726849'
+        CLASS: AndroidUe
+        CONSTRUCTOR_PARAMETERS:
+          serial_number: 'RFCW11VYG4J'
+          configuration:
+            ue_pc_address: 'PLKR-SC5G-UE5.intra.noklab.net'
+            login: 'user-lab0'
+            password: 'Bts2003'
+            ue_pc_port: '8080'
+            qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+            diag_cfg_path: 'C:/Users/user-lab0/DIAG.cfg'
+            voice_call_dialing_timeout: '30'
+            network_mode_switch_method: 'adb'
+            data_transfer:
+              iperf:
+                app_server: *APP_SERVER1
+                interface_name: '5gkrk2/rmnet_data'
+                binary_path: '/data/data/com.nokia.android.application/'
+
+CELLS:
+    GNB1:
+        CELL11:
+            PCI: 11
+        CELL21:
+            PCI: 21
+        CELL31:
+            PCI: 31
+        CELL32:
+            PCI: 32
+        CELL33:
+            PCI: 33
+        CELL34:
+            PCI: 34
+        CELL41:
+            PCI: 41
+        CELL42:
+            PCI: 42
+        CELL43:
+            PCI: 43
+        CELL44:
+            PCI: 44
+    ENB1:
+        CELL1:
+            CELLID: 19730433
+    ENB2:
+        CELL1:
+            CELLID: 19730689
+
+
+ATTENUATORS:
+    JFW:
+        TYPE: Jfw
+        CONSTRUCTOR_PARAMETERS:
+            ip: '10.255.13.30'
+            port: 3001
+            min_attenuation: 0
+            max_attenuation: 60
+
+CELLS_ATTENUATION:
+    ENB_1_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 1
+            - 2
+    ENB_1_CELL_2:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 3
+            - 4
+    ENB_2_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 5
+            - 6
+    ENB_2_CELL_2:
+      rf_paths_of_cell:
+        - used_attenuator: JFW
+          rf_paths_at_attenuator:
+            - 7
+            - 8

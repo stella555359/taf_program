@@ -1,0 +1,39 @@
+RSI:
+    # LOCALHOST section applies to RMODs that are directly accessible from (connected to) test_vm/test_pc
+    LOCALHOST:
+        RMODs:
+            # In case of MUMIN-USB serial connected RMODs only COM port is needed:
+            COM14: 'AQQA'
+            # In case of MUMIN-ETH telnet <IP:port> is needed:
+#            10.42.0.1:1001: 'AHFIC'
+#            10.42.1.2:1002: 'AREA'
+
+    # Each alias here means separate call to setup_host. Those aliases are arbitrary. They will be used with library
+    # keywords in order to select RMODs connected to external host. See documentation for 'setup_host' keyword
+    # for more details
+    T192:
+        # -------- arguments for setup_host with alias 'T192' ------------------
+        host: '10.42.22.22'
+        user: 'wro5grrm'
+        password: '5gpass!1'
+        port: '9002'
+        remote_dir: 'C:/rsi'
+        python_path: 'python'
+        # ----------------------------------------------------------------------
+        RMODs:
+            # Same rules apply to RMODs section of external host as to localhost above
+            COM14: 'AQQA'
+#            COM13: 'AZHL'
+            192.168.1.200:1002: 'AHFIG'
+
+    T180:
+        host: '10.42.11.11'
+        user: 'ute'
+        password: '****'
+        port: '9002'
+        remote_dir: '/tmp/rsi'
+        python_path: 'python'
+        RMODs:
+            /dev/ttyS3: 'AHFII'
+            /dev/ttyS4: 'AHFII'
+

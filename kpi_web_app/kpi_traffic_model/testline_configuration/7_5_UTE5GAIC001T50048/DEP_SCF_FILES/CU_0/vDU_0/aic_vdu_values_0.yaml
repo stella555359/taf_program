@@ -1,0 +1,17 @@
+global:
+  image:
+    oam:
+      tag: "knife"
+    oamfh:
+      tag: "knife"
+    cprt:
+      tag: "knife"
+
+      
+aic-vdu-oamcp:
+  oam:  
+    capabilities: "\"DAC_OVERRIDE\", \"KILL\", \"SYS_NICE\", \"NET_BIND_SERVICE\", \"IPC_OWNER\", \"SYS_TIME\", \"SYS_RESOURCE\", \"SETUID\", \"SETGID\", \"SYS_ADMIN\", \"NET_RAW\", \"NET_ADMIN\""
+  oamfh:
+    capabilities: "\"DAC_OVERRIDE\", \"KILL\", \"SYS_NICE\", \"SYS_ADMIN\", \"NET_RAW\", \"NET_ADMIN\", \"NET_BIND_SERVICE\""
+  cprt:
+    capabilities: "\"DAC_OVERRIDE\", \"KILL\", \"SYS_NICE\", \"SYS_ADMIN\", \"NET_RAW\", \"NET_ADMIN\", \"NET_BIND_SERVICE\""

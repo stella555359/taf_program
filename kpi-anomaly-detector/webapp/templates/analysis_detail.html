@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ analysis.original_filename }} - KPI Analysis{% endblock %}
+
+{% block content %}
+<main class="page-shell detail-shell" data-analysis-id="{{ analysis.id }}" data-auto-refresh="{{ 'true' if auto_refresh else 'false' }}">
+    <section class="detail-header">
+        <div class="detail-copy">
+            <p class="eyebrow">KPI workspace</p>
+            <h1>{{ analysis.original_filename }}</h1>
+            <p class="hero-text">Analysis id: {{ analysis.id }}</p>
+            {% if analysis.history_context %}
+            <div class="history-tags detail-tags">
+                {% if analysis.history_context.get('environment') %}
+                <span class="history-tag">Environment: {{ analysis.history_context.get('environment') }}</span>
+                {% endif %}
+                {% if analysis.history_context.get('scenario') %}
+                <span class="history-tag">Scenario: {{ analysis.history_context.get('scenario') }}</span>
+                {% endif %}
+                {% if analysis.history_context.get('history_key') %}
+                <span class="history-tag subdued-tag">History group: {{ analysis.history_context.get('history_key') }}</span>
+                {% endif %}
+            </div>
+            {% elif analysis.history_context_failed %}
+            <div class="history-tags detail-tags">
+                <span class="history-tag error-tag">file name incorrect</span>
+            </div>
+            {% endif %}
+            {% if analysis.hidden %}
+            <p class="action-note action-note-hidden">This run is currently hidden from Latest 50 and can be restored from the KPI workspace recycle bin.</p>
+            {% else %}
+            <p class="action-note"><span class="legend-chip legend-hide">Hide</span> keeps files and JSON history. <span class="legend-chip legend-delete">Delete</span> removes both.</p>
+            {% endif %}
+        </div>
+        <div class="detail-actions">
+            <a class="button-link ghost-link" href="{{ url_for('portal.home') }}">Portal home</a>
+            <a class="button-link ghost-link" href="{{ url_for('kpi.index') }}">KPI workspace</a>
+            {% if analysis.report_html_path %}
+            <a class="button-link" href="{{ url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='html', data_script=url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='data')) }}" target="_blank">Open HTML</a>
+            {% endif %}
+            {% if analysis.report_excel_path %}
+            <a class="button-link ghost-link" href="{{ url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='excel') }}">Download Excel</a>
+            {% endif %}
+            {% if analysis.status not in ['queued', 'running'] %}
+            <form class="inline-form" action="{{ url_for('kpi.analysis_rerun', analysis_id=analysis.id) }}" method="post">
+                <input type="hidden" name="return_to" value="detail">
+                <button class="rerun-button" type="submit">Rerun detector</button>
+            </form>
+            <form class="inline-form" action="{{ url_for('kpi.analysis_delete', analysis_id=analysis.id) }}" method="post">
+                <input type="hidden" name="delete_mode" value="soft">
+                <button class="soft-delete-button" type="submit" onclick='return confirm({{ ("Hide " ~ analysis.original_filename ~ " from Latest 50 runs? Files and JSON history will be kept.")|tojson }});'>Hide</button>
+            </form>
+            <form class="inline-form" action="{{ url_for('kpi.analysis_delete', analysis_id=analysis.id) }}" method="post">
+                <input type="hidden" name="delete_mode" value="hard">
+                <button class="delete-button" type="submit" onclick='return confirm({{ ("Delete " ~ analysis.original_filename ~ " and remove its files and JSON history?")|tojson }});'>Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="summary-grid">
+        <article class="summary-card status-card">
+            <p class="card-label">Status</p>
+            <span id="status-chip" class="status-chip status-{{ analysis.status }}">{{ analysis.status }}</span>
+            <dl>
+                <div><dt>Created</dt><dd id="created-at">{{ analysis.created_at }}</dd></div>
+                <div><dt>Started</dt><dd id="started-at">{{ analysis.started_at or '-' }}</dd></div>
+                <div><dt>Completed</dt><dd id="completed-at">{{ analysis.completed_at or '-' }}</dd></div>
+            </dl>
+        </article>
+
+        <article class="summary-card">
+            <p class="card-label">Severity snapshot</p>
+            <dl>
+                <div><dt>Regression</dt><dd id="severity-regression">{{ analysis.stats.get('severity_regression', '-') }}</dd></div>
+                <div><dt>Suspicious</dt><dd id="severity-suspicious">{{ analysis.stats.get('severity_suspicious', '-') }}</dd></div>
+                <div><dt>NoHistory</dt><dd id="severity-nohistory">{{ analysis.stats.get('severity_nohistory', '-') }}</dd></div>
+                <div><dt>Normal</dt><dd id="severity-normal">{{ analysis.stats.get('severity_normal', '-') }}</dd></div>
+            </dl>
+        </article>
+
+        <article class="summary-card">
+            <p class="card-label">Consistency snapshot</p>
+            <dl>
+                <div><dt>Total Codes</dt><dd id="stats-total-codes">{{ analysis.stats.get('total_codes', '-') }}</dd></div>
+                <div><dt>Consistent</dt><dd id="stats-consistent">{{ analysis.stats.get('consistent', '-') }}</dd></div>
+                <div><dt>Inconsistent</dt><dd id="stats-inconsistent">{{ analysis.stats.get('inconsistent', '-') }}</dd></div>
+                <div><dt>Partial Null</dt><dd id="stats-partial-null">{{ analysis.stats.get('partial_null', '-') }}</dd></div>
+            </dl>
+        </article>
+    </section>
+
+    {% if auto_refresh %}
+    <section id="progress-panel" class="progress-panel">
+        <div class="progress-copy">
+            <p class="eyebrow">Running analysis</p>
+            <h2>Result page is waiting for the detector output.</h2>
+            <p class="panel-hint">This page checks the backend every few seconds and refreshes automatically when HTML and Excel artifacts are ready.</p>
+        </div>
+        <div class="progress-pulse" aria-hidden="true"></div>
+    </section>
+    {% else %}
+    <section id="progress-panel" class="progress-panel hidden"></section>
+    {% endif %}
+
+    {% if analysis.error_message %}
+    <section id="error-panel" class="error-panel">
+        <h2>Execution error</h2>
+        <pre id="error-message">{{ analysis.error_message }}</pre>
+    </section>
+    {% else %}
+    <section id="error-panel" class="error-panel hidden">
+        <h2>Execution error</h2>
+        <pre id="error-message"></pre>
+    </section>
+    {% endif %}
+
+    <section id="report-panel" class="report-panel{% if not analysis.report_html_path %} hidden{% endif %}">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Interactive report</p>
+                <h2>Embedded HTML viewer</h2>
+            </div>
+            <p class="panel-hint">The report below is the original detector output.</p>
+        </div>
+        <iframe
+            id="report-frame"
+            class="report-frame"
+            src="{% if analysis.report_html_path %}{{ url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='html', data_script=url_for('kpi.analysis_artifact', analysis_id=analysis.id, artifact_kind='data')) }}{% endif %}"
+            title="KPI analysis report"
+        ></iframe>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function() {
+        const root = document.querySelector('[data-analysis-id]');
+        if (!root || root.dataset.autoRefresh !== 'true') {
+            return;
+        }
+
+        const analysisId = root.dataset.analysisId;
+        const statusChip = document.getElementById('status-chip');
+        const progressPanel = document.getElementById('progress-panel');
+        const reportPanel = document.getElementById('report-panel');
+        const reportFrame = document.getElementById('report-frame');
+        const errorPanel = document.getElementById('error-panel');
+        const errorMessage = document.getElementById('error-message');
+        const fieldMap = {
+            'created-at': 'created_at',
+            'started-at': 'started_at',
+            'completed-at': 'completed_at',
+        };
+        const statsMap = {
+            'severity-regression': 'severity_regression',
+            'severity-suspicious': 'severity_suspicious',
+            'severity-nohistory': 'severity_nohistory',
+            'severity-normal': 'severity_normal',
+            'stats-total-codes': 'total_codes',
+            'stats-consistent': 'consistent',
+            'stats-inconsistent': 'inconsistent',
+            'stats-partial-null': 'partial_null',
+        };
+
+        function updateText(id, value) {
+            const node = document.getElementById(id);
+            if (node) {
+                node.textContent = value || '-';
+            }
+        }
+
+        async function pollStatus() {
+            try {
+                const response = await fetch(`{{ url_for('kpi.analysis_status', analysis_id='__analysis_id__') }}`.replace('__analysis_id__', analysisId), { cache: 'no-store' });
+                if (!response.ok) {
+                    return;
+                }
+
+                const payload = await response.json();
+                statusChip.textContent = payload.status;
+                statusChip.className = `status-chip status-${payload.status}`;
+
+                Object.entries(fieldMap).forEach(([id, key]) => updateText(id, payload[key]));
+                Object.entries(statsMap).forEach(([id, key]) => updateText(id, payload.stats[key]));
+
+                if (payload.status === 'completed') {
+                    progressPanel.classList.add('hidden');
+                    errorPanel.classList.add('hidden');
+                    if (payload.html_url) {
+                        reportPanel.classList.remove('hidden');
+                        if (reportFrame.getAttribute('src') !== payload.html_url) {
+                            reportFrame.setAttribute('src', payload.html_url);
+                        }
+                    }
+                    window.location.reload();
+                    return;
+                }
+
+                if (payload.status === 'failed') {
+                    progressPanel.classList.add('hidden');
+                    errorPanel.classList.remove('hidden');
+                    errorMessage.textContent = payload.error_message || 'Unknown error';
+                    return;
+                }
+
+                window.setTimeout(pollStatus, 3000);
+            } catch (_error) {
+                window.setTimeout(pollStatus, 5000);
+            }
+        }
+
+        window.setTimeout(pollStatus, 3000);
+    })();
+</script>
+{% endblock %}

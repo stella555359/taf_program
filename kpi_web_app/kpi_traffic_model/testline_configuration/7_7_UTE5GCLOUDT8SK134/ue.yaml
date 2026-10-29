@@ -1,0 +1,28 @@
+AppServer1: &APP_1                              # 1st application server definition
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61'              # OPTIONAL ip of interface used for LTE data transfer
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:~$'        # OPTIONAL regex that should match prompt on App Server
+UePC1: &UE_PC_1
+  ue_pc_address: 'PLKR-SG01-06.intra.noklab.net'    # UE PC IP address
+  ue_pc_login: 'NOKLAB\pzkrk'
+  ue_pc_password: 'NokiaBts2003'
+  ue_pc_port: '8080'
+UE_POOLS:
+    TafUeAndroidPool:                                  # Ue Pool class defined by library
+        inline_config:
+            ANDROID_UE_1:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '379af27a'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    server_close_delay: 180
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        << : *UE_PC_1
+                        qualcomm_prototype: True
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: 1

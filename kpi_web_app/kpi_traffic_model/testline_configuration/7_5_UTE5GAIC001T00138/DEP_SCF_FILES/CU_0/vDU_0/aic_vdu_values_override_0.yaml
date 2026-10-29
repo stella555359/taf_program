@@ -1,0 +1,522 @@
+aic-oamasm:
+  coredumppath: ''
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-oamcm:
+  coredumppath: ''
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-oamconfig:
+  coredumppath: ''
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-oamctp:
+  coredumppath: ''
+  nodeSelector: {}
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-oamext:
+  apigw:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  certman:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  cloudInfraType: TPI3
+  coredumppath: ''
+  httpd:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  providercontroller:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  vaultapp:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+aic-oamfh:
+  coredumppath: ''
+  dhcp:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+    service:
+      dhcpServerLocation: internal
+      option43_vendor_specific_information_master_agent_ip: 192.168.254.33
+      option43_vendor_specific_information_port_number: '13001'
+      v4PoolsEnd: 192.168.254.60
+      v4PoolsStart: 192.168.254.34
+      v4Subnet: 192.168.254.0/26
+  nodeSelector: {}
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  vsftp:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+aic-oamfm:
+  coredumppath: ''
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-oampm:
+  coredumppath: ''
+  nodeSelector: {}
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-vdu-cprt:
+  cloudInfraType: TPI3
+  coredumppath: ''
+  cprtnodeAffinityIP: ''
+  givaxi:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+aic-vdu-up:
+  activeSiblingCore: 'true'
+  bipPdumpLogging:
+    persistentVolumeClaim:
+      accessModes: ReadWriteOnce
+      size: '10'
+      storageClassName: localfs-lvm-sc
+  cellFlag: multi
+  cloudInfraType: TPI3
+  coredumppath: ''
+  l1hi:
+    FHP_PRACH_RECEIVE_WIN_WORKAROUND_ENABLE: 'FALSE'
+    activeSiblingCore: 'false'
+    cellFlag: single
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+    fast_cplane_enabled: 'TRUE'
+    fhpconfig:
+      FHP_HOST_VLAN_ENABLE: 'FALSE'
+    l1_default_scs: '30'
+    securityContext:
+      privilegedMode: 'false'
+      runAsGroup: 9999
+      runAsUser: 9999
+  l2hi:
+    activeSiblingCore: 'false'
+    cellFlag: single
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+    securityContext:
+      privilegedMode: 'true'
+      runAsGroup: 9999
+      runAsUser: 9999
+  l2rt:
+    activeSiblingCore: 'false'
+    cellFlag: single
+    dptrace:
+      dump_payload: '0'
+      enable: '0'
+      filter: none:none
+  nftmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  nodeSelector: {}
+  nwmgmt:
+    securityContext:
+      runAsGroup: 9999
+      runAsUser: 9999
+  replicaCount: 1
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  upnodeAffinityIP: ''
+certman-auto-cmp:
+  configuration:
+    cmp:
+      ca_subject_name: null
+      cmp_secret_name: ''
+      ee_subject_fqdn: []
+      ee_subject_ip_addr: []
+      ee_subject_name: null
+      ip: null
+      path: null
+      port: null
+  nodeSelector: {}
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+cloudInfraType: TPI3
+coredumpPath: /tmp/cdump
+global:
+  agentIP: 10.71.177.82
+  cmp_psk: ''
+  cmp_refnum: ''
+  cmp_secret_name: ''
+  cpuDevicePlugin: cpuManager
+  cpuDevicePool:
+    dedicatedCore: cpu
+    sharedCore: cpu
+  custom_extensions:
+    labels: {}
+  deploymentType: OE19
+  devicePoolList:
+    fastPathCommonPool: openshift.io/sriov_vfio_ens1f1
+    fastPathFhPool: openshift.io/sriov_vfio_ens1f1
+    slowPathCommonPool: openshift.io/sriov_netdevice_ens1f1
+    slowPathFhPool: openshift.io/sriov_netdevice_ens1f1
+  externalNetwork:
+    f1:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: 10.71.177.75
+        rangeStart: 10.71.177.75
+        role:
+        - Tracing
+        subnet: 10.71.177.72/29
+        type: physical
+      vlanInfo:
+        vid: 1515
+        vlName: f1uplane
+    f1_op1:
+      ipInfo:
+      - family: ''
+        rangeEnd: ''
+        rangeStart: ''
+        subnet: ''
+        type: physical
+      vlanInfo:
+        vid: ''
+        vlName: f1uplane1
+    f1_op2:
+      ipInfo:
+      - family: ''
+        rangeEnd: ''
+        rangeStart: ''
+        subnet: ''
+        type: physical
+      vlanInfo:
+        vid: ''
+        vlName: f1uplane2
+    f1_op3:
+      ipInfo:
+      - family: ''
+        rangeEnd: ''
+        rangeStart: ''
+        subnet: ''
+        type: physical
+      vlanInfo:
+        vid: ''
+        vlName: f1uplane3
+    f1_op4:
+      ipInfo:
+      - family: ''
+        rangeEnd: ''
+        rangeStart: ''
+        subnet: ''
+        type: physical
+      vlanInfo:
+        vid: ''
+        vlName: f1uplane4
+    f1_op5:
+      ipInfo:
+      - family: ''
+        rangeEnd: ''
+        rangeStart: ''
+        subnet: ''
+        type: physical
+      vlanInfo:
+        vid: ''
+        vlName: f1uplane5
+    f1c:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: 10.71.177.74
+        rangeStart: 10.71.177.74
+        subnet: 10.71.177.72/29
+        type: physical
+      vlanInfo:
+        vid: 1515
+    fhm:
+      ipInfo:
+      - family: IPv4
+        rangeEnd: 192.168.254.33
+        rangeStart: 192.168.254.33
+        role:
+        - fhm
+        subnet: 192.168.254.0/26
+        type: physical
+      vlanInfo:
+        pcp: 2
+        vid: 295
+    fhuc1:
+      vlanInfo:
+        pcp: 7
+        vid: 301
+    fhuc2:
+      vlanInfo:
+        pcp: null
+        vid: null
+    l1bipl1:
+      vlanInfo:
+        vid: 1512
+    l1biprt:
+      vlanInfo:
+        vid: 1512
+    l2biphi:
+      vlanInfo:
+        vid: 1513
+    l2biprt:
+      vlanInfo:
+        vid: 1513
+    oam:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: 10.71.177.82
+        rangeStart: 10.71.177.82
+        role:
+        - oam
+        - certman-server
+        - tracecontroller
+        subnet: 10.71.177.80/29
+        type: physical
+      policyRouteInfo:
+      - gateway: 10.71.177.81
+        orderNumber: '5'
+        table: '2'
+      vlanInfo:
+        vid: 1516
+    tracing:
+      ipInfo:
+      - family: ipv4
+        ipAddress:
+          cprt:
+            rangeEnd: 10.71.177.91
+            rangeStart: 10.71.177.91
+          oamasm:
+            rangeEnd: 10.71.177.95
+            rangeStart: 10.71.177.95
+          oamcm:
+            rangeEnd: 10.71.177.92
+            rangeStart: 10.71.177.92
+          oamconfig:
+            rangeEnd: 10.71.177.96
+            rangeStart: 10.71.177.96
+          oamext:
+            rangeEnd: 10.71.177.90
+            rangeStart: 10.71.177.90
+          oamfh:
+            rangeEnd: 10.71.177.93
+            rangeStart: 10.71.177.93
+          oamfm:
+            rangeEnd: 10.71.177.94
+            rangeStart: 10.71.177.94
+        role:
+        - Tracing
+        subnet: 10.71.177.88/29
+        type: physical
+      policyRouteInfo:
+      - gateway: 10.71.177.89
+        orderNumber: '1000'
+        table: '249'
+      vlanInfo:
+        vid: 1514
+  fecDevicePool:
+    fecVF: intel.com/intel_fec_acc100
+    fecVFNum: '0'
+  fpIfaceBindOnHost: 'true'
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000/cran1
+  ipv6RxUdpZeroChecksum: enabled
+  ipv6TxUdpZeroChecksum: disabled
+  name_convention:
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+  networkInfo:
+    bip:
+      mtu: 1500
+    f1:
+      mtu: 1500
+    f1c:
+      mtu: 1500
+    fhm:
+      mtu: 1500
+    fhuc:
+      mtu: 1500
+    oam:
+      mtu: 1500
+    tracing:
+      mtu: 1500
+  psk:
+    certificatemanagement: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    default_write: DRa3r3CPlocz3P8gUAe5DezHpn+NpZwlZXfIVHlgHxY=
+    httpd: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    ne3sagent: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+    providercontroller: 4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m
+  pvcName: pvct120
+  siteDescription: MRBTS-1234
+  storageClass:
+    accessMode: ReadWriteOnce
+    storageClassName: localfs-lvm-sc
+  timezone: Asia/Shanghai
+  urlNMS: ''
+healing-controller:
+  custom:
+    criticalContainersCauseVNFRestart: []
+    serviceAccount: healing-controller
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    groups: 9999
+    uid: 9999
+  storage:
+    storageClassName: localfs-lvm-sc
+kubeapisymptomdataprovider:
+  nodeSelector: {}
+  podSecurityContext:
+    fsGroup: 9999
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+logservice:
+  nodeSelector: {}
+  podSecurityContext:
+    fsGroup: 9999
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+lwsd:
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    groups: 9999
+    uid: 9999
+pm:
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpfm:
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpsdl:
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    uid: 9999
+rcpum:
+  nodeSelector: {}
+  podSecurityContext:
+    fsGroup: 9999
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+secret-storage-framework:
+  configuration:
+    gid: 9999
+    uid: 9999
+  nodeSelector: {}
+securityContext:
+  gid: 9999
+  groups: 9999
+  uid: 9999
+swm:
+  securityContext:
+    runAsGroup: 9999
+    runAsUser: 9999
+trsconfig:
+  nodeSelector: {}
+  securityContext:
+    gid: 9999
+    uid: 9999

@@ -1,0 +1,36 @@
+vlan:
+  oam: 816
+  f1: 815
+  l1bip: 812
+  l2bip: 813
+  xpbip: 815
+  internal_range: 811-811
+  tracing: 106
+network:
+  # fast path device
+  fastPathCommonPool: openshift.io/sriov_vfio_ens43f0
+
+  #slow path device
+  slowPathCommonPool: openshift.io/sriov_netdevice_ens43f0
+  fastPathRANNICPool: nokia.com/sriov_rinline_up
+  slowPathRANNICPool: nokia.com/sriov_rinline_cp
+  f1usubnet: 10.69.45.168/29
+  f1csubnet: 10.69.45.168/29
+  f1subnet: 10.69.45.168/29
+  oamsubnet: 10.69.45.176/29
+  oam_ordernumber: 5 
+  tracingsubnet: 10.69.45.160/29
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: vdutest
+  fecVFNum: 0
+  timezone: UTC
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+  storage_class_name: lvms-vg1
+  deployment_type: OE20
+  upCellFlag: multi
+  upActiveSiblingCore: false
+oct_server: 10.109.3.195
+cloudRanVersion: 4.0

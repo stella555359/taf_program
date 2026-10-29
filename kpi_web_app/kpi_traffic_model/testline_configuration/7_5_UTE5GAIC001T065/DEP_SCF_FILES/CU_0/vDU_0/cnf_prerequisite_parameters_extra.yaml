@@ -1,0 +1,5 @@
+global:
+  fastPathBipPool: openshift.io/sriov_vfio_0
+  fastPathF1uPool: openshift.io/sriov_vfio_1
+  fastPathF1uPoolBackup: ""
+  slowPathCommonPool: openshift.io/sriov_netdevice_1

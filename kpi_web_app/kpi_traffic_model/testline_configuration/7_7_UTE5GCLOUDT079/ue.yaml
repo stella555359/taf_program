@@ -1,0 +1,45 @@
+pdn_1: &pdn_1
+    entryName: '5gsakrk'           # This field is required, it defines name under which its stored on UE
+    apnName: '5gsakrk'             # This field is required, its the apn address (could be "apn" also)
+    authType: NONE
+    operatorNumeric: '00101'
+    carrierEnabled: True
+    apnType:                        # This field is required, it always has to be list, even if it just one entry. It tells Android what type of APN it is. Here are listed all possible         types: CBS, DEFAULT,DUN, EMERGENCY, FOTA, HIPRI, IA, IMS, MCX, MMS, SUPL, XCAP
+        - IA
+        - DEFAULT
+    protocol: 'IPV4V6'
+    roamingProtocol: 'IPV4V6'
+
+AppServer1: &APP_1
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            ANDROID_UE:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                    - MEDIATEK_UE
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:                                                     # Parameters that will be passed to AndroidUe constructor
+                    serial_number: '0123456789ABCDEF'                                             # UE serial number (can be obtained via 'adb devices'
+                    configuration:
+                        default_pdn_name: 'default'
+                        pdns:                                                   # OPTIONAL
+                            default: *pdn_1
+                        ue_pc_address: 'PLKR-SG07-29.intra.noklab.net'
+                        login: 'pzkrk'                # SSH login to UE PC
+                        password: 'NokiaBts2003'               # SSH pass
+                        data_transfer:                                                      # data transfer protocols
+                            iperf:
+                                interface_name: '5gsakrk/ccmni2'
+                                app_server: *APP_1
+                            ping:
+                                app_server: *APP_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_1

@@ -1,0 +1,216 @@
+<raml xmlns="raml21.xsd" version="2.1">
+<cmData type="plan" scope="changes" name="FHGW-109503">
+<header>
+<log action="create" dateTime="2022-04-25T08:57:52+02:00">Creating 1 MO(s)</log>
+</header>
+<managedObject class="com.nokia.fhgw:CLOCK" version="FHGW24R3_2409_100" distName="FHGW-109503/MNL-1/SYNC-1/CLOCK-1" operation="update">
+<list name="syncInputList">
+<item>
+<p name="syncInputPrio">1</p>
+<p name="syncInputType">2</p>
+<!-- 1:1pps/ToD from Sync Hub Master  2:1pps/ToD from external GNSS receiver 15:TOPP -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:SYNC" version="FHGW24R3_2409_100" distName="FHGW-109503/MNL-1/SYNC-1" operation="update">
+<p name="actEcpriMasterClock">1</p>
+<list name="eCpriMasterPortConfDNList">
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_16</p>
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_17</p>
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_18</p>
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_27</p>
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_32</p>
+<p>FHGW-109503/TNL-1/INTF-frontPanelPort_31</p>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_19/ETHIF-1" operation="update">
+<p name="fecCode">0</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">9000</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+<!-- infra:external -->
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">2112-2116,2121-2121</p>
+<!-- traffic:oam/f1c/f1u/tracing -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_16/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">295-295,301-301</p>
+<!-- RU:fhm/fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_17/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">295-295,301-301</p>
+<!-- RU:fhm/fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_18/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">295-295,301-301</p>
+<!-- RU:fhm/fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_27/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">301-301</p>
+<!-- fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_28/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">301-301</p>
+<!-- fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_29/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">301-301</p>
+<!-- fhuc -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_31/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">1500</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">2112-2116,295-295,2121-2121</p>
+<!-- oam/f1c/f1u/tracing/fhm -->
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:ETHIF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_32/ETHIF-1" operation="update">
+<p name="fecCode">1</p>
+<!-- 0:none; 1:rs  -->
+<p name="mtu">9000</p>
+<list name="switchPort">
+<item>
+<p name="mode">0</p>
+<!-- 0:untagged; 1:tagged -->
+<p name="vlan">""</p>
+<!-- infra external -->
+</item>
+<item>
+<p name="mode">1</p>
+<p name="vlan">2121-2121</p>
+</item>
+</list>
+</managedObject>
+<managedObject class="com.nokia.fhgw:RMOD" version="FHGW24R3_2409_100" distName="FHGW-109503/EQM-1/RMOD-1" operation="create">
+<p name="moduleLocation">HangZhou</p>
+<p name="rmodId">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_1" operation="update">
+<p name="adminState">1</p>
+<!--  0:disabled; 1:enabled  -->
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_19" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_16" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_17" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_18" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_27" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_28" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_29" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_31" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+<managedObject class="com.nokia.fhgw:INTF" version="FHGW24R3_2409_100" distName="FHGW-109503/TNL-1/INTF-frontPanelPort_32" operation="update">
+<p name="adminState">1</p>
+</managedObject>
+</cmData>
+</raml>

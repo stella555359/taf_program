@@ -1,0 +1,9 @@
+aic-vcu-network:
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_ens4f0
+    fastPathDevicePoolBackup: ""
+    slowPathDevicePool: openshift.io/sriov_netdevice_ens4f0
+    slowPathDevicePoolBackup: ""
+global:
+  accessModes: ReadWriteMany
+  storageClassName: ocs-storagecluster-cephfs

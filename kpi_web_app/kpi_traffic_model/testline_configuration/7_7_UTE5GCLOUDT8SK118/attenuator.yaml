@@ -1,0 +1,7 @@
+CELLS_ATTENUATION:
+    GNB_1_CELL_1:
+        - 1
+        - 2
+    GNB_2_CELL_1:
+        - 3
+        - 4

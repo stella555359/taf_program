@@ -1,0 +1,790 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Anomaly Detector{% endblock %}
+
+{% block content %}
+<main class="page-shell module-shell">
+    <section class="detail-panel">
+        <p class="eyebrow">Capability module</p>
+        <h1>{{ module.title }} 🍏</h1>
+        <p class="hero-text">{{ module.summary }}</p>
+        <div class="module-meta">
+            <span class="meta-chip{% if module.repo_exists %} ok-chip{% else %} warn-chip{% endif %}">Repository {{ 'available' if module.repo_exists else 'missing' }}</span>
+            <span class="meta-chip">Mode {{ module.integration_mode }}</span>
+            <span class="meta-chip">Jobs {{ module.job_count }}</span>
+        </div>
+    </section>
+
+    <section class="hero-card">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Start detector job</p>
+                <h2>Upload Excel file</h2>
+            </div>
+        </div>
+        <form id="detector-upload-form" class="upload-form" action="{{ url_for('kpi_detector.submit') }}" method="post" enctype="multipart/form-data">
+            <div class="upload-inline-row">
+                <label class="file-picker file-picker-compact" for="detector-file-input">
+                    <span>Choose files</span>
+                    <input id="detector-file-input" type="file" name="files" accept=".xlsx" multiple required>
+                </label>
+                <button class="button-link" type="submit">Run detector</button>
+            </div>
+            <input id="detector-filename-override-environment" type="hidden" name="filename_override_environment">
+            <input id="detector-filename-override-scenario" type="hidden" name="filename_override_scenario">
+            <label class="bulk-select-all-label">
+                <input type="checkbox" name="is_base_file" value="1">
+                Treat upload as Base file
+            </label>
+            <p class="upload-selection-summary" id="upload-selection-summary">No files selected.</p>
+            <p class="upload-hint upload-hint-small">Base file compares against all history with the same Env and Scenario. Non-base file excludes history from the same Build under the same Env and Scenario before detector comparison.</p>
+            <p class="upload-hint upload-hint-compact">Filename must follow Date_Build_Env_Scenario_otherinfo.xlsx.</p>
+            <div class="naming-rules">
+                <p class="upload-hint upload-hint-small"><strong>Rule:</strong> {{ module.filename_rule_text }}</p>
+                <p class="upload-hint upload-hint-small"><strong>Example:</strong> {{ module.filename_rule_example }}</p>
+                <div class="filename-context filename-rule-chips">
+                    <span class="meta-chip filename-context-chip">Date: first token</span>
+                    <span class="meta-chip filename-context-chip">Build: token block before Env</span>
+                    <span class="meta-chip filename-context-chip">Env: standard Txxx or Txxxx code</span>
+                    <span class="meta-chip filename-context-chip">Scenario: starts at the first UE token and ends before csv</span>
+                    <span class="meta-chip filename-context-chip">otherinfo: first csv token and the rest</span>
+                </div>
+            </div>
+            <div id="detector-filename-override-dialog" class="filename-override-dialog" hidden>
+                <div class="filename-override-card">
+                    <p class="eyebrow">Filename fix</p>
+                    <h3>Provide Env and Scenario</h3>
+                    <p class="upload-hint upload-hint-small">These files do not follow the detector filename rule. Portal will rebuild their names with the Env and Scenario you provide, then send them to detector.</p>
+                    <ul id="detector-invalid-file-list" class="filename-override-list"></ul>
+                    <label class="search-field">
+                        <span>Env</span>
+                        <input id="detector-override-environment-input" type="text" placeholder="T813 or T1234">
+                    </label>
+                    <label class="search-field">
+                        <span>Scenario</span>
+                        <input id="detector-override-scenario-input" type="text" placeholder="7UE_DL_Burst">
+                    </label>
+                    <p id="detector-override-error" class="upload-hint upload-hint-small filename-override-error" hidden>Env and Scenario are required.</p>
+                    <div class="button-row">
+                        <button id="detector-override-confirm" class="button-link" type="button">Continue upload</button>
+                        <button id="detector-override-cancel" class="button-link button-link-secondary" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="table-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Repository binding</p>
+                <h2>kpi-anomaly-detector</h2>
+            </div>
+        </div>
+        <dl class="dashboard-notes compact-dashboard-notes compact-dashboard-notes-2 module-binding-notes">
+            <div>
+                <dt>Repository path / Reports directory</dt>
+                <dd><span class="binding-inline-label">Repo:</span> {{ module.repo_path }} <span class="binding-inline-sep">|</span> <span class="binding-inline-label">Reports:</span> {{ module.reports_path }}</dd>
+            </div>
+            <div>
+                <dt>Available entry files / Execution contract</dt>
+                <dd><span class="binding-inline-label">Entries:</span> {% if module.available_entries %}{{ module.available_entries|join(', ') }}{% else %}No known entry file found{% endif %} <span class="binding-inline-sep">|</span> <span class="binding-inline-label">Exec:</span> <code>{{ sample_command }}</code></dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="table-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recent jobs</p>
+                <h2>Portal job history</h2>
+            </div>
+        </div>
+        <form class="search-form" method="get" action="{{ url_for('kpi_detector.index') }}">
+            <label class="search-field">
+                <span>Search filename or job id</span>
+                <input type="text" name="q" value="{{ filters.q }}" placeholder="xlsx filename or job id">
+            </label>
+            <label class="search-field">
+                <span>Status</span>
+                <select name="status">
+                    <option value="" {% if not filters.status %}selected{% endif %}>All</option>
+                    <option value="queued" {% if filters.status == 'queued' %}selected{% endif %}>Queued</option>
+                    <option value="running" {% if filters.status == 'running' %}selected{% endif %}>Running</option>
+                    <option value="completed" {% if filters.status == 'completed' %}selected{% endif %}>Completed</option>
+                    <option value="failed" {% if filters.status == 'failed' %}selected{% endif %}>Failed</option>
+                </select>
+            </label>
+            <label class="search-field">
+                <span>Release</span>
+                <select name="release" id="filter-release">
+                    <option value="" {% if not filters.release %}selected{% endif %}>All</option>
+                    {% for release in filter_options.releases %}
+                    <option value="{{ release }}" {% if filters.release == release %}selected{% endif %}>{{ release }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label class="search-field">
+                <span>Environment</span>
+                <select name="environment" id="filter-environment">
+                    <option value="" {% if not filters.environment %}selected{% endif %}>All</option>
+                    {% for environment in filter_options.environments %}
+                    <option value="{{ environment }}" {% if filters.environment == environment %}selected{% endif %}>{{ environment }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label class="search-field">
+                <span>Scenario</span>
+                <select name="scenario" id="filter-scenario" data-selected-scenario="{{ filters.scenario }}">
+                    <option value="" {% if not filters.scenario %}selected{% endif %}>All</option>
+                    {% for scenario in filter_options.scenarios %}
+                    <option value="{{ scenario }}" {% if filters.scenario == scenario %}selected{% endif %}>{{ scenario }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button class="button-link" type="submit">Apply filters</button>
+            {% if filters.q or filters.status or filters.release or filters.environment or filters.scenario %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_detector.index') }}">Clear</a>
+            {% endif %}
+        </form>
+        <p class="upload-hint">
+            {% if job_page.total_count %}
+            Showing {{ job_page.page_start }}-{{ job_page.page_end }} of {{ job_page.total_count }} jobs.
+            {% else %}
+            No jobs matched the current filters.
+            {% endif %}
+        </p>
+        {% if jobs %}
+        {% if auto_refresh %}
+        <p class="upload-hint">This page refreshes automatically while queued or running detector jobs are visible.</p>
+        {% endif %}
+        <form id="bulk-action-form" class="bulk-action-form" method="post">
+            <input type="hidden" name="q" value="{{ filters.q }}">
+            <input type="hidden" name="status" value="{{ filters.status }}">
+            <input type="hidden" name="release" value="{{ filters.release }}">
+            <input type="hidden" name="environment" value="{{ filters.environment }}">
+            <input type="hidden" name="scenario" value="{{ filters.scenario }}">
+            <input type="hidden" name="page" value="{{ job_page.current_page }}">
+            <div class="button-row bulk-action-row">
+                <label class="bulk-select-all-label"><input type="checkbox" id="select-all-jobs"> Select all on this page</label>
+                <span class="upload-hint" id="selected-job-count">0 selected</span>
+                <button class="button-link button-link-secondary button-link-compact" type="submit" formaction="{{ url_for('kpi_detector.bulk_rerun') }}">Rerun selected</button>
+                <button class="button-link button-link-danger button-link-compact" type="submit" formaction="{{ url_for('kpi_detector.bulk_delete') }}">Delete selected</button>
+            </div>
+        </form>
+        <div class="table-wrap">
+            <table class="job-list-table job-list-table-detector">
+                <colgroup>
+                    <col class="job-col-select">
+                    <col class="job-col-created">
+                    <col class="job-col-filename">
+                    <col class="job-col-status">
+                    <col class="job-col-platform">
+                    <col class="job-col-regression">
+                    <col class="job-col-suspicious">
+                    <col class="job-col-artifacts">
+                    <col class="job-col-actions">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Created</th>
+                        <th>Filename</th>
+                        <th>Status</th>
+                        <th>Platform state</th>
+                        <th>Regression</th>
+                        <th>Suspicious</th>
+                        <th>Artifacts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr id="job-{{ job.id }}" data-job-id="{{ job.id }}" data-job-status="{{ job.status }}">
+                        <td class="job-select-cell"><input class="job-select-checkbox" type="checkbox" name="job_ids" value="{{ job.id }}" form="bulk-action-form"></td>
+                        <td class="job-created-cell">{{ job.created_at }}</td>
+                        <td class="filename-cell filename-cell-compact">
+                            <a class="text-link filename-link filename-link-compact" href="{{ url_for('kpi_detector.job_detail', job_id=job.id) }}">{{ job.original_filename }}</a>
+                            <div class="job-metadata-grid job-metadata-grid-compact job-metadata-grid-detector-history">
+                                <div class="job-metadata-history-row">
+                                    {% if job.display_environment %}
+                                    <span class="job-metadata-history-label">Env</span>
+                                    <span class="job-metadata-history-value">{{ job.display_environment }}</span>
+                                    {% endif %}
+                                    {% if job.display_build %}
+                                    <span class="job-metadata-history-label">Build</span>
+                                    <span class="job-metadata-history-value job-metadata-history-value-wide">{{ job.display_build }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="job-metadata-history-row">
+                                    {% if job.display_scenario %}
+                                    <span class="job-metadata-history-label">Scenario</span>
+                                    <span class="job-metadata-history-value job-metadata-history-value-wide">{{ job.display_scenario }}</span>
+                                    {% endif %}
+                                    {% if job.is_base_file %}
+                                    <span class="job-metadata-history-label">Role</span>
+                                    <span class="job-metadata-history-value">Base file</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="job-status-cell"><span id="job-status-{{ job.id }}" class="status-chip status-{{ job.status }}">{{ job.status }}</span></td>
+                        <td class="job-platform-cell" id="job-platform-state-{{ job.id }}">
+                            <div class="filename-context">
+                                <span class="meta-chip filename-context-chip">{{ job.platform_recent_stage }}</span>
+                            </div>
+                            <div class="filename-context">{{ job.platform_recent_message }}</div>
+                        </td>
+                        <td class="job-metric-cell job-metric-cell-tight" id="job-regression-{{ job.id }}">{{ job.stats.get('severity_regression', '-') }}</td>
+                        <td class="job-metric-cell job-metric-cell-tight" id="job-suspicious-{{ job.id }}">{{ job.stats.get('severity_suspicious', '-') }}</td>
+                        <td class="job-artifacts-cell job-artifacts-cell-minimal" id="job-artifacts-{{ job.id }}">
+                            {% set history_artifacts = job.history_list_artifacts or [] %}
+                            <div class="job-artifact-summary job-artifact-summary-minimal">
+                                {% if history_artifacts %}
+                                <div class="artifact-links artifact-links-compact history-artifact-links">
+                                    {% for artifact in history_artifacts %}
+                                    <a href="{{ artifact.download_href }}" title="{{ artifact.link_label }}" {% if artifact.open_in_new_tab %}target="_blank"{% endif %}>{{ artifact.link_label }}</a>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div class="job-artifact-count">-</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="job-actions-cell" id="job-actions-{{ job.id }}">
+                            <div class="action-stack">
+                                <form class="inline-form" action="{{ url_for('kpi_detector.rerun', job_id=job.id) }}" method="post">
+                                    <button class="button-link button-link-secondary button-link-compact" type="submit">{% if job.status == 'failed' %}Retry{% else %}Rerun{% endif %}</button>
+                                </form>
+                                {% if job.status in ['queued', 'running'] %}
+                                <form class="inline-form delete-form" action="{{ url_for('kpi_detector.cancel', job_id=job.id) }}" method="post" data-filename="{{ job.original_filename }}" data-action-kind="cancel" onsubmit="return confirm('Cancel running job for file:\n{{ job.original_filename|replace("'", "&#39;") }}\n\nThis will stop the detector process and mark the job as failed.');">
+                                    <input type="hidden" name="q" value="{{ filters.q }}">
+                                    <input type="hidden" name="status" value="{{ filters.status }}">
+                                    <input type="hidden" name="release" value="{{ filters.release }}">
+                                    <input type="hidden" name="environment" value="{{ filters.environment }}">
+                                    <input type="hidden" name="scenario" value="{{ filters.scenario }}">
+                                    <input type="hidden" name="page" value="{{ job_page.current_page }}">
+                                    <button class="button-link button-link-secondary button-link-compact" type="submit">Cancel</button>
+                                </form>
+                                {% endif %}
+                                <form class="inline-form delete-form" action="{{ url_for('kpi_detector.delete', job_id=job.id) }}" method="post" data-filename="{{ job.original_filename }}" data-action-kind="delete">
+                                    <input type="hidden" name="q" value="{{ filters.q }}">
+                                    <input type="hidden" name="status" value="{{ filters.status }}">
+                                    <input type="hidden" name="release" value="{{ filters.release }}">
+                                    <input type="hidden" name="environment" value="{{ filters.environment }}">
+                                    <input type="hidden" name="scenario" value="{{ filters.scenario }}">
+                                    <input type="hidden" name="page" value="{{ job_page.current_page }}">
+                                    <button class="button-link button-link-danger button-link-compact" type="submit" {% if job.status in ['queued', 'running'] %}disabled{% endif %}>Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if job_page.total_pages > 1 %}
+        <nav class="pagination" aria-label="Job history pagination">
+            {% if job_page.current_page > 1 %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_detector.index', q=filters.q, status=filters.status, release=filters.release, environment=filters.environment, scenario=filters.scenario, page=job_page.current_page - 1) }}">Previous</a>
+            {% else %}
+            <span class="action-disabled">Previous</span>
+            {% endif %}
+            <div class="page-number-list">
+                {% for page_number in page_numbers %}
+                    {% if page_number == job_page.current_page %}
+                    <span class="page-number current">{{ page_number }}</span>
+                    {% else %}
+                    <a class="page-number" href="{{ url_for('kpi_detector.index', q=filters.q, status=filters.status, release=filters.release, environment=filters.environment, scenario=filters.scenario, page=page_number) }}">{{ page_number }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% if job_page.current_page < job_page.total_pages %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_detector.index', q=filters.q, status=filters.status, release=filters.release, environment=filters.environment, scenario=filters.scenario, page=job_page.current_page + 1) }}">Next</a>
+            {% else %}
+            <span class="action-disabled">Next</span>
+            {% endif %}
+            <form class="page-jump-form" method="get" action="{{ url_for('kpi_detector.index') }}">
+                <input type="hidden" name="q" value="{{ filters.q }}">
+                <input type="hidden" name="status" value="{{ filters.status }}">
+                <input type="hidden" name="release" value="{{ filters.release }}">
+                <input type="hidden" name="environment" value="{{ filters.environment }}">
+                <input type="hidden" name="scenario" value="{{ filters.scenario }}">
+                <label class="search-field page-jump-field">
+                    <span>Go to page</span>
+                    <input type="number" name="page" min="1" max="{{ job_page.total_pages }}" value="{{ job_page.current_page }}">
+                </label>
+                <button class="button-link button-link-secondary" type="submit">Go</button>
+            </form>
+        </nav>
+        {% endif %}
+        {% else %}
+        <p class="hero-text">No Portal-triggered detector jobs yet.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var fileInput = document.getElementById('detector-file-input');
+        var uploadForm = document.getElementById('detector-upload-form');
+        var uploadSummary = document.getElementById('upload-selection-summary');
+        var overrideEnvironmentField = document.getElementById('detector-filename-override-environment');
+        var overrideScenarioField = document.getElementById('detector-filename-override-scenario');
+        var overrideDialog = document.getElementById('detector-filename-override-dialog');
+        var overrideInvalidFileList = document.getElementById('detector-invalid-file-list');
+        var overrideEnvironmentInput = document.getElementById('detector-override-environment-input');
+        var overrideScenarioInput = document.getElementById('detector-override-scenario-input');
+        var overrideError = document.getElementById('detector-override-error');
+        var overrideConfirmButton = document.getElementById('detector-override-confirm');
+        var overrideCancelButton = document.getElementById('detector-override-cancel');
+        var releaseSelect = document.getElementById('filter-release');
+        var environmentSelect = document.getElementById('filter-environment');
+        var scenarioSelect = document.getElementById('filter-scenario');
+        var scenarioMap = {{ filter_options.scenario_map|tojson }};
+        var validateUploadUrl = {{ url_for('kpi_detector.validate_upload_filenames')|tojson }};
+        var restoreFlagKey = 'kpi-detector-list-restore';
+        var restoreScrollKey = 'kpi-detector-list-scroll-y';
+        var currentPathKey = 'kpi-detector-list-path';
+        var selectAllJobs = document.getElementById('select-all-jobs');
+        var jobCheckboxes = Array.prototype.slice.call(document.querySelectorAll('.job-select-checkbox'));
+        var selectedJobCount = document.getElementById('selected-job-count');
+        var filterState = {
+            q: {{ filters.q|tojson }},
+            status: {{ filters.status|tojson }},
+            release: {{ filters.release|tojson }},
+            environment: {{ filters.environment|tojson }},
+            scenario: {{ filters.scenario|tojson }},
+            page: {{ job_page.current_page|tojson }}
+        };
+        var jobStatusUrlTemplate = {{ url_for('kpi_detector.job_status', job_id='__JOB_ID__')|tojson }};
+        var jobDetailUrlTemplate = {{ url_for('kpi_detector.job_detail', job_id='__JOB_ID__')|tojson }};
+        var rerunUrlTemplate = {{ url_for('kpi_detector.rerun', job_id='__JOB_ID__')|tojson }};
+        var cancelUrlTemplate = {{ url_for('kpi_detector.cancel', job_id='__JOB_ID__')|tojson }};
+        var deleteUrlTemplate = {{ url_for('kpi_detector.delete', job_id='__JOB_ID__')|tojson }};
+
+        function submitUploadForm() {
+            if (!uploadForm) {
+                return;
+            }
+            HTMLFormElement.prototype.submit.call(uploadForm);
+        }
+
+        function clearFilenameOverrides() {
+            if (overrideEnvironmentField) {
+                overrideEnvironmentField.value = '';
+            }
+            if (overrideScenarioField) {
+                overrideScenarioField.value = '';
+            }
+        }
+
+        function closeOverrideDialog() {
+            if (!overrideDialog) {
+                return;
+            }
+            overrideDialog.hidden = true;
+            if (overrideError) {
+                overrideError.hidden = true;
+            }
+        }
+
+        function openOverrideDialog(invalidFilenames) {
+            if (!overrideDialog || !overrideInvalidFileList) {
+                return;
+            }
+
+            overrideInvalidFileList.innerHTML = invalidFilenames.map(function (filename) {
+                return '<li>' + escapeHtml(filename) + '</li>';
+            }).join('');
+            if (overrideError) {
+                overrideError.hidden = true;
+            }
+            overrideDialog.hidden = false;
+            if (overrideEnvironmentInput) {
+                overrideEnvironmentInput.focus();
+            }
+        }
+
+        function updateUploadSummary() {
+            if (!fileInput || !uploadSummary) {
+                return;
+            }
+
+            var files = Array.prototype.slice.call(fileInput.files || []);
+            if (!files.length) {
+                uploadSummary.textContent = 'No files selected.';
+                return;
+            }
+
+            var names = files.slice(0, 3).map(function (file) { return file.name; });
+            var summary = 'Selected ' + files.length + ' file' + (files.length === 1 ? '' : 's') + ': ' + names.join(', ');
+            if (files.length > 3) {
+                summary += ' ...';
+            }
+            uploadSummary.textContent = summary;
+        }
+
+        function updateSelectedJobCount() {
+            if (!selectedJobCount) {
+                return;
+            }
+
+            var checked = jobCheckboxes.filter(function (checkbox) {
+                return checkbox.checked;
+            }).length;
+            selectedJobCount.textContent = checked + ' selected';
+
+            if (selectAllJobs) {
+                selectAllJobs.checked = !!jobCheckboxes.length && checked === jobCheckboxes.length;
+                selectAllJobs.indeterminate = checked > 0 && checked < jobCheckboxes.length;
+            }
+        }
+
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                clearFilenameOverrides();
+                closeOverrideDialog();
+                updateUploadSummary();
+            });
+            updateUploadSummary();
+        }
+
+        if (overrideConfirmButton) {
+            overrideConfirmButton.addEventListener('click', function () {
+                var environmentValue = overrideEnvironmentInput ? overrideEnvironmentInput.value.trim() : '';
+                var scenarioValue = overrideScenarioInput ? overrideScenarioInput.value.trim() : '';
+                if (!environmentValue || !scenarioValue) {
+                    if (overrideError) {
+                        overrideError.hidden = false;
+                    }
+                    return;
+                }
+
+                if (overrideEnvironmentField) {
+                    overrideEnvironmentField.value = environmentValue;
+                }
+                if (overrideScenarioField) {
+                    overrideScenarioField.value = scenarioValue;
+                }
+                closeOverrideDialog();
+                submitUploadForm();
+            });
+        }
+
+        if (overrideCancelButton) {
+            overrideCancelButton.addEventListener('click', function () {
+                clearFilenameOverrides();
+                closeOverrideDialog();
+            });
+        }
+
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', function (event) {
+                if (!fileInput || !fileInput.files || !fileInput.files.length) {
+                    return;
+                }
+
+                if ((overrideEnvironmentField && overrideEnvironmentField.value) || (overrideScenarioField && overrideScenarioField.value)) {
+                    return;
+                }
+
+                event.preventDefault();
+                var filenames = Array.prototype.slice.call(fileInput.files).map(function (file) {
+                    return file.name;
+                });
+
+                fetch(validateUploadUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ filenames: filenames })
+                })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('validation request failed');
+                        }
+                        return response.json();
+                    })
+                    .then(function (payload) {
+                        var invalidFilenames = Array.isArray(payload.invalid_filenames) ? payload.invalid_filenames : [];
+                        if (!invalidFilenames.length) {
+                            submitUploadForm();
+                            return;
+                        }
+                        openOverrideDialog(invalidFilenames);
+                    })
+                    .catch(function () {
+                        submitUploadForm();
+                    });
+            });
+        }
+
+        if (selectAllJobs) {
+            selectAllJobs.addEventListener('change', function () {
+                jobCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAllJobs.checked;
+                });
+                updateSelectedJobCount();
+            });
+        }
+
+        jobCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', updateSelectedJobCount);
+        });
+        updateSelectedJobCount();
+
+        function activeRowIds() {
+            return Array.prototype.slice.call(document.querySelectorAll('tr[data-job-id]')).filter(function (row) {
+                var status = row.getAttribute('data-job-status') || '';
+                return status === 'queued' || status === 'running';
+            }).map(function (row) {
+                return row.getAttribute('data-job-id');
+            }).filter(function (jobId) {
+                return !!jobId;
+            });
+        }
+
+        function updateJobCell(id, value) {
+            var node = document.getElementById(id);
+            if (node) {
+                node.textContent = value == null || value === '' ? '-' : value;
+            }
+        }
+
+        function escapeHtml(text) {
+            return String(text == null ? '' : text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function hiddenFieldsHtml() {
+            return [
+                '<input type="hidden" name="q" value="' + escapeHtml(filterState.q) + '">',
+                '<input type="hidden" name="status" value="' + escapeHtml(filterState.status) + '">',
+                '<input type="hidden" name="release" value="' + escapeHtml(filterState.release) + '">',
+                '<input type="hidden" name="environment" value="' + escapeHtml(filterState.environment) + '">',
+                '<input type="hidden" name="scenario" value="' + escapeHtml(filterState.scenario) + '">',
+                '<input type="hidden" name="page" value="' + escapeHtml(filterState.page) + '">'
+            ].join('');
+        }
+
+        function urlForJob(template, jobId) {
+            return template.replace('__JOB_ID__', jobId);
+        }
+
+        function artifactUrl(template, jobId, version) {
+            return urlForJob(template, jobId).replace('__VERSION__', encodeURIComponent(version || jobId));
+        }
+
+        function renderArtifacts(jobId, payload) {
+            var node = document.getElementById('job-artifacts-' + jobId);
+            if (!node) {
+                return;
+            }
+
+            var links = (payload.history_list_artifacts || []).map(function (artifact) {
+                return '<a href="' + escapeHtml(artifact.download_href || '#') + '"' + (artifact.open_in_new_tab ? ' target="_blank"' : '') + '>' + escapeHtml(artifact.link_label || 'artifact') + '</a>';
+            });
+
+            var html = '<div class="job-artifact-summary job-artifact-summary-minimal">';
+            if (links.length) {
+                html += '<div class="artifact-links artifact-links-compact history-artifact-links">' + links.join('') + '</div>';
+            } else {
+                html += '<div class="job-artifact-count">-</div>';
+            }
+            html += '</div>';
+            node.innerHTML = html;
+        }
+
+        function renderPlatformState(jobId, payload) {
+            var node = document.getElementById('job-platform-state-' + jobId);
+            if (!node) {
+                return;
+            }
+            var stage = escapeHtml(payload.platform_recent_stage || payload.progress_stage || payload.status || '-');
+            var message = escapeHtml(payload.platform_recent_message || payload.progress_message || '-');
+            node.innerHTML = '<div class="filename-context"><span class="meta-chip filename-context-chip">' + stage + '</span></div><div class="filename-context">' + message + '</div>';
+        }
+
+        function renderActions(jobId, payload) {
+            var node = document.getElementById('job-actions-' + jobId);
+            if (!node) {
+                return;
+            }
+
+            var status = payload.status || '';
+            var filename = escapeHtml(payload.original_filename || 'this file');
+            var hiddenFields = hiddenFieldsHtml();
+            var rerunLabel = status === 'failed' ? 'Retry' : 'Rerun';
+            var html = '';
+
+            html += '<div class="action-stack">';
+            html += '<form class="inline-form" action="' + escapeHtml(urlForJob(rerunUrlTemplate, jobId)) + '" method="post">';
+            html += '<button class="button-link button-link-secondary button-link-compact" type="submit">' + rerunLabel + '</button>';
+            html += '</form>';
+
+            if (status === 'queued' || status === 'running') {
+                html += '<form class="inline-form delete-form" action="' + escapeHtml(urlForJob(cancelUrlTemplate, jobId)) + '" method="post" data-filename="' + filename + '" data-action-kind="cancel" onsubmit="return confirm(\'Cancel running job for file:\\n' + filename + '\\n\\nThis will stop the detector process and mark the job as failed.\');">';
+                html += hiddenFields;
+                html += '<button class="button-link button-link-secondary button-link-compact" type="submit">Cancel</button>';
+                html += '</form>';
+            }
+
+            html += '<form class="inline-form delete-form" action="' + escapeHtml(urlForJob(deleteUrlTemplate, jobId)) + '" method="post" data-filename="' + filename + '" data-action-kind="delete">';
+            html += hiddenFields;
+            html += '<button class="button-link button-link-danger button-link-compact" type="submit"' + ((status === 'queued' || status === 'running') ? ' disabled' : '') + '>Delete</button>';
+            html += '</form>';
+            html += '</div>';
+
+            node.innerHTML = html;
+        }
+
+        function updateJobRow(jobId, payload) {
+            var row = document.getElementById('job-' + jobId);
+            var statusNode = document.getElementById('job-status-' + jobId);
+            if (!row || !statusNode) {
+                return;
+            }
+
+            var status = payload.status || '';
+            row.setAttribute('data-job-status', status);
+            statusNode.textContent = status || '-';
+            statusNode.className = 'status-chip status-' + status;
+            renderPlatformState(jobId, payload);
+            updateJobCell('job-regression-' + jobId, payload.stats && payload.stats.severity_regression);
+            updateJobCell('job-suspicious-' + jobId, payload.stats && payload.stats.severity_suspicious);
+            renderArtifacts(jobId, payload);
+            renderActions(jobId, payload);
+        }
+
+        function pollVisibleJobs() {
+            var jobIds = activeRowIds();
+            if (!jobIds.length) {
+                return;
+            }
+
+            Promise.all(jobIds.map(function (jobId) {
+                return fetch(urlForJob(jobStatusUrlTemplate, jobId), { cache: 'no-store' })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Request failed');
+                        }
+                        return response.json();
+                    })
+                    .then(function (payload) {
+                        updateJobRow(jobId, payload);
+                    })
+                    .catch(function () {
+                        return null;
+                    });
+            })).finally(function () {
+                if (activeRowIds().length) {
+                    window.setTimeout(pollVisibleJobs, 5000);
+                }
+            });
+        }
+
+        {% if auto_refresh %}
+        window.setTimeout(pollVisibleJobs, 3000);
+        {% endif %}
+
+        function resolveScenarioKey(releaseValue, environmentValue) {
+            var candidates = [
+                (releaseValue || '*') + '::' + (environmentValue || '*'),
+                releaseValue ? (releaseValue + '::*') : '',
+                environmentValue ? ('*::' + environmentValue) : '',
+                '*::*'
+            ];
+
+            for (var i = 0; i < candidates.length; i += 1) {
+                if (candidates[i] && scenarioMap[candidates[i]]) {
+                    return candidates[i];
+                }
+            }
+
+            return '*::*';
+        }
+
+        function renderScenarioOptions(releaseValue, environmentValue, selectedScenario) {
+            if (!scenarioSelect) {
+                return;
+            }
+
+            var allOption = document.createElement('option');
+            allOption.value = '';
+            allOption.textContent = 'All';
+
+            var scenarios = (scenarioMap[resolveScenarioKey(releaseValue, environmentValue)] || []).slice().sort();
+
+            scenarioSelect.innerHTML = '';
+            if (!selectedScenario) {
+                allOption.selected = true;
+            }
+            scenarioSelect.appendChild(allOption);
+
+            scenarios.forEach(function (scenarioValue) {
+                var option = document.createElement('option');
+                option.value = scenarioValue;
+                option.textContent = scenarioValue;
+                if (selectedScenario === scenarioValue) {
+                    option.selected = true;
+                }
+                scenarioSelect.appendChild(option);
+            });
+
+            if (selectedScenario && scenarios.indexOf(selectedScenario) === -1) {
+                scenarioSelect.value = '';
+            }
+        }
+
+        if (releaseSelect && environmentSelect && scenarioSelect) {
+            renderScenarioOptions(releaseSelect.value, environmentSelect.value, scenarioSelect.getAttribute('data-selected-scenario') || '');
+            releaseSelect.addEventListener('change', function () {
+                renderScenarioOptions(releaseSelect.value, environmentSelect.value, '');
+            });
+            environmentSelect.addEventListener('change', function () {
+                renderScenarioOptions(releaseSelect.value, environmentSelect.value, '');
+            });
+        }
+
+        if (sessionStorage.getItem(restoreFlagKey) === '1' && sessionStorage.getItem(currentPathKey) === window.location.pathname + window.location.search) {
+            var scrollY = parseInt(sessionStorage.getItem(restoreScrollKey) || '0', 10);
+            window.requestAnimationFrame(function () {
+                window.scrollTo({ top: scrollY, behavior: 'auto' });
+            });
+            sessionStorage.removeItem(restoreFlagKey);
+            sessionStorage.removeItem(restoreScrollKey);
+            sessionStorage.removeItem(currentPathKey);
+        }
+
+        document.addEventListener('submit', function (event) {
+            var form = event.target;
+            if (!form || !form.classList || !form.classList.contains('delete-form')) {
+                return;
+            }
+
+            if ((form.getAttribute('data-action-kind') || '') === 'cancel') {
+                return;
+            }
+
+            var filename = form.getAttribute('data-filename') || 'this file';
+            var confirmed = window.confirm('Delete job for file:\n' + filename + '\n\nThis will remove the Portal record and related history data.');
+            if (!confirmed) {
+                event.preventDefault();
+                return;
+            }
+
+            sessionStorage.setItem(restoreFlagKey, '1');
+            sessionStorage.setItem(restoreScrollKey, String(window.scrollY || window.pageYOffset || 0));
+            sessionStorage.setItem(currentPathKey, window.location.pathname + window.location.search);
+        });
+    })();
+</script>
+{% endblock %}

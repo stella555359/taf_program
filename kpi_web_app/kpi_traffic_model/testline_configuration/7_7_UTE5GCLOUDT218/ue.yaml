@@ -1,0 +1,41 @@
+APP_SERVER: &APP_SERVER
+    ssh:
+        host: '10.83.249.131'
+        user: '5g' #'pubs'
+        password: '5g' #'emssim4Nokia#'
+    lte_network_ip: '10.83.249.161'
+    iperf_interface_ip: '10.83.249.161'
+
+UE_POOLS:
+    QualcommUePool:
+        inline_config:
+            UE_1:                            # UE_PC_50_UE - UE name
+                CAPABILITIES:                      # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_QUALCOMM_UE
+                STARTING_CELL: 0x1258F64  #19238756
+                CLASS: QualcommUe                        # UE type.
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'c01258a'
+                    configuration:
+                        ue_pc_host: 'plkr-sc5g-pc54.intra.noklab.net'  #change
+                        ue_pc_ip: '10.83.178.211'         # UE PC IP address
+                        port_dict:                         # Dictionary containing ports that the UePcServer uses for QXDM control
+                            heartbeat: 6005               # Port for heartbeat messages
+                            server_command_input: 6007    # Port for command input
+                            server_qxdm_messages: 6008    # Port for QXDM messages output
+                            server_command_output: 6009    # Port for server command output
+                            message_stream_port: 6010
+                        login: 'user-lab0'
+                        password: 'Bts2003'
+                        qxdm_version: 5
+                        licence_type: '5G'
+                        attach_type: 'NSA'
+                        starting_5g_cell_id: 1230848001
+                        voice_call_technology_timeout: '65'
+                        com_port: 7
+                        ue_type: 'ANDROID'
+                        iperf_adb_dir: 'su 0 /data/data/com.nokia.android.application/iperf'
+                        data_transfer: *APP_SERVER
+
+

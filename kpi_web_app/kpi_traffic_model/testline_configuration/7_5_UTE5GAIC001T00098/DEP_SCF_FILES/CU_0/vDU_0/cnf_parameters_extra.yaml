@@ -1,0 +1,11 @@
+global:
+  fhmSiso: switch-network
+  image:
+    autoGetSecret: true
+  externalNetwork:
+    ahm-0:
+      fhuc:
+      - vlName: fhucplane01
+        defaultUnderlyingIface: ecpri4
+        vid: 301
+        pcp: 7

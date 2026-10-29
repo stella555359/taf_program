@@ -1,0 +1,69 @@
+schemaVersion: 4.0.1
+FHGW:
+    fhgwId: 5709
+    fhgwName: FHGW-5709
+    hostname: "controller"
+TIME:
+    fhgwTimezone: "Europe/Helsinki"
+USERS:
+    adminPassword: "$1$J8k5aLu5$vhl1J3d0ekBcbos3XwPfk1"
+    rootPassword: "$1$6vfgeYys$Fx3CSTNjKYyMaiACHtc.p."
+    admin_user_name: "_nokfhgwoperator"
+    admin_user_fallback_password_plain: root
+    admin_user_password_plain: root
+    root_password_plain: root
+    nemuadmin_user_name: "Nemuadmin"
+    nemuadmin_password_plain: "CsvEspoo@21"
+    sftp_user_name: "fhgwsftpuser"
+    sftp_user_password: "CsvEspoo@21"
+
+NETWORKING:
+    dnsServer: "10.158.51.11"
+    INTERNAL_NET:
+        vlanIdRangeStart: "4000"
+        vlanIdRangeEnd: "4095"
+    EXTERNAL_NET:
+        NET_DOMAINS:
+            NET_MANAGEMENT:
+                OAM:
+                    ETHIF:
+                        ethIfName: eth0
+                        mtu: 1500
+                    IPADDRESSV4:
+                        ipAddress: 10.16.46.245
+                        ipPrefixLength: 29
+                    ROUTE:
+                        staticRoute-1:
+                            destIpAddress: 0.0.0.0
+                            destIpPrefixLength: 24
+                            gateway: "10.16.46.241"
+
+    L2SWI:
+        PORT:
+            speed: "10G"
+            autoNeg: "Disabled"
+            fec: none
+
+CAAS:
+    HELM:
+        registryURL: "https://bhisoj70.apac.nsn-net.net/artifactory/fhgw-ci-helm-virtual"
+        encryptedCACert: None
+
+    DOCKER:
+        registryURL: "fhgw-ci-docker-local.bhisoj70.apac.nsn-net.net"
+        encryptedCACert: None
+
+NMS:
+    tlsMode: "false"
+
+NET_INFRA:
+    BMC:
+        mtu: 1500
+        IPADDRESSV4:
+            ipAddress: "10.16.46.243"
+            ipPrefixLength: None
+        ROUTE:
+            staticRoute-1:
+                destIpAddress: None
+                destIpPrefixLength: None
+                gateway: None

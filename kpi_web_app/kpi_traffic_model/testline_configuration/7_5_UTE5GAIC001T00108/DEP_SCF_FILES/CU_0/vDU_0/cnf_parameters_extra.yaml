@@ -1,0 +1,48 @@
+global:
+  externalNetwork:
+    f1:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.162.203'
+        rangeStart: '10.71.162.203'
+        subnet: '10.71.162.200/29'
+        type: physical
+    f1c:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.162.202'
+        rangeStart: '10.71.162.202'
+        subnet: '10.71.162.200/29'
+        type: physical
+    oam:
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.162.210'
+        rangeStart: '10.71.162.210'
+        role:
+        - oam
+        - certman-server
+        subnet: '10.71.162.208/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.162.209'
+        orderNumber: '5'
+        table: '2'
+    tracing:
+      ipInfo:
+      - family: ipv4
+        ipAddress:
+          cprt:
+            rangeEnd: '10.71.162.218'
+            rangeStart: '10.71.178.218'
+          oam:
+            rangeEnd: '10.71.162.219'
+            rangeStart: '10.71.162.219'
+        role:
+        - Tracing
+        subnet: '10.71.162.216/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.62.217'
+        orderNumber: '1000'
+        table: '3'

@@ -1,0 +1,9 @@
+CELLS:
+    GN1:
+        CELL1:
+            PCI: 118
+            NRCELLID: 1281523712
+    GN2:
+        CELL1:
+            PCI: 119
+            NRCELLID: 1281540096

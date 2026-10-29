@@ -1,0 +1,33 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:                                    
+                CAPABILITIES:                             
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 
+                CLASS: QualcommUe
+                CONSTRUCTOR_PARAMETERS:                   
+                    serial_number: ''           
+                    configuration:                        
+                        ue_pc_ip: '10.28.1.137'           
+                        pyro_port: '5059'                 
+                        login: 'ftps5g'                     
+                        password: 'Fr@TelS6'              
+                        server_dir: 'c:/pyro_server'      
+                        server_python: 'c:/Python27/python.exe'     
+                        qcat_exe_path: 'c:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    
+                        diag_cfg_path: 'c:/pyro_server/DIAG_5G.cfg'         
+                        data_transfer:                    
+                            ssh:
+                                host: '10.14.42.162'       
+                                user: 'lscore'             
+                                password: 'LScore123!'      
+                            iperf_interface_ip: '10.14.42.162'         
+                            iperf_options:
+                                packet: '1300'
+                            iperf_interval: '1'           
+                            ping:
+                                ping_host_ip: '10.14.42.162' 
+                                ping_count: '10'            
+                                allowed_packet_loss: '5'    

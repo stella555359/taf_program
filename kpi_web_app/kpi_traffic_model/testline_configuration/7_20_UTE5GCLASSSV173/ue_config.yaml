@@ -1,0 +1,48 @@
+AppServer1: &APP_SERVER_1                              # 1st application server definition - iperf
+   address: '10.0.106.35'
+   user: 'ran5g'
+   password: 'nokia2018'
+   bind_interface_ip: '10.11.70.178'              # OPTIONAL ip of interface used for LTE data transfer
+   expected_prompt: ':~\$'
+ 
+pdn_1: &pdn_1
+    entryName: 'testparis1'
+    apnName: 'testparis1'
+    authType: NONE
+    carrierEnabled: True
+    operatorNumeric: '54001'
+    apnType:
+        - DEFAULT
+    protocol: 'IPV4'
+    roamingProtocol: 'IPV4'
+ 
+UE_POOLS:    
+    TafUeAndroidPool:                         # Ue Pool class defined by library (AtCmdUePool is no longer supported !!!)
+        inline_config:
+            ANDROID_UE_1:                        # UE name
+                CAPABILITIES:            # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:  # Parameters that will be passed to AtCmdUe constructor when Ue instance is created.
+                    serial_number: 'c1396f2f'                               # OPTIONAL, UE serial number used by data transfer (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:
+                        ue_pc_address: '10.0.117.94'                      # UE PC domain address or IP
+                        ue_pc_port: 80                                        # OPTIONAL, default is 80
+                        imei: '351602005828775'
+                        imsi: '540019000000449'
+                        phone_number: '+358480500013'
+                        data_transfer:                                        # data transfer protocols
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                version: 2
+                                binary_path: ''
+                                dt_from_uepc: False                            # OPTIONAL, default is False, if True dt is run from interface on ue pc                             
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1     
+                        pdns:
+                            default: *pdn_1
+                            

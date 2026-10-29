@@ -1,0 +1,239 @@
+import os
+from taf.config.testline.connection_details import (
+    SshServiceDetails,
+    HttpConnectionDetails,
+    IperfDataTransferDetails,
+    TelnetConnectionDetails,
+)
+from taf.config.testline.testpc import TestPc
+from taf.config.testline.core import RealCore
+from taf.config.testline.gnb.du import DU
+from taf.config.testline.pdu import FACOM, PduPort, Pdu, EPC, ATEN, RRB, APC, Gude, HBTE
+from taf.config.testline.testline import TestLine
+from taf.config.testline.gnb import CU, ClassicalBts
+from taf.config.testline.airscale import Airscale, CommonUnit, CapacityUnit
+from taf.config.testline.ue import (
+    AirphoneCloud,
+    Airphone,
+    Prisma,
+    TM500,
+    Qualcomm,
+    QualcommUeType,
+    Android,
+)  # added in taf.meta.5.4
+from taf.config.testline.enb import (
+    Enb,
+    SimEnb,
+    RealEnb,
+    LTEEmuEnb,
+    PrismaEnb,
+    DocomoEnb,
+)
+from taf.config.testline.attenuator import (
+    AttenuationPort,
+    TopYoung,
+)  # added in taf.meta 5.4
+from taf.config.testline.gnb.networkaddress import NetworkAddress  # add in taf.meta 5.4
+from taf.config.testline.radio import (
+    RadioTypes,
+    SCRadioTypes,
+    RU,
+    SC5GRadio,
+    SC4GRadio,
+    RadioModule,
+)
+from taf.config.testline.hardware_controller import (
+    AmiaFanHardwareController,
+    GPSPowerHardwareController,
+)
+from taf.config.testline.signal_analyzer import KeysightN9935A
+from taf.config.testline.nms import Netact
+
+# from taf.compatibility.configuration import TestlineWrapper
+from taf.config.testline.appserver import AppServer
+from taf.config.testline import Mitron
+from taf.config.testline import NetworkAddress, RoutingInformation
+from taf.config.testline.flexi import Flexi
+
+__maintainer__ = "Shasha Liu"
+__team__ = (
+    "I_MN_5G_RAN_IV4_LINE_HZG_5_GMS <I_MN_5G_RAN_IV4_LINE_HZG_5@internal.nsn.com>"
+)
+__email__ = "shasha.liu@nokia-sbell.com"
+
+# common
+__all__ = ["tl"]
+
+_cfg_dir = os.path.dirname(os.path.abspath(__file__))
+
+_optical_switch = Mitron(addr="10.101.36.198", model="OXC1000-32X32-SM-1356-DD-50-LP")
+
+##host #Local VM
+_host = TestPc(
+    default_ssh_connection_details=SshServiceDetails(
+        addr="10.57.157.124", username="ute", password="iW_K#8.ute%A10h0m0ra"
+    )
+)
+
+_docker_pc = TestPc(
+    default_ssh_connection_details=SshServiceDetails(
+        addr="10.57.157.88", username="dcapuser", password="dcapuser123"
+    )
+)
+
+External_PCs_For_CellTrace = dict(docker=_docker_pc)
+
+
+# #RealEnb
+_real_enb_pdu = HBTE(addr="10.68.87.81", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_common_unit_2 = CommonUnit(
+    lmp_connection=SshServiceDetails(
+        addr="10.68.88.213", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    capacity_units=[],
+    pdu_port=_real_enb_pdu.pdu_ports[6],
+)
+
+_real_enb = Airscale(common_units=[_common_unit_2])
+
+_lte_real_enb = RealEnb(airscale=_real_enb, rms=None, instance_id=662)
+
+
+##RealEnb
+# _real_enb_pdu = HBTE(addr="10.68.87.81", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+# _fct_1 = CommonUnit(
+#    lmp_connection=SshServiceDetails(
+#        addr="10.68.88.213", username="toor4nsn", password="oZPS0POrRieRtu"
+#    ),
+#    capacity_units=[],
+#    pdu_port=_real_enb_pdu.pdu_ports[6],
+# )
+
+# _smod_1 = Flexi([_fct_1])
+
+# _lte_real_enb = RealEnb(
+#    system_module=_smod_1,
+# )
+
+##5GRU for classicalBTS
+
+_attenuator = TopYoung(
+    ip_addr="10.57.249.53", port=23, attenuation_port_numbers=[13, 14, 15, 16]
+)
+
+_ru1_pdu = HBTE(addr="10.68.87.50", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_ru1 = RU(
+    ru_hw_group="below6GHz",
+    default_ssh_connection_details=SshServiceDetails(
+        addr="172.16.73.128", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    lmp_connection=SshServiceDetails(
+        addr="172.16.73.128", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    pdu_port=_ru1_pdu.pdu_ports[1],
+    radio_type=RadioTypes.AEQV,  # radio_type='AEQV'
+    attenuation_ports=[
+        _attenuator.attenuator_ports[13],
+        _attenuator.attenuator_ports[14],
+        _attenuator.attenuator_ports[15],
+        _attenuator.attenuator_ports[16],
+    ],
+    # {module number:channel number} means {INPUT port:OUTPUT port} for Mitron
+    optical_switch_channels=[
+        _optical_switch.modules[1].channels[2],
+        _optical_switch.modules[2].channels[1],
+        _optical_switch.modules[3].channels[4],
+        _optical_switch.modules[4].channels[3],
+    ],
+)
+
+##DU for classicalBTS
+_lmp_connection = SshServiceDetails(
+    addr="10.68.88.153", username="toor4nsn", password="oZPS0POrRieRtu"
+)
+
+_capacity_unit = CapacityUnit(addr="192.168.253.22")
+
+_gnb_pdu = HBTE(addr="10.68.87.52", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_common_unit_0 = CommonUnit(
+    lmp_connection=_lmp_connection,
+    capacity_units=[_capacity_unit],
+    pdu_port=_gnb_pdu.pdu_ports[8],
+)
+
+_airscale = Airscale(common_units=[_common_unit_0])
+
+_du = DU(airscale=_airscale, rus=[_ru1], f1_m_ip_addr="10.68.88.153")
+
+##CU #Auto TL Upgrading
+_cu = CU(
+    backhaul_site_oam_ip="10.68.88.153",
+    oam_ssh_connection_details=SshServiceDetails(
+        addr="10.68.88.153", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    oam_http_connection_details=HttpConnectionDetails(
+        addr="10.68.88.153", username="Nemuadmin", password="nemuuser"
+    ),
+)
+
+##cloud_topology #UTE Type
+_tl_cloud_topology = "CLOUD_5G_RPI_SB_ASIBA102L_ABILA102B1_AEQV"
+
+# classicalbts
+_classical_bts = ClassicalBts(dus=[_du], cu=_cu, instance_id=2460, global_bts_id=2460)
+
+_appserver_ssh = SshServiceDetails(
+    addr="10.57.191.247", username="vrf4_sg5", password="vrf4@sg5", port="55916"
+)  # for UL
+_iperf = IperfDataTransferDetails(
+    ssh_connection_details=_appserver_ssh,
+    network_interface_address="10.57.191.247",
+    iperf_path="/data/data/com.nokia.syve.uemanager.mobile/",
+    port="55918",
+)  # for DL
+_appserver = AppServer(_iperf)
+# _appserver.iperf_details.port = 55916
+
+# CI_Detail_UE_Type='Huawei Honor 30s'
+
+_ue1 = Android(
+    ssh_connection_details=SshServiceDetails(
+        addr="10.68.86.211", username="nokia5G", password="noki@123"
+    ),
+    serial_number="QKXUT20519006581",  #'9YS0220103005528',##'L8K5T19919002146',
+    server_dir="/cygdrive/c/pyro_server",
+    python_path="/cygdrive/c/Python27/python.exe",
+    iperf_details=_iperf,
+    capabilities=["HUAWEI_30S", "huawei"],
+    # serial_com='12',
+    # reset_interface='no',
+    # enable_disable_cfun='yes',
+    # processes_to_kill=['ttermpro', 'ATCom'],
+    # ue_class = 'QualcommNoLicenseUe',
+    # turn_off_on_firewall='yes',
+    # diag_com='10',
+    # iperf_directory ='adb shell /data/iperf'
+)
+# # netact - Gansu
+_netact = Netact("10.108.248.82")
+
+tl = TestLine(
+    test_pc=_host,
+    test_pcs=[_docker_pc],
+    gnbs=[_classical_bts],
+    nms=_netact,
+    enbs=[_lte_real_enb],
+    core=RealCore(mcc=460, mnc=2),
+    tl_cloud_topology=_tl_cloud_topology,
+    ues=[_ue1],
+    attenuator=_attenuator,
+    appserver=_appserver,
+    optical_switches=[_optical_switch],
+)
+
+# old version keyword under robotws5g/resource compatibility workaround
+# tl = TestlineWrapper(tl)

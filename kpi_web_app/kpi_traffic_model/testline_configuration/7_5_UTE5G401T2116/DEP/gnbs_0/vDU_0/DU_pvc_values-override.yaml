@@ -1,0 +1,70 @@
+global:
+  # - Description: sys env variable for distinguish vRAN2.0 from vRAN4.0
+  # - Value type: string
+  # - Support values: "2.0", "LOOKASIDE", "RLOOKASIDE", "4.0", "INLINE", "RINLINE"
+  # - Default value: "4.0"
+  # - Notice: "2.0", "LOOKASIDE", "RLOOKASIDE" are same. "4.0", "INLINE", "RINLINE" are same.
+  cloudRanVersion: "4.0"
+  image:
+    # - Description: registry of image
+    # - Example:
+    #    "bcmt-registry:5000/dep" for NCS;
+    #    "registry.kube-system.svc.nokia.net:5555/dep" for NCIR;
+    #    "image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}" for OCP.
+    registry: "image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}"
+    pullPolicy: "IfNotPresent"
+
+  # - Description: the storageclass name of persistent volume. Will use default storageclass in case not filled.
+  # - Values:
+  # -   OCP multi node: ocs-storagecluster-cephfs
+  # -   OCP single node: localfs-lvm-sc
+  storageClassName: ""
+  # - Description: the accessModes of persistent volume.
+  #   OCP multi node: ReadWriteMany
+  #   OCP single node: ReadWriteOnce
+  accessModes: "ReadWriteOnce"
+
+  # Description: Preemption of pod objects within the same node is realized through priorityclass
+  # Support value: None. must be pre-defined in cluster node.
+  # Default value: high-priority-nopreempting-{{ .Release.Namespace }}.
+  # Value type: string
+  priorityClassName: "high-priority-nopreempting-{{ .Release.Namespace }}"
+  # - Description: method used to backup data for PVC, currently only support volumesnapshot
+  backupMethod: "volumesnapshot"
+  # - Description: method used to restore data for PVC, currently only support volumesnapshot
+  restoreMethod: "volumesnapshot"
+  # - Description: flag to set backup data for PVC via backupMethod
+  # - default value: true
+  backupData: true
+  # - Description: flag to restore data which backuped via restoreMethod when creating PVC
+  # - default value: true
+  restoreData: true
+  privilegedMode: "false"
+# - Description: the name of persistent volume
+# - consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+pvcName: ""
+
+# - Description: securityContext configuration for pvc job uid/gid/groups
+securityContext:
+  # - Description: Define the uid and gid for pod, uid/gid with non zero the container start with
+  #     non-root user, if the uid/gid is zero will start with root user.
+  uid: 9999
+  gid: 9999
+  # - Description: Define the group of mounted volumes for pod, containers started with non-root
+  #     need to make sure their gid can access expected volume.
+  groups: 9999
+
+timeout: 120
+
+security-storage-pvc:
+  # - Description: PVC for CC&S MCU based container
+  # - Note: Convention of pvc name is security-storage-<container name>-{{ include "pvc.Suffix" . }}.
+  #     Container names are configured in ccsBasedContainerList.
+  #     Each time you add new container name in ccsBasedContainerList, you also need to new element (which name is the same with container name) in security-storage-pvc for storage
+  ccsBasedContainerList:
+    - oamasm
+  oamasm:
+    storage: "1Gi"
+
+apigw-pvc:
+  name: "apigw-pvc"

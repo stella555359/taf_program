@@ -1,0 +1,41 @@
+scc_name: privileged
+l2rtCount: 1
+l2nrtCount: 1
+vlan: 
+  oam: 1416
+  f1: 1415
+  l1bip: 1412
+  l2bip: 1413
+  xpbip: 1415
+  internal_range: 1411-1411
+  tracing: 1414
+network:
+  # fast path device
+  host_device_1: openshift.io/sriov_vfio_ens43f0
+
+  #slow path device
+  host_device_2: openshift.io/sriov_netdevice_ens43f0
+  fastPathRANNICPool: nokia.com/sriov_rinline_up
+  slowPathRANNICPool: nokia.com/sriov_rinline_cp
+  f1subnet: 10.69.54.232/29
+  f1csubnet: 10.69.54.232/29
+  f1usubnet: 10.69.54.232/29
+  oamsubnet: 10.69.54.240/29
+  oam_ordernumber: 5
+  tracingsubnet: 10.69.54.224/29
+  tracing_ordernumber: 1414
+misc:
+  pvc_name: pvc5247
+  fecVFNum: 0
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+
+  # you can get it by command "kubectl get storageclasses.storage.k8s.ioâ€œ
+  storage_class_name: localfs-lvm-sc
+  l2rtDeploymentType: NR_L2RT_8CL2PS_4CL2LO
+  l2nrtDeploymentType: NR_L2NRT_3CL2HI
+  upCellFlag: single
+  upActiveSiblingCore: true
+oct_server: 10.109.3.195

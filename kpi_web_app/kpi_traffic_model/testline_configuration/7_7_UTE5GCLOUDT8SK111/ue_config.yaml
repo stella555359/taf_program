@@ -1,0 +1,52 @@
+AppServer1: &APP_1
+   address: '10.84.168.72'
+   user: '5g'
+   password: '5g1$NEWradio'
+   bind_interface_ip: '10.84.169.56'
+   expected_prompt: '5g@SKA-HC14s17-3:.*\$\s+'
+
+AppServer1: &APP_2
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61'
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:.*\$\s+'
+
+AppServer1: &APP_3
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'
+   expected_prompt: '5g@SKA-HC14-15-AppServer:.*\$\s+'
+
+AppServer1: &APP_4
+   address: '10.84.168.70'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.54'
+   expected_prompt: '5g@SKA-HC14s17-1:.*\$\s+'
+
+UE_POOLS:
+    TafUeAndroidPool:                               # Ue Pool class defined by library
+        inline_config:
+            ANDROID_UE_1:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE_1
+                    - REAL_ANDROID_UE
+                    - ONEPLUS
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number:  'd1f0d40e'      # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'plkr-sc5g-pc85.p08.ska-lab.nsn-rdnet.net'    # UE PC IP address
+                        login: 'pzkrk'              # SSH login to UE PC
+                        password: 'NokiaBts2003'    # SSH password to UE PC
+                        ue_pc_port: '80'
+                        service_call_attach: '16'
+                        service_call_detach: '16'
+                        network_mode_switch_method: 'ADB'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'

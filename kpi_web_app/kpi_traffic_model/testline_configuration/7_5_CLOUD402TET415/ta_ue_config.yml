@@ -1,0 +1,37 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:                                         # UE name
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x0032                     # Cell Id.
+
+                CLASS: AndroidUe                          # UE type.
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to constructor when Ue instance is created.
+                    serial_number: 'e4d6a76c'
+                    configuration:                        # By Default ue key ('UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_ip: '10.57.130.45'
+                        pyro_port: '9090'
+                        login: 'nokia5G'
+                        password: 'noki@123'
+                        server_dir: 'C:/pyro_server'
+                        server_python: 'C:/Python27/python.exe'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'      # PATH to DIAG.cfg file on UE PC (required to decode qmdl file)
+                        data_transfer:
+                            ssh:
+                                host: '10.57.205.26'
+                                user: 'ute'
+                                password: 'ute'
+                            ping:
+                                ping_host_ip: '10.57.205.26'
+                                ping_count: '10'
+                                allowed_packet_loss: '5'
+                            iperf_options:
+                                parallel_thread: '1'
+                                buffer: '41M'
+                                packet: '1024B'
+                                ttl: '64'
+                            #iperf_interface_ip: '10.42.129.2'
+

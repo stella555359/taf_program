@@ -1,0 +1,45 @@
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+  externalNetwork:
+    #  - Description: this is only one twamp vlan interface example
+    #    Add one vlan interface for the Measurement network as followed steps
+    #      1. copy the whole section from "twampF1" to "- 'twamp_f1'" including all the spaces
+    #      2. paste the whole section after line "- 'twamp_f1'"
+    #      3. modify the section key name "twampF1", align with the new vlName and role
+    #      4. configure vid( vlan id), pcp ,rangeStart,rangeEnd,subnet,family
+    #  - Feature ID: CB008468
+    #  - Note:
+    #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+    #    vlName should be unique under twamp section and can be defined by user, please not exceed 15 characters
+    #    role should be unique and same in the SCF file
+    #    subnet should be same as the Measurement network
+    #    if f1 and f1c use the same subnet, only need create one vlan interface here
+    twampF1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: "715"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:117:1:2:a47:babc"
+        rangeEnd: "2a00:8a00:8000:117:1:2:a47:babc"
+        subnet: "2a00:8a00:8000:117:1:2:a47:bab8/125"
+        type: "physical"
+        role:
+        - "twamp_f1"
+    twampOam:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_oam"
+        defaultUnderlyingIface: "twamp"
+        vid: "716"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:117:1:2:a47:bac6"
+        rangeEnd: "2a00:8a00:8000:117:1:2:a47:bac6"
+        subnet: "2a00:8a00:8000:117:1:2:a47:bac0/125"
+        type: "physical"
+        role:
+        - "twamp_oam"
+    # - End example for twamp vlan interface

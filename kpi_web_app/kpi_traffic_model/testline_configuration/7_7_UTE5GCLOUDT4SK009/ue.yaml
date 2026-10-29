@@ -1,0 +1,63 @@
+APP_SERVER: &APP_SERVER
+    ssh:
+        host: '10.84.168.120'
+        user: '5g'
+        password: '5g'
+    lte_network_ip: '10.84.169.60'
+    iperf_interface_ip: '10.84.169.60'
+
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_PC_45_UE_ANDROID:                                    # UE name
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x12CD301                  # Cell ID to which UE should attach
+
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '885bafb4'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                        # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_ip: '10.84.182.235'          # UE PC IP address
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'user-lab0'                # SSH login to UE PC
+                        password: 'Bts2003'               # SSH password to UE PC
+                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copied (create empty directory on UE-PC)
+                        server_python: 'C:/Python363/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'yes'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        data_transfer: *APP_SERVER
+
+    QualcommUePool:
+        inline_config:
+            UE_PC_45_UE:                            # UE name
+                CAPABILITIES:                      # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_QUALCOMM_UE
+                STARTING_CELL: 0x12CD301 # 19714817 enb cell iod was 0x12CD601
+
+                CLASS: QualcommUe                        # UE type.
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: '885bafb4' #'770c1fc5' #change
+                    configuration:
+                        ue_pc_host: 'plkr-wmp-ue31.intra.noklab.net'  #change
+                        port_dict:                         # Dictionary containing ports that the UePcServer uses for QXDM control
+                            heartbeat: 6005               # Port for heartbeat messages
+                            server_command_input: 6007    # Port for command input
+                            server_qxdm_messages: 6008    # Port for QXDM messages output
+                            server_command_output: 6009    # Port for server command output
+                            message_stream_port: 6010
+                        login: 'user-lab0'
+                        password: 'Bts2003'
+                        qxdm_version: 5
+                        licence_type: '5G'
+                        voice_call_technology_timeout: '65'
+                        com_port: 3
+                        ue_type: 'ANDROID'
+                        iperf_adb_dir: 'su 0 /data/iperf'
+                        data_transfer: *APP_SERVER
+                        attach_type: 'NSA'

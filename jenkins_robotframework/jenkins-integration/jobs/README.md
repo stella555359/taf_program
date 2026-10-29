@@ -1,0 +1,41 @@
+# jobs
+
+这里放 Jenkins job 定义骨架。
+
+建议承接：
+
+- seed job
+- Job DSL
+- 参数模板
+- 不同执行器的 job 入口定义
+
+这一层的职责是把：
+
+```text
+platform-api 传来的 run 语义
+```
+
+映射成：
+
+```text
+Jenkins job 需要的参数、标签、凭据和执行模式
+```
+
+这里先不写死所有 job 名，但 `robot` 路径已经补了“模板文档 + 实际 Job DSL 文件”两层入口，`python_orchestrator` 路径也已补 KPI runner Job DSL：
+
+这些 Job DSL 文件由 `seed/jenkins-robotframework-seed` 执行。该 seed job 由 `jcasc/jenkins.yaml` 自动创建，执行逻辑在 `pipelines/seed-jobs.Jenkinsfile`。
+
+当前 seed job 默认只加载 `*_job.groovy` 文件。旧的 hyphen 文件名保留作历史参考，但当前 Job DSL 插件会拒绝 `kpi-runner-job.groovy` 这类带 `-` 的脚本名。
+
+- [robot-execution-job-template.md](robot-execution-job-template.md)
+	- 固定 seed job / job 参数模板思路
+	- 固定 `ROBOTWS_GIT_REF` 和 `TESTLINE_CONFIGURATION_GIT_REF` 的默认值策略
+	- 说明哪些参数应该走全局环境，哪些保留 job 级配置
+- [robot_execution_job.groovy](robot_execution_job.groovy)
+	- 可直接放进 seed job 流程的实际 Job DSL 文件
+	- 参数列表与 `pipelines/robot-execution.Jenkinsfile` 当前定义保持一一对应
+	- 把 `robot/robot-execution` 这个 pipeline job 真正物化出来
+- [kpi_runner_job.groovy](kpi_runner_job.groovy)
+	- 创建 `CIT/KPI_Testing/<SBTS>/<testline>` 和 `CRT/KPI_Testing/<SBTS>/<testline>` 两个 KPI runner job
+	- 参数列表与 `pipelines/kpi-runner.Jenkinsfile` 当前定义保持一一对应
+	- `BUILD` 是一等参数，用于表示本次 KPI testing 的 CIT 包 / 软件包版本

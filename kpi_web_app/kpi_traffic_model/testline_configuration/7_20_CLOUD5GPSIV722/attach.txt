@@ -1,0 +1,16 @@
+
+LSCO 000000000018000003000400006000000000004000F000000000000000000000CC00258010000002364C3B7A3F0347FC813A7B395529BDFF
+#--------------------
+
+forw mte SetUEContext 0
+forw mte NasConfigEmmRegister 0(0 [0] [] [] [] [] [] [] )
+FORW MTE ACTIVATE -1
+WAIT FOR "ACTIVATE" TIMEOUT 5
+
+#VBO# forw mte RrcAptTriggerMeasEvent 1 17 0 [][] [5(1{39 [70] [74] [34][ ]})] #VBO / simulate B1 measurement 17 because ENB shared for 5GNR's
+#VBO# Forw mte getstats [0][0][1]
+
+wait 2
+forw mte getnrbeamstats
+
+#VBO# forw mte NrConfigCsiOverride [] [1{0 [] [] [] [0] [] [] [] [] [] }] [1] #VBO / force rank indicator 1

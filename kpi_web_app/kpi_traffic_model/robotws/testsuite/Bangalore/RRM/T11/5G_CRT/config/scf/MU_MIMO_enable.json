@@ -1,0 +1,230 @@
+[
+	{
+		"distName": "MRBTS-1/NRBTS-1",
+		"operation": "update",
+		"parameters": [		
+			{
+				"parameterName": "actMultipleDedicatedBWPs",
+				"value": "true",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRPMRNL-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "miNrCellUtilization",
+				"value": "5min",
+				"operation": "update"
+			},
+			{
+				"parameterName": "miNrRSADU",
+				"value": "5min",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB-19",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nrDrbMacDN",
+				"value": "MRBTS-1/NRBTS-1/NRDRB_MAC-6",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_MAC-6",
+		"operation": "create",
+		"parameters": [
+			{
+				"parameterName": "lcgid",
+				"value": "1",
+				"operation": "update"
+			},
+			{
+				"parameterName": "prioritisedBitRate",
+				"value": "16kBps",
+				"operation": "update"
+			},
+			{
+				"parameterName": "schedulBSD",
+				"value": "100ms",
+				"operation": "update"
+			},
+			{
+				"parameterName": "schedulPrio",
+				"value": "12",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "actExhaustiveScheduling",
+				"value": "disabled",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actNbrForNonGbrBearers",
+				"value": "true",
+				"operation": "update"
+			},
+			{
+				"parameterName": "maxNbrTrafficLimit",
+				"value": "90",
+				"operation": "update"
+			},
+			{
+				"parameterName": "maxNumOfNbrBearers",
+				"value": "80",
+				"operation": "update"
+			},
+			{
+				"parameterName": "maxPrbsPerNbrUe",
+				"value": "90",
+				"operation": "update"
+			},
+			{
+				"parameterName": "nbrPdcchCongHandlingDl",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "nbrPdcchCongHandlingUl",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "nbrPdschCongHandling",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "nbrPuschCongHandling",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actInitialBWPFlexibility",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actPfMetricReinitSchedUes",
+				"value": "true",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actULSchedInactiveBwp",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actExhaustiveScheduling",
+				"value": "disabled",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actRat1Alloc",
+				"value": "true",
+				"operation": "update"
+			},
+			{
+				"parameterName": "dlInterferenceAvoidance",
+				"value": [
+					{
+						"dataBufferThreshold": "60000",
+						"endMcs": "28",
+						"prbAllocationDirection": "highPerforming_High2low",
+						"rank": "2",
+						"rbgLimit": "0",
+						"startMcs": "20"
+					}
+				],
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_MAC-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nbrDl",
+				"value": "300000",
+				"operation": "update"
+			},
+			{
+				"parameterName": "nbrUl",
+				"value": "100000",
+				"operation": "update"
+			},
+			{
+				"parameterName": "schedulBSD",
+				"value": "100ms",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-1/NRDLMUMIMO-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "dlMuMimoCorrThd",
+				"value": "100",
+				"operation": "update"
+			},
+			{
+				"parameterName": "dlMuMimoSpectralEffThd",
+				"value": "10",
+				"operation": "update"
+			},
+			{
+				"parameterName": "dlMuMimoTaperingH",
+				"value": "25dB",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-2",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "actInitialBWPFlexibility",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actULSchedInactiveBwp",
+				"value": "false",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-3",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "actInitialBWPFlexibility",
+				"value": "false",
+				"operation": "update"
+			},
+			{
+				"parameterName": "actULSchedInactiveBwp",
+				"value": "false",
+				"operation": "update"
+			}
+		]
+	}
+]

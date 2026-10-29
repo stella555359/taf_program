@@ -1,0 +1,21 @@
+aic-vdu-up:
+  l1hi:
+    cellFlag: "multi"
+    activeSiblingCore: "true"
+    l1_default_scs: "30"
+  l2hi:
+    cellFlag: "multi"
+    activeSiblingCore: "true"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "multi"
+    activeSiblingCore: "true"
+global:
+  devicePoolList:
+    fastPathCommonPool: "openshift.io/sriov_vfio_ens43f0"
+    slowPathCommonPool: "openshift.io/sriov_netdevice_ens43f0"
+    fastPathFhPool: "openshift.io/sriov_vfio_ens43f0"
+    slowPathFhPool: "openshift.io/sriov_netdevice_ens43f0"
+    fastPathRANNICPool: "nokia.com/sriov_rinline_up"
+    slowPathRANNICPool: "nokia.com/sriov_rinline_cp"

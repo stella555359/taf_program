@@ -1,0 +1,63 @@
+version: "0.0.1"
+CELL_LIST:
+  - NRCELL_1:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 405
+     physCellId: 405
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_2:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 406
+     physCellId: 406
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_3:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 407
+     physCellId: 407
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_4:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 408
+     physCellId: 408
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_5:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 409
+     physCellId: 409
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_6:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 410
+     physCellId: 410
+     freqBandIndicatorNR: 5
+     chBwDl: 20MHz
+     chBwUL: 20MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+

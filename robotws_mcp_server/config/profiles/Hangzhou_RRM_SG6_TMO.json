@@ -1,0 +1,98 @@
+{
+  "name": "Hangzhou_RRM_SG6_TMO",
+  "description": "Hangzhou RRM RAN_PZ_HAZ_34 SG6 TMO/None_Feature testcase style profile.",
+  "profile_type": "case",
+  "area": "RRM",
+  "case_type": "TMO",
+  "path_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34/None_Feature_SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "case_candidate_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "confirmed_case_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "allowed_resource_scopes": [
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "preferred_keywords": {
+    "setup": [
+      "SetUp.TMO Case Common SetUp"
+    ],
+    "teardown": [
+      "TMO_Common_Case_Teardown"
+    ],
+    "coam": [
+      "Connect to gnb coam via ssl",
+      "Change status for parameter cellBarred on GNB",
+      "COAM Teardown gnb connections"
+    ],
+    "pa": [
+      "Modify PA Value Setting For Required RU",
+      "Set Maritix PA Port"
+    ],
+    "kpi": [
+      "Compass.KPI Generate And Upload To Remote Server",
+      "Compass.Single KPI Generate And Upload To Remote Server",
+      "Compass.Generate KPI Report"
+    ],
+    "evidence": [
+      "Get syslog file with duration and Compress File",
+      "Check ERR Or WRN From Syslog",
+      "Start Container Capture Wireshark Log",
+      "Stop Container Wireshark Log Collection",
+      "COAM Save snapshot via rest api"
+    ],
+    "ue": [
+      "Procedures.Start UE Prepare",
+      "power_ue.Prepare UE",
+      "power_ue.UE Attach",
+      "power_ue.UE Detach",
+      "Perform Mutli-UE Prepare",
+      "Perform Mutli-UE Attach",
+      "Perform Mutli-UE Disconnect"
+    ]
+  },
+  "negative_patterns": [
+    {
+      "pattern": "taf.hw.rf_attenuator",
+      "message": "Prefer group PA keywords such as Modify PA Value Setting For Required RU or Set Maritix PA Port in testcase bodies."
+    },
+    {
+      "pattern": "csn.execute",
+      "message": "Avoid raw SSH commands in new testcase bodies when an existing common keyword can express the operation."
+    },
+    {
+      "pattern": "Sleep    30min",
+      "message": "Long sleeps should be justified by KPI/statistics period requirements and preferably follow existing TMO KPI patterns."
+    },
+    {
+      "pattern": "Library    taf.",
+      "message": "Do not add direct low-level TAF library imports to testcase files unless no group resource keyword exists."
+    }
+  ],
+  "style_rules": [
+    "Use testcase names that start with the case or QC id when available.",
+    "Include [Documentation] with author or purpose.",
+    "Include [Tags] with target testline tags such as T073, T080, or T813.",
+    "Use SetUp.TMO Case Common SetUp for TMO case setup when applicable.",
+    "Use TMO_Common_Case_Teardown in testcase teardown.",
+    "Prefer SG6/TMO common keywords over direct low-level TAF APIs.",
+    "Keep testline-specific branching based on ${tl_prefix}.",
+    "Use existing mapping variables for UE index and PA mapping instead of hardcoding when available.",
+    "Use Compass.KPI Generate And Upload To Remote Server for merged KPI reports.",
+    "Preserve evidence collection patterns for syslog, pcap, snapshot, and KPI xlsx."
+  ],
+  "required_fields": [
+    "Documentation",
+    "Tags",
+    "Setup",
+    "Teardown"
+  ]
+}

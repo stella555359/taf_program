@@ -1,0 +1,35 @@
+ATTENUATORS:
+    RadioRack08:                                      # attenuator name - change if you want
+        TYPE: RadioRack                               # attenuator type to use; or you may give it directly: ta_attenuator.attenuators_impl.hytem.HytemAttenuator
+        CONSTRUCTOR_PARAMETERS:                       # Parameters that will be passed to Attenuator constructor when Attenuator instance is created.
+            ip: '10.83.185.240'                       # IP address of attenuator device
+            port: 50000                               # TCP Port number of attenuator device
+            min_attenuation: 0
+            max_attenuation: 220
+
+CELLS_ATTENUATION:
+    ENB_1_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: RadioRack08
+            rf_paths_at_attenuator:
+            - 9
+            - 10
+    ENB_1_CELL_2:
+        rf_paths_of_cell:
+        -   used_attenuator: RadioRack08
+            rf_paths_at_attenuator:
+            - 11
+            - 12
+    ENB_2_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: RadioRack08
+            rf_paths_at_attenuator:
+            - 13
+            - 14
+    ENB_2_CELL_2:
+        rf_paths_of_cell:
+        -   used_attenuator: RadioRack08
+            rf_paths_at_attenuator:
+            - 15
+            - 16
+

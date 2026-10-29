@@ -1,0 +1,32 @@
+AppServer1: &APP_1
+   address: '10.84.168.70'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.54'
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:.*\$\s+'
+
+UE_POOLS:
+    TafUeAndroidPool:                                  # Ue Pool class defined by library
+        inline_config:
+            UE_1:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: 'R5CTA1Y01PD'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: '10.84.174.139'    # UE PC IP address
+                        ue_pc_port: '80'           # TCP Port number on UE PC on which Pyro server will be started
+#                        service_call_attach: '17'
+#                        service_call_detach: '17'
+#                        network_mode_switch_method: 'ADB'
+#                        airplane_mode_switcher_text: 'Airplane mode'
+                        login: 'pzkrk'            # SSH login to UE PC
+                        password: 'NokiaBts2003'         # SSH password to UE PC
+                        network_mode_switch_method: 'ADB'       # method for change network mode keyword
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'

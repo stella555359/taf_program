@@ -1,0 +1,12 @@
+version: "0.0.1"
+CELL_LIST:
+  - NRCELL_1:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 1
+     physCellId: 401
+     freqBandIndicatorNR: 5
+     chBwDl: 5MHz
+     chBwUL: 5MHz
+     nrarfcnDl: 174360
+     nrarfcnUl: 165360

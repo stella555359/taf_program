@@ -1,0 +1,28 @@
+{
+  "T282": {
+    "config_id": "10_11_QT_7005",
+    "config_path": "testline_configuration/10_11_QT_7005/__init__.py",
+    "department": "QT",
+    "site": "Wroclaw",
+    "topology_id": "7005",
+    "match_type": "static_map",
+    "confidence": "high",
+    "allowed_script_roots": [
+      "SG6/common/scripts",
+      "QT/Wroclaw/common/scripts"
+    ]
+  },
+  "T813": {
+    "config_id": "10_11_QT_5101",
+    "config_path": "testline_configuration/10_11_QT_5101/__init__.py",
+    "department": "QT",
+    "site": "Oulu",
+    "topology_id": "5101",
+    "match_type": "static_map",
+    "confidence": "high",
+    "allowed_script_roots": [
+      "SG6/common/scripts",
+      "QT/Oulu/common/scripts"
+    ]
+  }
+}

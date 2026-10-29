@@ -1,0 +1,87 @@
+# if start
+ENV:  env 1
+IP:  https://api-int.hz-ocp-dx-multi-19-3.dyn.nesc.nokia.net:6443
+namespace:  cran7
+deploymentmode:  NSA
+cnflayout:  basic
+cpuecount:  1
+upuecount:  1
+dedicatedCore:  numa_0
+stackTraceEnabled: false
+vCU_network:
+  tracing_orderNumber:  1000
+  tracing_subnet:  192.168.188.0/23
+  tracing:  2664
+  tracing_oamext_start: "192.168.188.70"
+  tracing_oamext_end: "192.168.188.70"
+  tracing_oamasm_start: "192.168.188.71"
+  tracing_oamasm_end: "192.168.188.71"
+  tracing_oamcm_start: "192.168.188.72"
+  tracing_oamcm_end: "192.168.188.72"
+  tracing_oamconfig_start: "192.168.188.73"
+  tracing_oamconfig_end: "192.168.188.73"
+  tracing_oamfm_start: "192.168.188.75"
+  tracing_oamfm_end: "192.168.188.75"
+  tracing_oampm_start: "192.168.188.74"
+  tracing_oampm_end: "192.168.188.74"
+  tracing_cpif_start: "192.168.188.80"
+  tracing_cpif_end: "192.168.188.80"
+  tracing_cpcl_start: "192.168.188.78"
+  tracing_cpcl_end: "192.168.188.78"
+  tracing_cpnb_start: "192.168.188.77"
+  tracing_cpnb_end: "192.168.188.77"
+  tracing_cpnrt_start: "192.168.188.79"
+  tracing_cpnrt_end: "192.168.188.79"
+  tracing_cpue_start: "192.168.188.76"
+  tracing_cpue_end: "192.168.188.76"
+  oam_subnet:  10.57.179.0/26
+  oam:  10
+  oam_start:  10.57.179.10
+  oam_end:  10.57.179.10
+  x2u_subnet:  10.57.179.192/26
+  x2u:  2662
+  x2u_start:  10.57.179.208
+  x2u_end:  10.57.179.208
+  x2c_subnet:  10.57.179.128/26
+  x2c:  2661
+  x2c_start:  10.57.179.138
+  x2c_end:  10.57.179.138
+  f1u_subnet:  10.57.179.64/26
+  f1u:  2660
+  f1u_start:  10.57.179.81
+  f1u_end:  10.57.179.81
+  f1c_subnet:  10.57.179.64/26
+  f1c:  2660
+  f1c_start:  10.57.179.80
+  f1c_end:  10.57.179.80
+  s1u_subnet:  10.57.180.0/24
+  s1u:  2663
+  s1u_start:  10.57.180.10
+  s1u_end: 10.57.180.10
+  ngu_subnet:
+  ngu:
+  ngu_start:
+  ngu_end:
+  ngc_subnet:
+  ngc:
+  ngc_start:
+  ngc_end:
+  xnu_subnet:
+  xnu:
+  xnu_start:
+  xnu_end:
+  xnc_subnet:
+  xnc:
+  xnc_start:
+  xnc_end:
+  internale1:  1207
+  fastPathDevicePool:  openshift.io/sriov_netdevice_ens1f1
+  slowPathDevicePool:  openshift.io/sriov_netdevice_ens1f1
+  fastPathDevicePoolBackup: ""
+  slowPathDevicePoolBackup: ""
+misc:
+  hardAntiAffinity:  TRUE
+  timezone:  UTC
+  platform_type:  OCP
+  storageClassName: ocs-storagecluster-cephfs
+  accessModes:  ReadWriteMany

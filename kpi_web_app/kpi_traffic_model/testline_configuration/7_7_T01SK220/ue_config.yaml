@@ -1,0 +1,34 @@
+AppServer1: &APP_SERVER_1
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'
+   expected_prompt: '5g@SKA-HC14-15-AppServer'
+
+UE_POOLS:
+    TafUeAtPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                CLASS: Quectel
+                CONSTRUCTOR_PARAMETERS:
+                    configuration:
+                        ue_pc_address: 'plkr-tp-ue130.p01.ska-lab.nsn-rdnet.net'
+                        ue_pc_login: 'plkrsg09'
+                        ue_pc_password: 'ssp123!!Macro'
+                        proxy_mngr_port: '80'
+                        ue_pc_expected_prompt: 'plkrsg09@PLKR-TP-UE130 ~$'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                server_close_delay: 50
+                                binary_path: '/cygdrive/c/iperf/'
+                                dt_from_uepc: True
+                                interface_name: 'Ethernet 4'
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1

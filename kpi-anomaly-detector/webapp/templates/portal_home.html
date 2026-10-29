@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Portal{% endblock %}
+
+{% block content %}
+<main class="page-shell portal-shell">
+    <section class="hero-panel portal-hero">
+        <div class="hero-copy">
+            <p class="eyebrow">Unified Flask portal</p>
+            <h1>One entry point for detector workflows, reports, and future tools.</h1>
+            <p class="hero-text">
+                The current portal hosts the KPI anomaly detector as its first module and keeps the app ready
+                for additional analysis, debugging, and reporting workspaces without another monolithic rewrite.
+            </p>
+            <div class="portal-hero-actions">
+                <a class="button-link" href="{{ url_for('kpi.index') }}">Open KPI Workspace</a>
+                <a class="button-link ghost-link" href="{{ url_for('portal.healthz') }}" target="_blank">Health Check</a>
+            </div>
+        </div>
+        <div class="hero-card portal-summary-card">
+            <p class="card-label">Portal status</p>
+            <div class="portal-metrics-grid">
+                <article class="portal-metric">
+                    <strong>{{ overview.total_count }}</strong>
+                    <span>Total runs</span>
+                </article>
+                <article class="portal-metric">
+                    <strong>{{ overview.visible_count }}</strong>
+                    <span>Visible runs</span>
+                </article>
+                <article class="portal-metric">
+                    <strong>{{ overview.hidden_count }}</strong>
+                    <span>Hidden runs</span>
+                </article>
+                <article class="portal-metric">
+                    <strong>{{ overview.active_count }}</strong>
+                    <span>Active jobs</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="portal-modules-grid">
+        <article class="module-card module-card-primary">
+            <p class="eyebrow">Module 01</p>
+            <h2>KPI Detector Workspace</h2>
+            <p>
+                Upload Excel files, run the existing detector pipeline, browse searchable history, rerun failed jobs,
+                and open generated HTML or Excel artifacts.
+            </p>
+            <ul class="module-points">
+                <li>Scenario and environment-aware history grouping</li>
+                <li>SQLite-backed run index with recycle bin</li>
+                <li>Interactive HTML report hosting and rerun flow</li>
+            </ul>
+            <a class="button-link" href="{{ url_for('kpi.index') }}">Enter module</a>
+        </article>
+
+        <article class="module-card module-card-secondary">
+            <p class="eyebrow">Architecture</p>
+            <h2>Portal-ready foundation</h2>
+            <p>
+                The app now uses an application factory, blueprints, and a shared service layer so new modules can be
+                added beside KPI without putting more routing and state into one giant file.
+            </p>
+            <div class="module-chip-row">
+                <span class="history-tag subdued-tag">Flask app factory</span>
+                <span class="history-tag subdued-tag">Blueprint modules</span>
+                <span class="history-tag subdued-tag">Shared services</span>
+            </div>
+        </article>
+    </section>
+
+    <section class="table-panel portal-recent-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recent activity</p>
+                <h2>Latest KPI runs</h2>
+            </div>
+            <a class="button-link ghost-link" href="{{ url_for('kpi.index') }}">Open full dashboard</a>
+        </div>
+
+        {% if overview.recent_runs %}
+        <div class="portal-run-list">
+            {% for analysis in overview.recent_runs %}
+            <article class="portal-run-card">
+                <div class="portal-run-meta">
+                    <span class="status-chip status-{{ analysis.status }}">{{ analysis.status }}</span>
+                    <span class="portal-run-time">{{ analysis.created_at }}</span>
+                </div>
+                <h3><a class="text-link filename-link" href="{{ url_for('kpi.analysis_detail', analysis_id=analysis.id) }}">{{ analysis.original_filename }}</a></h3>
+                <div class="history-tags compact-tags">
+                    {% if analysis.history_context.get('environment') %}
+                    <span class="history-tag">Env {{ analysis.history_context.get('environment') }}</span>
+                    {% endif %}
+                    {% if analysis.history_context.get('scenario') %}
+                    <span class="history-tag">Scenario {{ analysis.history_context.get('scenario') }}</span>
+                    {% endif %}
+                    {% if analysis.history_context_failed %}
+                    <span class="history-tag error-tag">file name incorrect</span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No analysis records yet</h3>
+            <p>Open the KPI workspace to submit the first Excel file.</p>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

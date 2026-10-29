@@ -1,0 +1,61 @@
+AppServer1: &APP_1
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'
+   expected_prompt: '5g@SKA-HC14-15-AppServer:.*\$\s+'
+
+AppServer2: &APP_2
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61'
+   expected_prompt: '5g@SKA-HC14-16-AppServer2:.*\$\s+'
+
+AppServer3: &APP_3
+   address: '10.84.168.76'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.50'
+   expected_prompt: '5g@SKA-HC14s18-1:.*\$\s+'
+
+AppServer4: &APP_4
+   address: '10.84.168.111'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.52'
+   expected_prompt: '5g@SKA-HC14s18-3:.*\$\s+'
+
+AppServer5: &APP_5
+   address: '10.83.249.133'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.83.249.163'
+   expected_prompt: '5g@KRK-SB18s16-App3::.*\$\s+'
+
+UE_POOLS:
+    TafUeAndroidPool:                             # Ue Pool class defined by library
+        inline_config:
+            ANDROID_UE_1:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE
+                CLASS: AndroidUe                    # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: 'ce4da1b0'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'plkr-tp-ue92.p01.ska-lab.nsn-rdnet.net'   # UE PC IP address
+                        login: 'plkrsg09'           # SSH login to UE PC
+                        password: 'ssp123!!Macro'          # SSH password to UE PC
+                        ue_pc_port: 80           # TCP Port number on UE PC on which Pyro server will be started
+                        clear_logs: True            # to clear server logs always when the plugin starts
+                        clear_server_files: True    # to clear server files always when the plugin starts
+                        processes_to_kill: # processes to kill on UE PC - anything that may interrupt a test case
+                          - 'uemanager'
+                          - 'putty'
+                        network_mode_switch_method: 'ADB'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_3
+                                interval: '1'
+                                binary_path: '/data/data/com.nokia.android.application/'
+

@@ -1,0 +1,22 @@
+
+# ##########################################################################################
+#
+#    7_20_CLOUD5GPSIV114  -  IV_PS_114  -  CV114
+#
+#    2022-01-21
+#    custom.yaml for TL IV_PS_114
+#
+# ##########################################################################################
+
+custom:
+  GNB_Friendly_TL_Name: 'CV114'
+  TL_TECHNOLOGY: 'cmW_TDD'
+  TL_RMOD: 'AZQG'
+  TL_FB: 'n42'
+  TL_SECTOR: '1'
+  TL_CC: '1CC'
+  Repeat_CM_Upload: '1'
+  LNADJGNB_DN_eNB: 'MRBTS-4057/LNBTS-22269/LNADJGNB-0'
+  RFSHARINGENABLED: False
+  DEDICATEDENB: False
+  RMOD_BTSLOG: False

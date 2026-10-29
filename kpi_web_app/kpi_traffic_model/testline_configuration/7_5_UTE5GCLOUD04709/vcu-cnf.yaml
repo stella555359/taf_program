@@ -1,0 +1,47 @@
+global:
+  accessModes: ReadWriteMany                          
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_0
+    fastPathDevicePoolBackup: ""
+    slowPathDevicePool: openshift.io/sriov_netdevice_0
+    slowPathDevicePoolBackup: ""
+  externalNetwork:
+    f1c:
+      vlanInfo:
+        vid: "3460"
+    f1u:
+      vlanInfo:
+        vid: "3460"                                            
+    ngc:
+      vlanInfo:
+        vid: "3461"
+    ngu:
+      vlanInfo:
+        vid: "3461"    
+    oam:
+      vlanInfo:
+        vid: "3464"
+    s1u:
+      vlanInfo:
+        vid: ""
+                          
+    x2c:
+      vlanInfo:               
+        vid: "3499"              
+    x2u:
+      vlanInfo:
+        vid: "3499"
+    xnc:
+      vlanInfo:
+        vid: "3483" 
+    xnu:
+      vlanInfo:
+        vid: "3483"
+    e2:
+      vlanInfo:
+        vid: "3478"
+  internale1Network:
+    internale1:
+      vlanInfo:
+        vid: "1778"
+  storageClassName: ocs-storagecluster-cephfs

@@ -1,0 +1,112 @@
+# if start
+ENV:  env 1
+IP:  https://api-int.hz-ocp-dx-multi-19-3.dyn.nesc.nokia.net:6443
+namespace:  cran7
+# if scc_name is not configured, will install scc chart with privileged.
+# if scc_name is configured, the name rule must be followed: lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')
+scc_name:  privileged
+deploymentmode:  NSA
+# when cnfLayout is 'mini', upuecount must be 1; when cnfLayout is 'mini', cpuecount must be 1 or 2
+cnflayout:  basic
+cpuecount:  1
+upuecount:  1
+# cpe2count is not must to be configured, default is 0. If the value is 1, e2_subnet/e2/e2_start/e2_end are must to be configured.
+cpe2count:  0
+# [IFC20230102] default values are 1
+# - Description: the number of 2N CPIF redundancy instances. If cnfLayout is basic, this parameter is not applicable; if cnfLayout is redundant, [1, 4] is officially supported
+# - Note: when the number of 2N CPIF redundancy instances is 1, it's purely same as legacy cpif.
+cpifInstanceCount:  1
+dedicatedCore:  numa_0
+stackTraceEnabled: false
+vCU_network:
+  tracing_orderNumber:  1000
+  tracing_subnet:  10.107.136.0/23
+  tracing:  1001
+  tracing_oam_start: "10.107.136.4"
+  tracing_oam_end: "10.107.136.18"
+  oam_subnet:  10.107.138.96/27
+  oam:  1007
+  oam_start:  10.107.138.100
+  oam_end:  10.107.138.100
+  x2u_subnet:  
+  x2u:  
+  x2u_start:  
+  x2u_end:  
+  x2c_subnet:  
+  x2c:  
+  x2c_start:  
+  x2c_end:  
+  f1u_subnet:  10.107.138.128/25
+  f1u:  1003
+  f1u_start:  10.107.138.132
+  f1u_end:  10.107.138.134
+  f1c_subnet:  10.107.138.0/27
+  f1c:  1002
+  f1c_start:  10.107.138.4
+  f1c_end:  10.107.138.4
+  s1u_subnet:  
+  s1u:  
+  s1u_start:  
+  s1u_end: 
+  ngu_subnet: 10.107.135.128/25
+  ngu: 1006
+  ngu_start:  10.107.135.144
+  ngu_end:  10.107.135.146
+  ngu_subnet_dual: 2a00:8a00:8000:5801:0:28:0:f00/120
+  ngu_start_dual:  2a00:8a00:8000:5801:0:28:0:f0a
+  ngu_end_dual:  2a00:8a00:8000:5801:0:28:0:f0b
+  ngc_subnet:  10.107.138.64/27
+  ngc:  1008
+  ngc_start:  10.107.138.72
+  ngc_end:  10.107.138.72
+  ngc_subnet_dual: 2a00:8a00:8000:5801:0:28:0:c00/120
+  ngc_start_dual:  2a00:8a00:8000:5801:0:28:0:c06
+  ngc_end_dual:  2a00:8a00:8000:5801:0:28:0:c06
+  xnu_subnet:  10.107.135.0/25
+  xnu:  1005
+  xnu_start:  10.107.135.16
+  xnu_end:  10.107.135.18
+  xnu_subnet_dual: 2a00:8a00:8000:5801:0:28:0:1000/120
+  xnu_start_dual:  2a00:8a00:8000:5801:0:28:0:100a
+  xnu_end_dual:  2a00:8a00:8000:5801:0:28:0:100b
+  xnc_subnet:  10.107.138.32/27
+  xnc:  1004
+  xnc_start:  10.107.138.40
+  xnc_end:  10.107.138.40
+  xnc_subnet_dual: 2a00:8a00:8000:5801:0:28:0:d00/120
+  xnc_start_dual:  2a00:8a00:8000:5801:0:28:0:d06
+  xnc_end_dual:  2a00:8a00:8000:5801:0:28:0:d06
+  e2_subnet:
+  e2:
+  e2_start:
+  e2_end:
+  f1u_slice1_subnet:
+  f1u_slice1:
+  f1u_slice1_start:
+  f1u_slice1_end:
+  ngu_slice1_subnet:
+  ngu_slice1:
+  ngu_slice1_start:
+  ngu_slice1_end:
+  s1u_slice1_subnet:
+  s1u_slice1:
+  s1u_slice1_start:
+  s1u_slice1_end:
+  twamp_f1c:  
+  twamp_f1c_start:  
+  twamp_f1c_end:  
+  twamp_f1c_subnet:   
+  internale1:  1207
+  fastPathDevicePool:  openshift.io/sriov_netdevice_ens1f1
+  slowPathDevicePool:  openshift.io/sriov_netdevice_ens1f1
+  fastPathDevicePoolBackup: ""
+  slowPathDevicePoolBackup: ""
+misc:
+  timezone:  UTC
+  platform_type:  OCP
+  storageClassName: ocs-storagecluster-cephfs
+  accessModes:  ReadWriteMany
+  securityContext:
+    uid: 9999
+    gid: 9999
+    groups: 9999

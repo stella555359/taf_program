@@ -1,0 +1,228 @@
+import os
+from taf.config.testline.cloud_hosting import (
+    ControlNode,
+    NCIR,
+    CloudDeployment,
+    DeploymentFlavorStack,
+    DeploymentNetworkStack,
+    DeploymentVnfStack,
+)
+from taf.config.testline.connection_details import (
+    OpenStackConnectionDetails,
+    SshServiceDetails,
+    BmcConnectionDetails,
+    HttpConnectionDetails,
+    IperfDataTransferDetails,
+)
+from taf.config.testline.testpc import TestPc
+from taf.config.testline.ue import (
+    AirphoneCloud,
+    Airphone,
+    Prisma,
+    TM500,
+    Qualcomm,
+    QualcommUeType,
+    Android,
+)  # added in taf.meta.5.4
+from taf.config.testline.core import EPCSim, LTEEmuCore, PrismaCore
+from taf.config.testline.gnb.du import DU
+from taf.config.testline.pdu import TopYoung, HBTE
+from taf.config.testline.pdu import FACOM, PduPort, Pdu, EPC, ATEN, RRB, APC, Gude
+from taf.config.testline.testline import TestLine
+from taf.config.testline.gnb.gnb import CloudBts, CU, ClassicalBts
+from taf.config.testline.airscale import Airscale, CommonUnit, CapacityUnit
+from taf.config.testline.ue import AirphoneCloud, Airphone, Prisma, TM500
+from taf.config.testline.enb import (
+    Enb,
+    SimEnb,
+    RealEnb,
+    LTEEmuEnb,
+    PrismaEnb,
+    DocomoEnb,
+)
+from taf.config.testline.switch import DellS4048ONSwitch, DellS4048TONSwitch
+
+# added in taf.meta 5.4
+from taf.config.testline.gnb.networkaddress import NetworkAddress  # add in taf.meta 5.4
+from taf.config.testline.radio import (
+    RadioTypes,
+    SCRadioTypes,
+    RU,
+    SC5GRadio,
+    SC4GRadio,
+    RadioModule,
+)
+from taf.config.testline.appserver import AppServer
+from taf.config.testline.hardware_controller import (
+    AmiaFanHardwareController,
+    GPSPowerHardwareController,
+)
+
+__maintainer__ = "brain.chen"
+__team__ = "I_NSB_MN_5GSC_MMW_SC_PZ_HZ_02@internal.nsn.com"
+__email__ = "brain.1.chen@nokia-sbell.com"
+
+# common
+__all__ = ["tl"]
+
+_cfg_dir = os.path.dirname(os.path.abspath(__file__))
+
+# #host
+_host = TestPc(
+    default_ssh_connection_details=SshServiceDetails(
+        addr="10.57.155.72", username="ute", password="iW_K#8.ute%A10h0m0ra"
+    )
+)
+
+# PB INFO of ENB IS NOT CORRECT #
+# 4GRU for RealEnb
+_ru_enb_pdu = HBTE(addr="10.56.18.175", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_ru_enb = RadioModule(
+    default_ssh_connection_details=SshServiceDetails(
+        addr="172.16.8.128", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    pdu_port=_ru_enb_pdu.pdu_ports[2],
+)
+
+
+# #RealEnb
+_real_enb_pdu = HBTE(addr="10.106.223.138", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_common_unit_2 = CommonUnit(
+    lmp_connection=SshServiceDetails(
+        addr="10.106.223.157", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    capacity_units=[],
+    pdu_port=_real_enb_pdu.pdu_ports[7],
+)
+
+_real_enb = Airscale(common_units=[_common_unit_2])
+
+_lte_real_enb = RealEnb(airscale=_real_enb, rms=_ru_enb)
+
+
+# #5GRU_0 for cloudBTS
+_ru1_pdu = TopYoung(addr="10.106.223.145", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_ru1 = RU(
+    ru_hw_group="hw_group",
+    default_ssh_connection_details=SshServiceDetails(
+        addr="172.22.56.2", username="root", password="umniedziala"
+    ),
+    lmp_connection=SshServiceDetails(
+        addr="172.22.56.2", username="root", password="umniedziala"
+    ),
+    pdu_port=_ru1_pdu.pdu_ports[2],
+    radio_type=RadioTypes.AEWD,
+)
+
+_ru2_pdu = TopYoung(addr="10.106.223.145", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_ru2 = RU(
+    ru_hw_group="hw_group",
+    default_ssh_connection_details=SshServiceDetails(
+        addr="172.22.56.154", username="root", password="umniedziala"
+    ),
+    lmp_connection=SshServiceDetails(
+        addr="172.22.56.154", username="root", password="umniedziala"
+    ),
+    pdu_port=_ru2_pdu.pdu_ports[3],
+    radio_type=RadioTypes.AEWD,
+)
+
+# #######Iperf########
+_appserver_ssh = SshServiceDetails(
+    addr="10.57.178.11", username="mmw_sg2", password="mm@2", port="43147"
+)
+
+_iperf = IperfDataTransferDetails(
+    ssh_connection_details=_appserver_ssh,
+    network_interface_address="10.57.178.11",
+    iperf_path="/system/bin",
+    port="44147",
+)
+
+_iperf_details_on_appserver2 = IperfDataTransferDetails(
+    ssh_connection_details=_appserver_ssh,
+    network_interface_address="10.57.178.11",
+    iperf_path="iperf",
+    port="42147",
+)
+_appserver = AppServer(_iperf_details_on_appserver2)
+
+# CI_Detail_UE_Type='Samsung'
+
+# Qualcomm
+_android1 = Android(
+    ssh_connection_details=SshServiceDetails(
+        addr="10.106.223.170", username="nokia5G", password="noki@123"
+    ),
+    serial_number="R5CN20FNSYV",
+    server_dir="/cygdrive/c/pyro_server",
+    python_path="C:/Python27/python.exe",
+    qcat_path="C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe",
+    diag_cfg_path="C:/pyro_server/DIAG.cfg",
+    iperf_details=_iperf,
+    capabilities=["REAL_ANDROID_UE", "samsung"],
+)
+
+_android2 = Android(
+    ssh_connection_details=SshServiceDetails(
+        addr="10.106.223.171", username="nokia5G", password="noki@123"
+    ),
+    serial_number="R5CN20JHAHZ",
+    server_dir="/cygdrive/c/pyro_server",
+    python_path="C:/Python27/python.exe",
+    qcat_path="C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe",
+    diag_cfg_path="C:/pyro_server/DIAG.cfg",
+    iperf_details=_iperf,
+    capabilities=["REAL_ANDROID_UE", "samsung"],
+)
+
+# #DU_0 for cloudlBTS
+_lmp_connection_0 = SshServiceDetails(
+    addr="10.106.223.156", username="toor4nsn", password="oZPS0POrRieRtu"
+)
+
+_capacity_unit_0 = CapacityUnit(addr="192.168.253.22")
+
+_du_pdu = HBTE(addr="10.108.135.48", port_numbers=[1, 2, 3, 4, 5, 6, 7, 8])
+
+_common_unit_0 = CommonUnit(
+    lmp_connection=_lmp_connection_0,
+    capacity_units=[_capacity_unit_0],
+    pdu_port=_du_pdu.pdu_ports[5],
+)
+
+_airscale = Airscale(common_units=[_common_unit_0])
+
+_du = DU(airscale=_airscale, rus=[_ru1, _ru2], f1_m_ip_addr="10.106.223.156")
+
+
+# #CU
+_cu = CU(
+    backhaul_site_oam_ip="10.106.223.156",
+    oam_ssh_connection_details=SshServiceDetails(
+        addr="10.106.223.156", username="toor4nsn", password="oZPS0POrRieRtu"
+    ),
+    oam_http_connection_details=HttpConnectionDetails(
+        addr="10.106.223.156", username="Nemuadmin", password="nemuuser"
+    ),
+)
+
+# classicalbts------------------------------------------------
+_classical_bts = ClassicalBts(dus=[_du], cu=_cu, instance_id=147, global_bts_id=1)
+
+
+# #cloud_topology------------------------------------------------
+_tl_cloud_topology = "CLOUD_5G_CLASSICAL_ASIB_ABIO_AEQN_eCPRI"
+
+tl = TestLine(
+    test_pc=_host,
+    ues=[_android1, _android2],
+    gnbs=[_classical_bts],
+    enbs=[_lte_real_enb],
+    appserver=_appserver,
+    tl_cloud_topology=_tl_cloud_topology,
+)

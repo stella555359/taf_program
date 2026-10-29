@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Excel temp files (auto-generated when file is open)
+~$*.xlsx
+~$*.xls
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========== Project Specific ==========
+
+# Data files - large test data, do not push to remote
+data/
+docs/
+
+# Reports - generated outputs, do not push to remote
+reports/
+webapp_data/
+
+# Root-level standalone Python scripts (not part of the package)
+/*.py
+/*.txt
+# Backup folders
+zbk/
+**/zbk/
+*.bak
+*_backup/
+backups/
+
+# Logs
+*.log
+logs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Test outputs
+test_output/
+*.test.xlsx
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Traffic Model{% endblock %}
+
+{% block content %}
+<main class="page-shell module-shell">
+    <section class="detail-panel">
+        <p class="eyebrow">Capability module</p>
+        <h1>{{ module.title }} 🍏</h1>
+        <p class="hero-text">{{ module.summary }}</p>
+        <div class="module-meta">
+            <span class="meta-chip{% if module.repo_exists %} ok-chip{% else %} warn-chip{% endif %}">Repository {{ 'available' if module.repo_exists else 'missing' }}</span>
+            <span class="meta-chip{% if module.env_map_exists %} ok-chip{% else %} warn-chip{% endif %}">env_map {{ 'ready' if module.env_map_exists else 'missing' }}</span>
+            <span class="meta-chip">Jobs {{ module.job_count }}</span>
+        </div>
+    </section>
+
+    <section class="hero-card">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Resolve env</p>
+                <h2>Load testline context from env_map.json</h2>
+            </div>
+        </div>
+        <form class="upload-form" method="get" action="{{ url_for('kpi_traffic_model.index') }}">
+            <label class="search-field">
+                <span>Env</span>
+                <input type="text" name="env" value="{{ env }}" placeholder="T282 or T813" required>
+            </label>
+            <button class="button-link" type="submit">Load testline</button>
+        </form>
+        {% if env_error %}
+        <p class="upload-hint">{{ env_error }}</p>
+        {% endif %}
+    </section>
+
+    {% if env_context %}
+    <section class="hero-card">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Submit workflow</p>
+                <h2>Run KPI traffic model</h2>
+            </div>
+        </div>
+        <form class="upload-form" action="{{ url_for('kpi_traffic_model.submit') }}" method="post">
+            <input type="hidden" name="env" value="{{ env_context.env }}">
+            <label class="search-field">
+                <span>Resolved config</span>
+                <input type="text" value="{{ env_context.resolved_config.config_id }} | {{ env_context.resolved_config.config_path }}" disabled>
+            </label>
+            <div class="search-field checkbox-field">
+                <span>Select UEs</span>
+                {% for ue in env_context.ues %}
+                <label><input type="checkbox" name="selected_ue_indexes" value="{{ ue.ue_index }}"> {{ ue.label }}{% if ue.ue_ip %} | {{ ue.ue_ip }}{% endif %}</label>
+                {% endfor %}
+            </div>
+            <div class="search-field checkbox-field">
+                <span>Runtime</span>
+                <label><input type="checkbox" name="dry_run" value="1" checked> Dry run</label>
+                <label><input type="checkbox" name="stop_on_failure" value="1" checked> Stop on failure</label>
+                <label><input type="checkbox" name="auto_generator" value="1"> Auto generator</label>
+                <label><input type="checkbox" name="auto_detector" value="1"> Auto detector</label>
+            </div>
+            <label class="search-field">
+                <span>log_level</span>
+                <input type="text" name="log_level" value="INFO">
+            </label>
+            <label class="search-field">
+                <span>max_parallel_workers</span>
+                <input type="number" name="max_parallel_workers" min="1" value="4">
+            </label>
+            <label class="search-field">
+                <span>stage_execution_mode</span>
+                <select name="stage_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+            <label class="search-field">
+                <span>same_type_execution_mode</span>
+                <select name="same_type_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+            <label class="search-field">
+                <span>cross_type_execution_mode</span>
+                <select name="cross_type_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+
+            <div class="search-field checkbox-field">
+                <span>apply_preconditions</span>
+                <label><input type="checkbox" name="enable_preconditions" value="1" checked> Enable</label>
+                <label><input type="checkbox" name="cell_barred" value="1"> cell_barred</label>
+            </div>
+            <label class="search-field">
+                <span>pa_port_state</span>
+                <select name="pa_port_state">
+                    <option value="">leave empty</option>
+                    <option value="enabled">enabled</option>
+                    <option value="disabled">disabled</option>
+                </select>
+            </label>
+            <label class="search-field">
+                <span>precondition_notes</span>
+                <input type="text" name="precondition_notes" placeholder="Optional notes for preconditions">
+            </label>
+
+            <div class="search-field checkbox-field">
+                <span>attach</span>
+                <label><input type="checkbox" name="enable_attach" value="1" checked> Enable</label>
+            </div>
+            <label class="search-field">
+                <span>attach_timeout_seconds</span>
+                <input type="number" name="attach_timeout_seconds" min="1" value="120">
+            </label>
+            <label class="search-field">
+                <span>attach_execution_mode</span>
+                <select name="attach_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+
+            <div class="search-field checkbox-field">
+                <span>dl_burst_appserver</span>
+                <label><input type="checkbox" name="enable_dl_burst" value="1"> Enable</label>
+            </div>
+            <label class="search-field">
+                <span>dl_burst script_path</span>
+                <input type="text" name="dl_burst_script_path" placeholder="Relative path under allowed_script_roots">
+            </label>
+            <label class="search-field">
+                <span>dl_burst script_args</span>
+                <textarea name="dl_burst_script_args" rows="4" placeholder="One argument per line"></textarea>
+            </label>
+            <label class="search-field">
+                <span>dl_burst_execution_mode</span>
+                <select name="dl_burst_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+
+            <div class="search-field checkbox-field">
+                <span>detach</span>
+                <label><input type="checkbox" name="enable_detach" value="1" checked> Enable</label>
+            </div>
+            <label class="search-field">
+                <span>detach_execution_mode</span>
+                <select name="detach_execution_mode">
+                    <option value="serial">serial</option>
+                    <option value="parallel">parallel</option>
+                </select>
+            </label>
+
+            <p class="upload-hint">Current page builds one default stage and maps selected UE objects directly from the resolved testline context. The backend runner already supports serial and basic parallel stage execution.</p>
+            <p class="upload-hint upload-hint-small">Supported models: {{ module.supported_models|join(', ') }}. sample command: {{ sample_command }}</p>
+            <button class="button-link" type="submit">Submit KPI traffic model job</button>
+        </form>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Resolved env</p>
+                <h2>Current testline context</h2>
+            </div>
+        </div>
+        <dl class="dashboard-notes compact-dashboard-notes compact-dashboard-notes-3">
+            <div><dt>Config id</dt><dd>{{ env_context.resolved_config.config_id }}</dd></div>
+            <div><dt>Department</dt><dd>{{ env_context.resolved_config.department or '-' }}</dd></div>
+            <div><dt>Site</dt><dd>{{ env_context.resolved_config.site or '-' }}</dd></div>
+            <div><dt>Topology</dt><dd>{{ env_context.resolved_config.topology_id or '-' }}</dd></div>
+            <div><dt>UE count</dt><dd>{{ env_context.summary.ue_count or env_context.ues|length }}</dd></div>
+            <div><dt>Allowed script roots</dt><dd>{{ env_context.resolved_config.allowed_script_roots|join(', ') or '-' }}</dd></div>
+        </dl>
+    </section>
+    {% endif %}
+
+    <section class="table-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recent jobs</p>
+                <h2>KPI traffic model history</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="job-list-table">
+                <thead>
+                    <tr>
+                        <th>Job id</th>
+                        <th>Env</th>
+                        <th>Status</th>
+                        <th>Platform state</th>
+                        <th>Artifacts</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td class="filename-cell">
+                            <a class="text-link filename-link" href="{{ url_for('kpi_traffic_model.job_detail', job_id=job.id) }}" title="{{ job.id }}">{{ job.id }}</a>
+                            <div class="job-metadata-grid">
+                                <div class="job-metadata-line">
+                                    <span class="job-metadata-label">Env</span>
+                                    <span class="job-metadata-value">{{ job.env or '-' }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="job-metric-cell">{{ job.env or '-' }}</td>
+                        <td class="job-status-cell"><span class="status-chip status-{{ job.status }}">{{ job.status }}</span></td>
+                        <td class="job-platform-cell">
+                            <div class="filename-context"><span class="meta-chip filename-context-chip">{{ job.platform_recent_stage }}</span></div>
+                            <div class="filename-context">{{ job.platform_recent_message }}</div>
+                        </td>
+                        <td class="job-artifacts-cell">
+                            {% set preview_artifacts = job.platform_download_artifacts[:2] %}
+                            <div class="job-artifact-summary">
+                                <div class="job-artifact-count">{{ job.platform_download_artifacts|length }} files</div>
+                                {% if preview_artifacts %}
+                                <div class="artifact-links artifact-links-compact artifact-links-inline">
+                                    {% for artifact in preview_artifacts %}
+                                    <a href="{{ url_for(artifact.artifact_endpoint, job_id=job.id, artifact_kind=artifact.download_endpoint_kind) }}" title="{{ artifact.link_label }}">{{ artifact.link_label }}</a>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if job.platform_download_artifacts|length > preview_artifacts|length %}
+                                <a class="artifact-more-link" href="{{ url_for('kpi_traffic_model.job_detail', job_id=job.id) }}">View all</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="job-created-cell">{{ job.created_at }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No jobs yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}

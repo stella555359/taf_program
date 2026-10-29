@@ -1,0 +1,294 @@
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+# - values-override.yaml will overwrite the values.yaml file.
+# - Operator need to set the following values base on the real scenario.
+
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+
+  # - Description: psk for vault application access
+  psk:
+    httpd:                 "4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m"
+    ne3sagent:             "4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m"
+    providercontroller:    "4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m"
+    certificatemanagement: "4ReY6MQRFhxZuQGkeuoQqEqEp95gKj9m"
+
+  # - Description: convention of name
+  name_convention:
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+
+  # - Description: registry of image
+  # - Support Value: "bcmt-registry:5000/dep" for NCS, "registry.kube-system.svc.nokia.net:5555/dep" for NCIR
+  image:
+    registry: "bcmt-registry:5000/dep"
+
+  # timezone
+  timezone: "Asia/Shanghai"
+
+  # - Description: the number of CPUE Pods. If cnfLayout is basic, [1, 2] is officially supported; if cnfLayout is redundant, [2, 4] is officially supported.
+  # - Note: If cnfLayout is redundant and cpuecount is 1, it will be modified to 2 automatically.
+  cpuecount: 1
+  # - Description: the number of UPUE Pods. If cnfLayout is basic, [1, 10] is officially supported; if cnfLayout is redundant, [2, 20] is officially supported.
+  # - Note: If cnfLayout is redundant and upuecount is 1, it will be modified to 2 automatically.
+  upuecount: 1
+
+  # - Description: the layout of the CU. Redundant means CU supports high availability.
+  # - Support Value: basic or redundant
+  cnfLayout: "basic"
+
+  devicePoolList:
+    # The SR-IOV Device Pool used by s1u,x2u,f1u networks (fast path)
+    fastPathDevicePool: "nokia.k8s.io/sriov_ens1f1"
+    # The SR-IOV Device Pool used by oam,tracing,f1c,x2c networks (slow path)
+    slowPathDevicePool: "nokia.k8s.io/sriov_ens1f1"
+
+  # - Description: Infrastructure configuration
+  cpuDevicePool:
+    # - Support Value: "nokia.k8s.io/shared_pool" for NCS, "nokia.k8s.io/shared_caas" for NCIR
+    sharedCore: "nokia.k8s.io/shared_pool"
+    # - Support Value: "nokia.k8s.io/exclusive_numa_0_pool" or "nokia.k8s.io/exclusive_numa_1_pool" for NCS
+    #                  "nokia.k8s.io/exclusive_caas" for NCIR
+    dedicatedCore: "nokia.k8s.io/exclusive_numa_0_pool"
+
+  # - Description: the deployment mode of the CU, Non-Standalone(NSA) or Standalone mode(SA).
+  # support values: NSA or SA
+  deploymentmode: "NSA"
+
+  # external network configuration for NSA and SA mode
+  # if deploymentmode set to NSA, please set the related externalNetwork in the NSA list
+  # if deploymentmode set to SA, please set the related externalNetwork in the SA list
+  NSA:
+    cpif:
+      - x2c
+      - f1c
+    upue:
+      - f1u
+      - s1u
+      - x2u
+    oamext:
+      - oam
+  SA:
+    cpif:
+      - ngc
+      - f1c
+      - xnc
+    upue:
+      - f1u
+      - ngu
+      - xnu
+    oamext:
+      - oam
+
+  # external network configuration
+  # Values set base on real network scenario
+  # all ip address support IPv4/IPv6,IPv4 FORMAT (e.g. "10.0.0.0/24"),IPv6 FORMAT(e.g. "2001:db8::/45")
+  # "start" means start ip address,supportIPv4/IPv6
+  # "end"  means end ip address,supportIPv4/IPv6
+  # for s1u,x2u,ngu,f1u,if "upuecount"  is 1, the "end" can be empty or same as "start"
+  # for s1u,x2u,ngu,f1u,if "upuecount" is not 1, the count of range between "start" ip address and "end" ip address should equal "upuecount"-1
+  # for x2c,f1c,ngc, the default replicaCount is 1 and not recommend to change this value, so the "end" can be empty or same as "start"
+  # "vlanId" means the vlan id of this network
+  # "subnet" means the subnet of this network
+  externalNetwork:
+    # oam network configuration
+    # Note: Values set base on real network scenario
+    # support IPv4/IPv6,IPv4 FORMAT (e.g. "10.0.0.0/24"),IPv6 FORMAT(e.g. "2001:db8::/45")
+    # end can be empty or same as start
+    oam:
+      ipInfo:
+        vlanId: "1344"
+        subnet: "10.107.89.80/28"
+        start: "10.107.89.88"
+        end: "10.107.89.88"
+      # - Description: policy based route for oam network.
+      proute:
+        # - Description: the orderNumber of oam route
+        # Note: should different from orderNumber in the SCF file to avoid conflict
+        orderNumber: "5"
+        # - Description: the ipv4/ipv6 gateway ip address information of oam network
+        # - Note: Values set base on real network scenario
+        gateway: "10.107.89.81"
+
+    # tracing network common configuration such as subnet,gateway,vlanId
+    # Note: Values set base on real network scenario
+    # support IPv4/IPv6,IPv4 FORMAT (e.g. "10.0.0.0/24"),IPv6 FORMAT(e.g. "2001:db8::/45")
+    # "start" means start ip address,supportIPv4/IPv6
+    # "end"  means end ip address,supportIPv4/IPv6
+    # for "upue" and "cpue",if "upuecount" and "cpuecount" is set to 1, the "end" can be empty or same as "start"
+    # if "upuecount" and "cpuecount" is not 1, the count of range between "start" ip address and "end" ip address should equal "upuecount"/"cpuecount"-1
+    # for others, the default replicaCount is 1 and not recommend to change this value, so the "end" can be empty or same as "start"
+    # "vlanId" means the vlan id of this network
+    # "subnet" means the subnet of this network
+    tracing:
+      # tracing network subnet
+      subnet: "10.107.88.0/24"
+      vlanInfo:
+        # the vlanId of tracing network
+        vlanId: "1345"
+      # - Description: policy based route for tracing network.
+      proute:
+        # - Description: the order number of trace policy route
+        # Note: should different from orderNumber in the SCF file to avoid conflict
+        orderNumber: "1000"
+        # - Description: the ipv4/ipv6 gateway ip address information of trace network
+        # - Note: Values set base on real network scenario
+        gateway: "10.107.88.1"
+      ipInfo:
+        cpif:
+          start: "10.107.88.64"
+          end: "10.107.88.64"
+        cpnb:
+          start: "10.107.88.65"
+          end: "10.107.88.65"
+        cpnrt:
+          start: "10.107.88.66"
+          end: "10.107.88.66"
+        cpue:
+          start: "10.107.88.67"
+          end: "10.107.88.67"
+        cpcl:
+          start: "10.107.88.68"
+          end: "10.107.88.68"
+        oamasm:
+          start: "10.107.88.69"
+          end: "10.107.88.69"
+        oamcm:
+          start: "10.107.88.70"
+          end: "10.107.88.70"
+        oamfm:
+          start: "10.107.88.71"
+          end: "10.107.88.71"
+        oampm:
+          start: "10.107.88.72"
+          end: "10.107.88.72"
+        oamconfig:
+          start: "10.107.88.73"
+          end: "10.107.88.73"
+        oamext:
+          start: "10.107.88.74"
+          end: "10.107.88.74"
+    # x2u network is for NSA mode, don't need to configure it when you set mode to SA
+    x2u:
+      ipInfo:
+        vlanId: "1340"
+        subnet: "10.107.89.32/28"
+        start: "10.107.89.40"
+        end: "10.107.89.40"
+    # f1u network is for NSA mode or SA mode,need to configure whether you set mode to SA or NSA
+    f1u:
+      ipInfo:
+        vlanId: "1342"
+        subnet: "10.107.89.0/27"
+        start: "10.107.89.12"
+        end: "10.107.89.12"
+    # s1u network is for NSA mode, don't need to configure it when you set mode to SA
+    s1u:
+      ipInfo:
+        vlanId: "1341"
+        subnet: "10.107.89.48/28"
+        start: "10.107.89.56"
+        end: "10.107.89.56"
+    # f1c network is for NSA mode or SA mode,need to configure whether you set mode to SA or NSA
+    f1c:
+      ipInfo:
+        vlanId: "1342"
+        subnet: "10.107.89.0/27"
+        start: "10.107.89.13"
+        end: "10.107.89.13"
+    # x2c network is for NSA mode, don't need to configure it when you set mode to SA
+    x2c:
+      ipInfo:
+        vlanId: "1343"
+        subnet: "10.107.89.64/28"
+        start: "10.107.89.72"
+        end: "10.107.89.72"
+    # ngu network is for SA mode, don't need to configure it when you set mode to NSA
+    ngu:
+      ipInfo:
+        vlanId: 427
+        subnet: "10.71.171.192/29"
+        start: "10.71.171.198"
+        end: "10.71.171.198"
+    # ngc network is for SA mode, don't need to configure it when you set mode to NSA
+    ngc:
+      ipInfo:
+        vlanId: 415
+        subnet: "10.71.170.200/29"
+        start: "10.71.170.206"
+        end: ""
+    # xnu network is for SA mode, don't need to configure it when you set mode to NSA
+    xnu:
+      ipInfo:
+        vlanId: 517
+        subnet: "10.71.172.192/29"
+        start: "10.71.172.198"
+        end: "10.71.172.198"
+    # xnc network is for SA mode, don't need to configure it when you set mode to NSA
+    xnc:
+      ipInfo:
+        vlanId: 518
+        subnet: "10.71.172.200/29"
+        start: "10.71.172.206"
+        end: ""
+
+
+  # internale1 network common configuration such as subnet,gateway,vlanId
+  # Note: Values set base on real network scenario, this network used internal , please use internal ip.
+  # support IPv4/IPv6,IPv4 FORMAT (e.g. "10.0.0.0/24"),IPv6 FORMAT(e.g. "2001:db8::/45")
+  # "start" means start ip address,supportIPv4/IPv6
+  # "end"  means end ip address,supportIPv4/IPv6
+  # "vlanId" means the vlan id of this network
+  # "subnet" means the subnet of this network
+  # should set different subnet and vlan for different tenant on the same env
+  internale1:
+    ipInfo:
+      subnet: "192.168.2.0/24"
+    vlanInfo:
+      vlanId: "1104"
+
+  internale1NetworkInfo:
+    cpif:
+      internale1:
+        ipInfo:
+          start: "192.168.2.18"
+          end: ""
+    cpnrt:
+      internale1:
+        ipInfo:
+          start: "192.168.2.19"
+          end: ""
+
+rcpsdl:
+  cluster:
+    ## when deployed on single node hardAntiAffinity should set to false, otherwise set to true.
+    # support value : true or false
+    # default value :true
+    hardAntiAffinity: true
+
+pm:
+  pv:
+    ## when deployed on single node, it should set to false.
+    enabled: true
+  pvc:
+    hfrw:
+      ## when pm.pv.enabled set to true, storageClassName need to be set, and the pv must support RWX access mode.
+      storageClassName: "csi-cephfs"
+    lfrw:
+      ## when pm.pv.enabled set to true, storageClassName need to be set, and the pv must support RWX access mode.
+      storageClassName: "csi-cephfs"

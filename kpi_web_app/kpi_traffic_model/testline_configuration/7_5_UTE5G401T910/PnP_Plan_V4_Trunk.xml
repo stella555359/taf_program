@@ -1,0 +1,1764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE raml SYSTEM 'raml20.dtd'>
+<raml version="2.0" xmlns="raml20.xsd">
+  <cmData type="plan">
+    <header>
+      <log dateTime="2021-06-23T15:30:47.000+08:00" action="created" appInfo="ActualExporter">InternalValues are used</log>
+    </header>
+    <managedObject class="com.nokia.du.5g:MRBTS" version="sBTSDU21B_2105_001" distName="PLMN-PLMN/MRBTS-4223" id="114119" operation="create">
+      <p name="$maintenanceRegionId">5GSCIV-HZ</p>
+	  <p name="AutoConnHWID">EA193954901</p>
+      <p name="$maintenanceRegionCId">5GSC-HZ</p>
+      <p name="name">MRBTS-4223</p>
+      <p name="altitude">19</p>
+      <p name="btsName">5gDU_HZSG3_mmW_TL910</p>
+      <p name="latitude">301816565</p>
+      <p name="longitude">1201386972</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EQM_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1" id="114122" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqm:EQM" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1" id="174723" operation="create"/>
+    <managedObject class="com.nokia.srbts.nrbts:NRBTS" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223" id="114126" operation="create">
+      <p name="actCarrierAggregation">1</p>
+      <p name="actCellTraceReport">0</p>
+      <p name="actCoverageNonCoherentUes">1</p>
+      <p name="actCsiReportsMuxOnPucch">0</p>
+      <p name="actCustomBsr">0</p>
+      <p name="actDDDSPeriodOptimization">1</p>
+      <p name="actEcpriPhase2">1</p>
+      <p name="actEcpriPhase3">0</p>
+      <p name="actEcpriRuPtpOnlySync">0</p>
+      <p name="actEnhancedLinkAdaptation">1</p>
+      <p name="actFdmEnhancedScheduling">0</p>
+      <p name="actFdmScheduling">0</p>
+      <p name="actGeneralConnectivityBronze">1</p>
+      <p name="actGeneralConnectivityGold">0</p>
+      <p name="actGeneralConnectivitySilver">1</p>
+      <p name="actGnbInitRlf">1</p>
+      <p name="actLteNrDss">0</p>
+      <p name="actMicroDTX">0</p>
+      <p name="actMultVlan">1</p>
+      <p name="actMultiDrbNSA">1</p>
+      <p name="actMultiFrequencyBandIndicatorNRSupport">0</p>
+      <p name="actNonGbrServiceDiff">0</p>
+      <p name="actNsaSlice">0</p>
+      <p name="actPCMDReport">1</p>
+      <p name="actPaging">0</p>
+      <p name="actPrioVoiceTraffic">0</p>
+      <p name="actRanSharing">0</p>
+      <p name="actRohc">0</p>
+      <p name="actSACallProcessingDU">0</p>
+      <p name="actSpatialStreamPooling">0</p>
+      <p name="actTddPrePooling">0</p>
+      <p name="actTimeAlignExtension">1</p>
+      <p name="actUacBarPerPlmn">0</p>
+      <p name="actUeDeltaConfigOptimize">0</p>
+      <p name="cPlaneDscp">46</p>
+      <p name="drxDefaultPaging">128</p>
+      <list name="duFlowControlProf1">
+        <item>
+          <p name="dddsPeriod">10</p>
+          <p name="flowControlReactionDelay">5</p>
+          <p name="maxRlcQueueingDelay">20</p>
+          <p name="minThFlowCtrl">10</p>
+        </item>
+      </list>
+      <p name="f1NbResetRetryForFault">1</p>
+      <p name="f1NbSetupRetryForFault">1</p>
+      <p name="f1ResetRspTmr">60</p>
+      <p name="f1SetupRspTmr">60</p>
+      <p name="gNbCuName">CU-TL910</p>
+      <p name="gNbCuType">0</p>
+      <p name="gNbIdLength">22</p>
+      <p name="gtpuManagementDscp">46</p>
+      <p name="mcc">262</p>
+      <p name="mnc">3</p>
+      <p name="mncLength">2</p>
+      <p name="n310">10</p>
+      <p name="n311">1</p>
+      <p name="operationalState">5</p>
+      <p name="pdschRat0RbgConfig">1</p>
+      <p name="periodicBSRTimer">10</p>
+      <p name="pfaTargetPRACH">3</p>
+      <list name="phrConfig">
+        <item>
+          <p name="dlPathlossChg">1</p>
+          <p name="tPeriodicPhr">1</p>
+          <p name="tProhibitPhr">0</p>
+        </item>
+      </list>
+      <p name="pwsRestIndEnabled">0</p>
+      <p name="sCCNumber">1</p>
+      <p name="sCellActivationMethod">1</p>
+      <p name="sCellDeactivationBadRlqCount">0</p>
+      <p name="slotLAUseHighBlerAckNack">1</p>
+      <p name="slotLAUseLowBlerAckNack">1</p>
+      <p name="srb1Config">0</p>
+      <list name="srb1RlcAmProf">
+        <item>
+          <p name="dlMaxRetxThreshold">8</p>
+          <p name="dlPollByte">0</p>
+          <p name="dlPollPDU">0</p>
+          <p name="dlTPollRetr">45</p>
+          <p name="dlTProhib">0</p>
+          <p name="dlTReassembly">35</p>
+          <p name="ulMaxRetxThreshold">8</p>
+          <p name="ulPollByte">0</p>
+          <p name="ulPollPDU">0</p>
+          <p name="ulTPollRetr">45</p>
+          <p name="ulTProhib">0</p>
+          <p name="ulTReassembly">35</p>
+        </item>
+      </list>
+      <list name="srb2RlcAmProf">
+        <item>
+          <p name="dlMaxRetxThreshold">8</p>
+          <p name="dlPollByte">0</p>
+          <p name="dlPollPDU">0</p>
+          <p name="dlTPollRetr">45</p>
+          <p name="dlTProhib">0</p>
+          <p name="dlTReassembly">35</p>
+          <p name="ulMaxRetxThreshold">8</p>
+          <p name="ulPollByte">0</p>
+          <p name="ulPollPDU">0</p>
+          <p name="ulTPollRetr">45</p>
+          <p name="ulTProhib">0</p>
+          <p name="ulTReassembly">35</p>
+        </item>
+      </list>
+      <list name="srb3RlcAmProf">
+        <item>
+          <p name="dlMaxRetxThreshold">8</p>
+          <p name="dlPollByte">0</p>
+          <p name="dlPollPDU">0</p>
+          <p name="dlTPollRetr">45</p>
+          <p name="dlTProhib">0</p>
+          <p name="dlTReassembly">35</p>
+          <p name="ulMaxRetxThreshold">8</p>
+          <p name="ulPollByte">0</p>
+          <p name="ulPollPDU">0</p>
+          <p name="ulTPollRetr">45</p>
+          <p name="ulTProhib">0</p>
+          <p name="ulTReassembly">35</p>
+        </item>
+      </list>
+      <p name="t304">6</p>
+      <p name="t310">6</p>
+      <p name="t311">30000</p>
+      <p name="tRLFindForDU">0</p>
+      <p name="timerF1UeProcGuard">2500</p>
+      <p name="timerf1NonUeProcGuard">60</p>
+      <p name="tmpParam4">2</p>
+      <p name="trsIpv6Enabled">0</p>
+      <p name="ueSpecAlgControl">0</p>
+      <p name="ulVoipPacketAggrSinrThreshold">20</p>
+      <p name="ulsVoipPacketSize">680</p>
+      <p name="variableSourceUdpPortEnabled">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:TNLSVC" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1" id="114125" operation="create"/>
+	<managedObject distName="PLMN-PLMN/MRBTS-4223/INTEGRATE-1" class="INTEGRATE" version="INT_01" operation="create">
+	  <p name="hostNameEm">10.68.90.139</p>
+      <p name="hostNameNe3sws">10.68.90.139</p>
+      <p name="ipVersion">0</p>
+      <p name="plannedSWReleaseVersion">5G21B_GNB_0000_000400_001300</p>
+      <p name="securityMode">0</p>
+      <p name="systemReleaseVersion">5G21BDU</p>
+    </managedObject>
+	    <managedObject class="com.nokia.srbts.mnl:MNL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1" id="124010" operation="create">
+      <p name="actNcYgMPlane">0</p>
+      <p name="plannedSWReleaseVersion">5G21B_GNB_0000_000400_001300</p>
+      <p name="productVariantPlanned">33</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:APEQM_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1" id="114123" operation="create">
+      <p name="aldScanningInterval">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:HWTOP_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/HWTOP_R-1" id="174739" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqm:APEQM" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1" id="174726" operation="create">
+      <p name="aldScanningInterval">1</p>
+      <p name="allowBbPoolRecoveryReset">1</p>
+      <p name="berMajorAlarmThreshold">-12</p>
+      <p name="berMinorAlarmThreshold">0</p>
+      <p name="sfpOperatorMode">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:HWTOP" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/HWTOP-1" id="174725" operation="create"/>
+    <managedObject class="com.nokia.srbts.nrbts:BWP_PROFILE" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-1" id="174736" operation="create">
+      <p name="bwpType">0</p>
+      <list name="locationAndBandwidthDl">
+        <item>
+          <p name="cRbSizeDl">1</p>
+          <p name="cRbStartDl">1</p>
+        </item>
+      </list>
+      <list name="locationAndBandwidthUl">
+        <item>
+          <p name="cRbSizeUl">0</p>
+          <p name="cRbStartUl">0</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:BWP_PROFILE" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-49" id="174733" operation="create">
+      <p name="bwpType">1</p>
+      <list name="locationAndBandwidthDl">
+        <item>
+          <p name="cRbSizeDl">1</p>
+          <p name="cRbStartDl">1</p>
+        </item>
+      </list>
+      <list name="locationAndBandwidthUl">
+        <item>
+          <p name="cRbSizeUl">0</p>
+          <p name="cRbStartUl">0</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:TRACKINGAREA" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/TRACKINGAREA-0" id="174738" operation="create">
+      <p name="fiveGsTac">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRDRB" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDRB-1" id="174728" operation="create">
+      <p name="actDddsReduction">0</p>
+      <p name="discardTimer">0</p>
+      <p name="dlFlowControlAlgo">1</p>
+      <p name="dscp">0</p>
+      <p name="maxDddsPeriodCpuOvld">40</p>
+      <p name="nrDrbMacDN">MRBTS-4223/NRBTS-4223/NRDRB_MAC-1</p>
+      <p name="nrDrbRlcAmDN">MRBTS-4223/NRBTS-4223/NRDRB_RLC_AM-1</p>
+      <p name="resType">0</p>
+      <p name="rlcMode">2</p>
+      <p name="schedulWeight">10</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRCELLGRP" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRCELLGRP-0" id="174729" operation="create">
+      <p name="actLoadCsiPeriodicity">0</p>
+      <p name="actNackDtxFloodControlDetection">1</p>
+      <p name="actProactUlScheduling">0</p>
+      <p name="addNumOfNonGBRBearersCGRPSAHo">0</p>
+      <p name="addNumOfRrcCGRPSAHo">0</p>
+      <p name="beamformingGridSel">0</p>
+      <p name="loadBasedCsiPerThreshold">50</p>
+      <p name="maxDlHarqTx">5</p>
+      <p name="maxHarqMsg3Tx">5</p>
+      <p name="maxNumOfNonGBRBearersCGRPSA">550</p>
+      <p name="maxNumOfRrcCGRPSA">275</p>
+      <p name="maxUlHarqTx">5</p>
+      <list name="nackFloodControlF1">
+        <item>
+          <p name="dataFlowResumeThrFR1">5</p>
+          <p name="dataFlowResumeThrFR2">20</p>
+          <p name="forgettingRatioFR1">50</p>
+          <p name="forgettingRatioFR2">50</p>
+          <p name="maxNackFloodBurstSizeFR1">10</p>
+          <p name="maxNackFloodBurstSizeFR2">40</p>
+        </item>
+      </list>
+      <list name="nrCellList">
+        <p>1</p>
+      </list>
+      <p name="numberOfTransmittedSsBlocks">32</p>
+      <p name="pucchF2MaxCodeRate">15</p>
+      <p name="scs">120</p>
+      <p name="spCellChangeEnabled">0</p>
+      <p name="ssBurstSetPeriod">20</p>
+      <p name="ulSchedTimeInterval">100</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRDRB_MAC" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDRB_MAC-1" id="174732" operation="create">
+      <p name="lcgid">1</p>
+      <p name="schedulPrio">12</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRDRB_RLC_AM" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDRB_RLC_AM-1" id="174731" operation="create">
+      <p name="dlMaxRetxThreshold">16</p>
+      <p name="dlPollByte">500</p>
+      <p name="dlPollPDU">64</p>
+      <p name="dlTPollRetr">45</p>
+      <p name="dlTProhib">15</p>
+      <p name="dlTReassembly">15</p>
+      <p name="dlTReassemblyIBCA">30</p>
+      <p name="duFlowControlProfId">1</p>
+      <p name="ulMaxRetxThreshold">32</p>
+      <p name="ulPollByte">500</p>
+      <p name="ulPollPDU">64</p>
+      <p name="ulTPollRetr">45</p>
+      <p name="ulTProhib">15</p>
+      <p name="ulTReassembly">15</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRSCTP" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRSCTP-1" id="174735" operation="create">
+      <p name="f1SctpProfileIdOfDu">1</p>
+      <list name="sctpProfile">
+        <item>
+          <p name="sctpChunkBundlingEnabled">0</p>
+          <p name="sctpHeartbeatInterval">20</p>
+          <p name="sctpMaxBurst">4</p>
+          <p name="sctpMaxPayloadSize">1395</p>
+          <p name="sctpMaxTimeSctpSetup">60</p>
+          <p name="sctpPathMaxRetrans">6</p>
+          <p name="sctpProfileId">1</p>
+          <p name="sctpRtoInit">3000</p>
+          <p name="sctpRtoMax">30000</p>
+          <p name="sctpRtoMin">250</p>
+          <p name="sctpSackDelay">200</p>
+          <p name="sctpSackFreq">2</p>
+          <p name="sctpValidCookieLife">60</p>
+          <p name="sctpWaitTimeInitSeqRetry">240</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRPMRNL" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRPMRNL-1" id="174734" operation="create">
+      <p name="miNrBeamforming">15</p>
+      <p name="miNrCaDu">15</p>
+      <p name="miNrCaDu01">0</p>
+      <p name="miNrCellAvailability">15</p>
+      <p name="miNrCellUtilPerPLMN">0</p>
+      <p name="miNrCellUtilization">15</p>
+      <p name="miNrDlHarq">15</p>
+      <p name="miNrDlSignalQuality">15</p>
+      <p name="miNrDlSignalQuality2">0</p>
+      <p name="miNrEcpriUpFCp">15</p>
+      <p name="miNrEirp">5</p>
+      <p name="miNrEnDssPerCell">15</p>
+      <p name="miNrF1CD">15</p>
+      <p name="miNrF1UDInterface">15</p>
+      <p name="miNrGnss">15</p>
+      <p name="miNrHighRlcReport">15</p>
+      <p name="miNrLowRlcReport">15</p>
+      <p name="miNrLteMgPerCell">15</p>
+      <p name="miNrMacPduTput">15</p>
+      <p name="miNrMacSduReport">15</p>
+      <p name="miNrMgPerCell">15</p>
+      <p name="miNrMobilityReportDu">15</p>
+      <p name="miNrPaging">0</p>
+      <p name="miNrPdcch">0</p>
+      <p name="miNrRRCD">15</p>
+      <p name="miNrRSADU">15</p>
+      <p name="miNrRacDu">15</p>
+      <p name="miNrRachUsage">15</p>
+      <p name="miNrSfpBbmod">15</p>
+      <p name="miNrSfpRmod">15</p>
+      <p name="miNrSfpSmod">15</p>
+      <p name="miNrSrb3D">15</p>
+      <p name="miNrTimingAdvance">15</p>
+      <p name="miNrUlHarq">15</p>
+      <p name="miNrUlSignalQuality">15</p>
+      <p name="tmpMiNrParam1">0</p>
+      <p name="tmpMiNrParam10">0</p>
+      <p name="tmpMiNrParam2">0</p>
+      <p name="tmpMiNrParam3">0</p>
+      <p name="tmpMiNrParam4">0</p>
+      <p name="tmpMiNrParam5">0</p>
+      <p name="tmpMiNrParam6">0</p>
+      <p name="tmpMiNrParam7">0</p>
+      <p name="tmpMiNrParam8">0</p>
+      <p name="tmpMiNrParam9">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRDU" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDU-1" id="114140" operation="create">
+      <p name="actInterNumerologyCa">0</p>
+      <list name="carrierAggregationSupportList">
+        <p>0</p>
+      </list>
+      <p name="f1CLinkStatusDU">1</p>
+      <list name="f1Cplane">
+        <item>
+          <p name="ipV4AddressDN1">MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1</p>
+        </item>
+      </list>
+      <list name="f1Uplane">
+        <item>
+          <p name="ipV4AddressDN1">MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1</p>
+        </item>
+      </list>
+      <p name="flexibleCAMode">0</p>
+      <p name="gNbDuId">0</p>
+      <p name="maxNumOfRrcConUEsPerDU">26928</p>
+      <p name="numOfDrbsReservForEmergency">0</p>
+      <list name="refNrCellGroup">
+        <p>0</p>
+      </list>
+      <p name="remotef1CplaneIpAddr">10.57.181.92</p>
+      <p name="targetDN">MRBTS-4223/EQM-1/APEQM-1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRCTRLTS" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRCTRLTS-1" id="174737" operation="create"/>
+    <managedObject class="com.nokia.srbts.nrbts:NRCELL" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRCELL-1" id="114134" operation="create">
+      <p name="actAdaptVoipTbs">0</p>
+      <p name="actAperCsi">0</p>
+      <p name="actBeamforming">1</p>
+      <p name="actCDrx">1</p>
+      <p name="actCDrxVoNR">0</p>
+      <p name="actDl256Qam">0</p>
+      <p name="actDlMuMimo">0</p>
+      <p name="actDownSampling">0</p>
+      <p name="actDynUlDataSplitMode">1</p>
+      <p name="actEirpControl">0</p>
+      <p name="actEmergencyCall">0</p>
+      <p name="actExternalAntennaBF">0</p>
+      <p name="actGBRAdmissionControl">0</p>
+      <p name="actGbrLoadRepDss">0</p>
+      <p name="actInfTddFrameMuting">0</p>
+      <p name="actMprAwareUlla">0</p>
+      <p name="actORuBeamforming">0</p>
+      <p name="actPRBBlanking">0</p>
+      <p name="actPciBasedCsiImRandomization">0</p>
+      <p name="actPcsiOnF2Fdm">0</p>
+      <p name="actPdschAtSsbSlots">0</p>
+      <p name="actPdschRmCsirsForTracking">0</p>
+      <p name="actPerCsiReportBundlingTddFr1">0</p>
+      <p name="actPrachMultiplexing">0</p>
+      <p name="actRrcReconfigAtBeamSwitch">0</p>
+      <p name="actSib1ForNsaCell">0</p>
+      <p name="actUca">0</p>
+      <p name="actUl256Qam">0</p>
+      <p name="actUlMuMimo">0</p>
+      <p name="actUlSrsBm">0</p>
+      <p name="actVoNrMobilityThresholds">0</p>
+      <p name="actVoipPacketAggr">0</p>
+      <p name="addNumOfGBRBearers">0</p>
+      <p name="administrativeState">2</p>
+      <p name="aggregationLevel">4</p>
+      <p name="arpPrioEmergencyCall">1</p>
+      <list name="beamSet">
+        <item>
+          <p name="basicBeamSet">201</p>
+          <p name="leftEdgeAngle">90</p>
+          <p name="lowerEdgeAngle">130</p>
+          <p name="nrBtsBeamRefinementP2">0</p>
+          <p name="rightEdgeAngle">90</p>
+          <p name="upperEdgeAngle">90</p>
+        </item>
+      </list>
+      <p name="bufferThesholdSCellDePrioritize">200</p>
+      <p name="cbraPreamblesPerSsb">64</p>
+      <p name="cellBarred">1</p>
+      <list name="cellBwpList">
+        <item>
+          <p name="bwpDN">MRBTS-4223/NRBTS-4223/BWP_PROFILE-1</p>
+          <p name="cellBwpId">0</p>
+        </item>
+        <item>
+          <p name="bwpDN">MRBTS-4223/NRBTS-4223/BWP_PROFILE-49</p>
+          <p name="cellBwpId">1</p>
+        </item>
+      </list>
+      <p name="cellDepType">0</p>
+      <p name="cellName">cell_1</p>
+      <p name="cellReservedForOperatorUse">1</p>
+      <p name="cellReservedForOtherUse">0</p>
+      <p name="cellTechnology">1</p>
+      <p name="chBw">100</p>
+      <p name="configuredEpsTac">1</p>
+      <p name="consecRlOThreshold">2</p>
+      <p name="consecRlRThreshold">2</p>
+      <list name="csirsForTracking">
+        <item>
+          <p name="csirsTrackingPeriod">80</p>
+        </item>
+      </list>
+      <p name="deliveryDelayThWithDataSplit">5</p>
+      <p name="dlDMRSAdditionalPosition">0</p>
+      <list name="dlDataDmrsFdm">
+        <item>
+          <p name="actDlDataDmrsFdm">0</p>
+          <p name="dlDataDmrsFdmThres256QamMcs">20</p>
+          <p name="dlDataDmrsFdmThres64QamMcs">20</p>
+        </item>
+      </list>
+      <p name="dlMimoMode">30</p>
+      <p name="dlMuMaxNumPairedUEs">8</p>
+      <list name="dlPtrs">
+        <item>
+          <p name="actDlPtrs">1</p>
+          <p name="dlPtrsFreqDensityThresNrb0">278</p>
+          <p name="dlPtrsFreqDensityThresNrb1">24</p>
+        </item>
+      </list>
+      <p name="dlQam256PowerBackoffSub6">15</p>
+      <p name="dllaBlerTarget">10</p>
+      <p name="dllaDeltaCqiMax">150</p>
+      <p name="dllaDeltaCqiMin">-150</p>
+      <p name="dllaDeltaCqiStepdown">250</p>
+      <p name="dllaIniMcs">3</p>
+      <p name="dmrsTypeAPosition">3</p>
+      <list name="drxProfile1">
+        <item>
+          <p name="drxInactivityTimer">8</p>
+          <p name="drxLongCycle">3</p>
+          <p name="drxOnDurationTimer">7</p>
+          <p name="drxRetransTimerDl">24</p>
+          <p name="drxRetransTimerUl">24</p>
+        </item>
+      </list>
+      <p name="drxWactDlEnabled">0</p>
+      <p name="drxWactUlEnabled">0</p>
+      <p name="eirpControlTimeAveragingWindow">6</p>
+      <p name="eirpControlTimeAveragingWindowStepSize">100</p>
+      <p name="emergencyCallLimServ">0</p>
+      <p name="enDcSyncStatus">1</p>
+      <p name="expectedCellSize">4</p>
+      <list name="fPdcchMonOccsnPo">
+        <p>0</p>
+      </list>
+      <list name="frRefList">
+        <p>MRBTS-4223/EQM-1/APEQM-1/RMOD-1</p>
+      </list>
+      <p name="freqBandIndicatorNR">260</p>
+      <p name="frequencyDensityThresNrb0">277</p>
+      <p name="frequencyDensityThresNrb1">277</p>
+      <p name="gapOffset">0</p>
+      <p name="gscn">23066</p>
+      <p name="iniNumSCellsToActivate">0</p>
+      <p name="initialPreambleReceivedTargetPower">-104</p>
+      <p name="intraFreqReselection">0</p>
+      <p name="lcrId">1</p>
+      <p name="lteNrDssMode">0</p>
+      <p name="lteToNrTimeOffset">0</p>
+      <p name="maxNumOfGBRBearersSA">10</p>
+      <p name="maxNumOfNonGBRBearersSA">550</p>
+      <p name="maxNumOfRrcSA">275</p>
+      <p name="mcsIndexForArtificialLoad">0</p>
+      <list name="modDNList">
+        <p>MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1</p>
+      </list>
+      <p name="modPeriodCoeff">2</p>
+      <p name="msg1FrequencyStart">0</p>
+      <p name="msg3DeltaPreamble">1</p>
+      <p name="n310">10</p>
+      <p name="n311">1</p>
+      <p name="nbrOfBlankedPRBsHighEdgeDL">0</p>
+      <p name="nbrOfBlankedPRBsHighEdgeUL">0</p>
+      <p name="nbrOfBlankedPRBsLowEdgeDL">0</p>
+      <p name="nbrOfBlankedPRBsLowEdgeUL">0</p>
+      <p name="nbrOfSsbPerRachOccasion">3</p>
+      <p name="nrCellIdentity">69189633</p>
+      <p name="nrCellType">22</p>
+      <p name="nrarfcn">2249947</p>
+      <p name="nrofHARQProcessesForPDSCH">16</p>
+      <p name="numOfPagingFrames">4</p>
+      <p name="numOfRadioResReservForEmergency">0</p>
+      <p name="numOfSubSectors">0</p>
+      <p name="numPagingOccsnPagingFrame">1</p>
+      <p name="numberOfRxBeamforming">2</p>
+      <p name="openLoopScheme">4</p>
+      <p name="operationalState">1</p>
+      <p name="pMax">160</p>
+      <p name="pMaxNROwnCell">20</p>
+      <p name="pagingOffset">1</p>
+      <list name="periodicCsiAcquisition">
+        <item>
+          <p name="csiReportPeriodicity">320</p>
+        </item>
+      </list>
+      <p name="physCellId">50</p>
+      <p name="powerRampingStep">1</p>
+      <p name="powerRampingStepHighPriorityCfra">2</p>
+      <p name="prachConfigurationIndex">38</p>
+      <p name="prachRootSequenceIndex">0</p>
+      <p name="prachSequenceType">0</p>
+      <p name="preambleTransMax">6</p>
+      <p name="preferredSCellTechnology">1</p>
+      <p name="primaryPathMaxQueueingDelay">10</p>
+      <p name="proceduralStatus">4</p>
+      <p name="pucchDataDtxNumOfSamples">100</p>
+      <p name="pucchF3MaxCodeRate">15</p>
+      <p name="pucchF3ModulationScheme">4</p>
+      <p name="pucchModeSelect">0</p>
+      <p name="puschDataDtxNumOfSamples">100</p>
+      <p name="puschMappingType">1</p>
+      <p name="qRxLevMin">-65</p>
+      <list name="rModDNList">
+        <p>MRBTS-4223/EQM-1/APEQM-1/RMOD-1</p>
+      </list>
+      <p name="raContentionResolutionTmr">7</p>
+      <p name="raResponseWindow">7</p>
+      <p name="rangeExtension">10</p>
+      <p name="reqMinNumPuschPrb">19</p>
+      <p name="rlResumeBackOffTmr">2000</p>
+      <p name="rlResumePathLossThreshold">110</p>
+      <p name="rlResumeSinrThreshold">100</p>
+      <p name="rloConsecDtxThreshold">2</p>
+      <p name="rloDtxRatioThreshold">50</p>
+      <p name="rloPathLossThreshold">130</p>
+      <p name="rloSinrThreshold">0</p>
+      <p name="rlpDetCsiBsiThreshold">75</p>
+      <p name="rlpDetDlHarqThreshold">35</p>
+      <p name="rlpRecCsiBsiThreshold">2</p>
+      <p name="rlpRecDlHarqThreshold">5</p>
+      <p name="rsrpThresholdSSB">11</p>
+      <p name="sCellActivationLevel">1</p>
+      <p name="sCellActivationMinDataThreshold">6000</p>
+      <p name="sCellBadChannelQualityThreshold">4</p>
+      <p name="sCellChannelEstimationPeriod">2000</p>
+      <p name="sCellDePrioritizeEvalPeriod">50</p>
+      <p name="sCellDeactivationTimerGNB">1280</p>
+      <p name="sCellGoodChannelQualityThreshold">8</p>
+      <p name="secondaryPathMaxQueueingDelay">10</p>
+      <p name="srPeriodicity">80</p>
+      <p name="ssPbchBlockPower">0</p>
+      <p name="ssbOccasionMaskIndex">0</p>
+      <p name="ssbScs">240</p>
+      <p name="t300">400</p>
+      <p name="t301">400</p>
+      <p name="t310">2000</p>
+      <p name="t311">3000</p>
+      <p name="t319">400</p>
+      <p name="targetSUOMeNBULSubframes">0</p>
+      <p name="targetTotalLoad">0</p>
+      <list name="tddFrameStructure">
+        <item>
+          <p name="frameStructureType">2</p>
+          <p name="guardPeriodLength">2</p>
+          <p name="ulDlDataSlotRatio">5</p>
+        </item>
+      </list>
+      <p name="timeRestrictionForIntfMeas">1</p>
+      <p name="timingAdvanceOffset">8620</p>
+      <p name="totalNumberOfRAPreambles">64</p>
+      <p name="trsMutingInBlankedPRBsEnabled">0</p>
+      <p name="type0CoresetConfigurationIndex">0</p>
+      <p name="type0SearchSpaceConfigurationIndex">0</p>
+      <p name="ulDMRSAdditionalPosition">255</p>
+      <list name="ulDataDmrsFdm">
+        <item>
+          <p name="actUlDataDmrsFdm">0</p>
+          <p name="ulDataDmrsFdmThres256QamMcs">20</p>
+          <p name="ulDataDmrsFdmThres64QamMcs">20</p>
+        </item>
+      </list>
+      <p name="ulMimoMode">20</p>
+      <p name="ulMuMaxNumPairedUEs">8</p>
+      <list name="ulPowerControlCommon">
+        <item>
+          <p name="actUlOpenLoopPwrCtrl">1</p>
+          <p name="alpha">1</p>
+          <p name="alphaSrs">7</p>
+          <p name="p0NominalPucch">-80</p>
+          <p name="p0NominalPucchF1F3">-108</p>
+          <p name="p0NominalPusch">-50</p>
+          <p name="p0NominalSrs">-80</p>
+          <p name="pucchF1DeltaF">-10</p>
+          <p name="pucchF3DeltaF">0</p>
+        </item>
+      </list>
+      <list name="ulPtrs">
+        <item>
+          <p name="actUlPtrs">0</p>
+          <p name="ulPtrsFreqDensityThresNrb0">278</p>
+          <p name="ulPtrsFreqDensityThresNrb1">24</p>
+        </item>
+      </list>
+      <p name="ullaBlerTarget">10</p>
+      <p name="ullaDeltaSinrMax">150</p>
+      <p name="ullaDeltaSinrMin">-300</p>
+      <p name="ullaDeltaSinrStepdown">250</p>
+      <p name="ullaIniMcs">3</p>
+      <p name="zeroCorrelationZoneConfig">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRPLMN" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRPLMN-1" id="174730" operation="create">
+      <p name="mcc">262</p>
+      <p name="mnc">3</p>
+      <p name="mncLength">2</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:TNL" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1" id="172013" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:TNL" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2" id="174727" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:MNLENT" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1" id="174742" operation="create">
+      <p name="targetDN">MRBTS-4223/EQM-1/APEQM-1</p>
+      <p name="targetDNType">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CMD" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/CMD-1" id="174744" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:TCEADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/TCEADM-1" id="174740" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:MNL_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNL_R-1" id="174745" operation="create">
+      <p name="active5GRATSWVersion">5G21B_GNB_0000_000400_001300</p>
+      <p name="activeSWActivationTime">2021-06-23T05:10:36.040+08:00</p>
+      <p name="activeSWReleaseVersion">5G21B_GNB_0000_000400_001300</p>
+      <p name="passiveSWReleaseVersion">5G22R1_GNB_0000_000400_001652</p>
+      <p name="productVariant">30</p>
+      <p name="sharedRfTechnologies">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:AMGR" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/AMGR-1" id="174741" operation="create">
+      <p name="btsEMRestrictedAccess">0</p>
+      <p name="checkCnumPasswdExpiry">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CERTH" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/CERTH-1" id="174743" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqmr:RMOD_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2" id="147489" operation="create">
+      <list name="activeNrCellsList">
+        <p>1</p>
+      </list>
+      <p name="activeSwBuild">5GH41.05.R10</p>
+      <p name="activeSwVersion">5GH41.05.R10</p>
+      <p name="administrativeState">2</p>
+      <p name="antennaPathDelayMeasurementCapable">0</p>
+      <p name="configDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1</p>
+      <p name="hwVersion">102</p>
+      <p name="l3Protocol">6</p>
+      <p name="operationalState">1</p>
+      <p name="outputPowerWattsCap">316</p>
+      <p name="proceduralStatus">5</p>
+      <p name="productCode">474612A.102</p>
+      <p name="productName">AEWD</p>
+      <p name="radioMasterDN">MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1</p>
+      <p name="radioModuleHwReleaseCode">5GRU4.0</p>
+      <p name="rfmTransmitModeStatus">0</p>
+      <p name="serialNumber">AH194601604</p>
+      <p name="usageState">1</p>
+      <p name="vendorName">Nokia</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:CABINET_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1" id="174759" operation="create">
+      <p name="configDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1</p>
+      <p name="productCode">473098A</p>
+      <p name="productName">AMIA AirScale Indoor Subrack</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:CABLINK_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/HWTOP_R-1/CABLINK_R-1" id="174761" operation="create">
+      <p name="configDN">MRBTS-4223/EQM-1/HWTOP-1/CABLINK-1</p>
+      <p name="firstEndpointDN">MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1</p>
+      <p name="firstEndpointLabel">8</p>
+      <p name="firstEndpointPortId">1</p>
+      <p name="iqCompression">0</p>
+      <p name="operationalState">1</p>
+      <p name="secondEndpointDN">MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1</p>
+      <p name="secondEndpointLabel">8</p>
+      <p name="secondEndpointPortId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:CABLINK_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/HWTOP_R-1/CABLINK_R-1001" id="174760" operation="create">
+      <p name="cablinkType">3</p>
+      <p name="configDN">MRBTS-4223/EQM-1/HWTOP-1/CABLINK-2</p>
+      <p name="firstEndpointDN">MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1</p>
+      <p name="firstEndpointLabel">12</p>
+      <p name="firstEndpointPortId">1</p>
+      <p name="iqCompression">0</p>
+      <p name="linkMaxPhysicalCapacity">25781</p>
+      <p name="linkModeConfiguration">1</p>
+      <p name="linkModeDC">0</p>
+      <p name="linkModeData">1</p>
+      <p name="linkModeSynchronization">1</p>
+      <p name="linkSpeed">125</p>
+      <p name="operationalState">1</p>
+      <p name="secondEndpointDN">MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2</p>
+      <p name="secondEndpointLabel">12</p>
+      <p name="secondEndpointPortId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:CABINET" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1/CABINET-1" id="174749" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqm:RMOD" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1/RMOD-1" id="174748" operation="create">
+      <p name="actPimCancellation">0</p>
+      <p name="actSnapshotCollection">0</p>
+      <p name="administrativeState">2</p>
+      <p name="legacyWideCarrierMode">0</p>
+      <p name="linkSpeed">10</p>
+      <p name="oruEnergySavingMode">0</p>
+      <p name="pimCancellingEnabled">0</p>
+      <p name="prodCodePlanned">474612A</p>
+      <p name="ptpSyncRepPrd">10</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:CABLINK" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/HWTOP-1/CABLINK-1" id="174746" operation="create">
+      <p name="firstEndpointDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/SMOD-1</p>
+      <p name="firstEndpointLabel">8</p>
+      <p name="firstEndpointPortId">1</p>
+      <p name="iqCompression">0</p>
+      <p name="secondEndpointDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1</p>
+      <p name="secondEndpointLabel">8</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:CABLINK" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/HWTOP-1/CABLINK-2" id="174747" operation="create">
+      <p name="firstEndpointDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1</p>
+      <p name="firstEndpointLabel">12</p>
+      <p name="firstEndpointPortId">1</p>
+      <p name="iqCompression">0</p>
+      <p name="linkSpeed">125</p>
+      <p name="radioProtocolType">1</p>
+      <p name="secondEndpointDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1</p>
+      <p name="secondEndpointLabel">12</p>
+      <p name="secondEndpointPortId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:PDCCH" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-1/PDCCH-1" id="174758" operation="create">
+      <p name="alSelection">0</p>
+      <p name="dciDedicatedAggregationLevel">4</p>
+      <p name="dciPagingAggregationLevel">4</p>
+      <p name="dciRaCompletionAggregationLevel">4</p>
+      <p name="dciRaMsg2AggregationLevel">4</p>
+      <p name="dciSiAggregationLevel">4</p>
+      <p name="downgradeAL16toAL8">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:PDCCH" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-49/PDCCH-1" id="174757" operation="create">
+      <p name="alSelection">0</p>
+      <p name="dciDedicatedAggregationLevel">4</p>
+      <p name="dciPagingAggregationLevel">4</p>
+      <p name="dciRaCompletionAggregationLevel">4</p>
+      <p name="dciRaMsg2AggregationLevel">4</p>
+      <p name="dciSiAggregationLevel">4</p>
+      <p name="downgradeAL16toAL8">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRCTRLTSDU" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDU-1/NRCTRLTSDU-1" id="174756" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:TNL_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/TNL_R-1" id="174755" operation="create">
+      <p name="actFastIpRerouting">0</p>
+      <p name="actIpSecBkupTun">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHSVC" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1" id="174754" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:IPNO" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1" id="174752" operation="create">
+      <p name="addressCacheExpirationTime">30</p>
+      <p name="icmpDscp">10</p>
+      <p name="icmpResponseEnabled">1</p>
+      <p name="ipReassemblyTimeout">1000</p>
+      <p name="ndMldDscp">56</p>
+      <p name="retransTimer">1000</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:PMTNL" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/PMTNL-1" id="174753" operation="create">
+      <p name="bridgePortStatisticsInterval">15</p>
+      <p name="ethernetInterfaceStatisticsInterval">15</p>
+      <p name="ethernetLinkInterval">15</p>
+      <p name="firstLevelSchedulerStatisticsInterval">15</p>
+      <p name="ipFilteringInterval">15</p>
+      <p name="ipInterfaceStatisticsInterval">15</p>
+      <p name="ipNodeStatisticsInterval">15</p>
+      <p name="ipPerHopBehaviourStatisticsInterval">15</p>
+      <p name="ipSecSaStatisticsInterval">15</p>
+      <p name="ipSecStatisticsInterval">15</p>
+      <p name="ipV4AddressStatisticsInterval">0</p>
+      <p name="ipV4RxPerHopBehaviourStatisticsInterval">15</p>
+      <p name="ipV4TxPerHopBehaviourStatisticsInterval">15</p>
+      <p name="ipV6AddressStatisticsInterval">0</p>
+      <p name="ipV6RxPerHopBehaviourStatisticsInterval">15</p>
+      <p name="ipV6TxPerHopBehaviourStatisticsInterval">15</p>
+      <p name="sctpStatisticsInterval">15</p>
+      <p name="secondLevelSchedulerStatisticsInterval">15</p>
+      <p name="tcpUdpStatisticsInterval">15</p>
+      <p name="twampStatisticsInterval">15</p>
+      <p name="vlanStatisticsInterval">15</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:TNL_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/TNL_R-1" id="174751" operation="create">
+      <p name="actFastIpRerouting">0</p>
+      <p name="actIpSecBkupTun">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHSVC" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1" id="174750" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:SECADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SECADM-1" id="174771" operation="create">
+      <p name="actServiceAccountSsh">1</p>
+      <p name="actServicePortState">1</p>
+      <p name="actSyncToRU">0</p>
+      <p name="ethernetPortSecurityEnabled">0</p>
+      <p name="keyContinuation">0</p>
+      <p name="passwdHistoryLength">0</p>
+      <p name="sshClientAliveTimer">45</p>
+      <p name="sshMaxAuthAttempts">4</p>
+      <p name="sshSessionIdleTimer">3600</p>
+      <p name="sshSessionLoginDelayTimer">10</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:BBADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/BBADM-1" id="174774" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:FMCADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/FMCADM-1" id="174765" operation="create">
+      <p name="actAlarmsInTestDedicatedState">1</p>
+      <p name="actCategoryAlarms">1</p>
+      <p name="actForceAutoReset">0</p>
+      <p name="actForceUnitAutoReset">0</p>
+      <p name="actPipePowerDecreased1dBFaults">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:MPLANENW" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/MPLANENW-1" id="174766" operation="create">
+      <p name="mPlaneDscp">20</p>
+      <p name="mPlaneIpv4AddressDN">MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1</p>
+      <p name="oamTls">0</p>
+      <p name="tls11Enabled">0</p>
+      <p name="tls12CbcCipherDisabled">0</p>
+      <p name="tls12RsaKExDisabled">0</p>
+      <p name="tlsRenegotiationInterval">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:SYNC" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1" id="174773" operation="create">
+      <p name="actEcpriMasterClock">1</p>
+      <p name="btsSyncMode">1</p>
+      <p name="manualFrameTimingAdjustment">0</p>
+      <p name="profileType">1</p>
+      <p name="userLabel">Nemuadmin</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CERTHENT" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1" id="174770" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:PMCADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/PMCADM-1" id="174768" operation="create">
+      <p name="reportingIntervalPm">3</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CELLMAPPING" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1" id="174772" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:CAPCFG" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CAPCFG-1" id="174767" operation="create">
+      <p name="cellsWithIqcDsApplied">0</p>
+      <p name="enbBbCapacityUsage">1</p>
+      <p name="enbHwRelease">AirScale</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TAC" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/TAC-1" id="174775" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:FEATCADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/FEATCADM-1" id="174769" operation="create">
+      <p name="actAldSwUpdate">0</p>
+      <p name="actAntennaPathDelayMeasurement">0</p>
+      <p name="actAsi">0</p>
+      <p name="actAutRachBasedSlCellDetRec">0</p>
+      <p name="actCellTimingOffset">0</p>
+      <p name="actCli">1</p>
+      <p name="actCpriOTNRecovery">0</p>
+      <p name="actDhcp">10</p>
+      <p name="actDtPim">0</p>
+      <p name="actDualStackIpV4V6ForMplane">0</p>
+      <p name="actEAPMode">1</p>
+      <p name="actEcpriRuMPlaneSecurity">1</p>
+      <p name="actFaultSignature">0</p>
+      <p name="actLbmOnFronthaul">0</p>
+      <p name="actMultiCablesForOTN">0</p>
+      <p name="actObsaiOTNRecovery">0</p>
+      <p name="actPimTesting">0</p>
+      <p name="actPowerMeter">0</p>
+      <p name="actRemoteRfDiag">0</p>
+      <p name="actRfChaining">0</p>
+      <p name="actRfiTesting">0</p>
+      <p name="actRxMonitoring">1</p>
+      <p name="actSWRollbackReject">0</p>
+      <p name="actSyncEGen">0</p>
+      <p name="actTransportConfigFallback">0</p>
+      <p name="otnCpriRecoveryPeriod">500</p>
+      <p name="otnObsaiRecoveryPeriod">500</p>
+      <p name="rfSharingEnabled">0</p>
+      <p name="systemAcctPermEnable">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TRBLCADM" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/TRBLCADM-1" id="174764" operation="create">
+      <p name="actCoreDumpFileCollection">1</p>
+      <p name="actInternalTrace">1</p>
+      <p name="actRemoteSyslogTransmission">0</p>
+      <p name="diagSnapDestination">0</p>
+      <list name="faultSnapshotTriggers">
+        <item>
+          <p name="faultNumber">61524</p>
+          <p name="triggerType">0</p>
+        </item>
+      </list>
+      <p name="snapshotUploadDelayForFault6450">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TCE" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/TCEADM-1/TCE-1" id="174762" operation="create">
+      <p name="tceIdentifier">1</p>
+      <p name="tceIpAddress">10.57.252.3</p>
+      <p name="tcePortNumber">48151</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:LUAC" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/AMGR-1/LUAC-1" id="174763" operation="create">
+      <p name="appAdmLocalPasswdLastChangedTime">0</p>
+      <p name="btsAccountLockoutDuration">15</p>
+      <p name="btsFailedLoginCountingPeriod">5</p>
+      <p name="btsMaxFailedLoginAttempts">5</p>
+      <p name="btsSessionLoginDelay">1</p>
+      <p name="localPasswdExpiryPeriod">0</p>
+      <p name="localPasswdWarningPeriod">0</p>
+      <p name="readOnlyLocalPasswdLastChangedTime">0</p>
+      <p name="secAdmLocalPasswdLastChangedTime">0</p>
+      <p name="webEMSessionLogoutTimer">900</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CMP" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/CERTH-1/CMP-1" id="174776" operation="create">
+      <p name="caCertificateUpdateTime">90</p>
+      <p name="neCertificateUpdateTime">30</p>
+      <p name="serverHost">10.62.65.164</p>
+      <p name="serverPath">pkix</p>
+      <p name="serverPort">1024</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CRLH" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/CERTH-1/CRLH-1" id="174777" operation="create">
+      <p name="distributionPointSource">0</p>
+      <p name="updatePeriod">24</p>
+      <p name="usageEnabled">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:PHYANT_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/PHYANT_R-1" id="174797" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqmr:SFP_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/SFP_R-1" id="174803" operation="create">
+      <p name="complianceCode">UNKNOWN</p>
+      <p name="connectorType">LC</p>
+      <p name="cooledTransceiverDeclaration">0</p>
+      <p name="dateCode">201220  </p>
+      <p name="diagMonType">AOP</p>
+      <list name="maxTransmissionDistanceList">
+        <item>
+          <p name="maxLinkLength">10</p>
+          <p name="maxLinkLengthType">Length (SMF,km)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">100</p>
+          <p name="maxLinkLengthType">Length (SMF)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (50um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (62.5um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (OM4 or copper cable)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (OM3)</p>
+        </item>
+      </list>
+      <p name="nokiaPN">P462270</p>
+      <p name="physicalPort">OPT_IF1</p>
+      <p name="productCode">-</p>
+      <p name="rxPowerHighAlarmThreshold">3</p>
+      <p name="rxPowerHighWarnThreshold">2</p>
+      <p name="rxPowerLowAlarmThreshold">-20</p>
+      <p name="rxPowerLowWarnThreshold">-18</p>
+      <p name="serialNumber">VF2052000AA</p>
+      <p name="temperatureHighAlarmThreshold">95</p>
+      <p name="temperatureLowAlarmThreshold">-48</p>
+      <p name="transceiverComplianceCode">25GBASE-LR</p>
+      <p name="transceiverIdentifier">SFP_PLUS_SFP28</p>
+      <p name="transmissionMode">-</p>
+      <p name="transmissionRate">25500</p>
+      <p name="txPowerHighAlarmThreshold">4</p>
+      <p name="txPowerHighWarnThreshold">3</p>
+      <p name="txPowerLowAlarmThreshold">-9</p>
+      <p name="txPowerLowWarnThreshold">-8</p>
+      <p name="vendorName">FINISAR CORP.</p>
+      <p name="vendorPartNumber">FTLF1436W4BTV-NN</p>
+      <p name="vendorRevision">A</p>
+      <p name="waveLength">1310</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:FAN_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/FAN_R-1" id="174802" operation="create">
+      <p name="fanPresent">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:FAN_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/FAN_R-2" id="174801" operation="create">
+      <p name="fanPresent">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-1" id="174800" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-11" id="174804" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-2" id="174798" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-3" id="174799" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-5" id="174796" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-7" id="174795" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/EAC_R-9" id="174805" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">1</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:FAN_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/FAN_R-1" id="174808" operation="create">
+      <p name="fanLocation">202</p>
+      <p name="fanPresent">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:FAN_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/FAN_R-2" id="174807" operation="create">
+      <p name="fanLocation">201</p>
+      <p name="fanPresent">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:BBMOD_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1" id="174809" operation="create">
+      <p name="administrativeState">2</p>
+      <p name="configDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1</p>
+      <p name="eutraSupport">0</p>
+      <p name="function">2</p>
+      <p name="geranSupport">0</p>
+      <p name="horizontalPosition">1</p>
+      <p name="nrSupport">1</p>
+      <p name="operationalState">1</p>
+      <p name="proceduralStatus">5</p>
+      <p name="productCode">474020A.102</p>
+      <p name="productName">ABIL AirScale Capacity</p>
+      <p name="serialNumber">EA191971916</p>
+      <p name="utranSupport">0</p>
+      <p name="verticalPosition">2</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:SMOD_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1" id="174806" operation="create">
+      <p name="configDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/SMOD-1</p>
+      <p name="function">1</p>
+      <p name="horizontalPosition">1</p>
+      <p name="operationalState">1</p>
+      <p name="proceduralStatus">5</p>
+      <p name="productCode">474021A.102</p>
+      <p name="productName">ASIK AirScale Common</p>
+      <p name="serialNumber">EA193954901</p>
+      <p name="verticalPosition">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:BBMOD" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1" id="174780" operation="create">
+      <p name="administrativeState">2</p>
+      <p name="fddNrCellConfigTradeoff">0</p>
+      <p name="prodCodePlanned">474020A</p>
+      <p name="useFullCapacity">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:SMOD" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1/CABINET-1/SMOD-1" id="174779" operation="create">
+      <p name="climateControlOcxoTemperatureLearning">0</p>
+      <p name="climateControlProfiling">0</p>
+      <p name="prodCodePlanned">474021A</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqm:PHYANT" version="EQM21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM-1/APEQM-1/RMOD-1/PHYANT-1" id="174778" operation="create"/>
+    <managedObject class="com.nokia.srbts.nrbts:PDCCH_CONFIG_COMMON" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-1/PDCCH-1/PDCCH_CONFIG_COMMON-1" id="174794" operation="create"/>
+    <managedObject class="com.nokia.srbts.nrbts:PDCCH_CONFIG_DEDICATED" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-49/PDCCH-1/PDCCH_CONFIG_DEDICATED-1" id="174793" operation="create">
+      <list name="coresetDedicated">
+        <item>
+          <p name="cceToRegMapping">1</p>
+          <p name="coresetId">1</p>
+          <p name="cRbStart">0</p>
+          <p name="duration">1</p>
+          <p name="interleaverSize">0</p>
+          <p name="regBundleSize">6</p>
+          <p name="size">48</p>
+        </item>
+      </list>
+      <list name="searchSpaceDedicated">
+        <item>
+          <p name="coresetId">0</p>
+          <p name="dciFormat">0</p>
+          <p name="duration">1</p>
+          <p name="monitoringSymbolWithinSlot">1</p>
+          <p name="numOfPdcchCandidatesInAL1">0</p>
+          <p name="numOfPdcchCandidatesInAL16">0</p>
+          <p name="numOfPdcchCandidatesInAL2">0</p>
+          <p name="numOfPdcchCandidatesInAL4">2</p>
+          <p name="numOfPdcchCandidatesInAL8">0</p>
+          <p name="periodicity">1</p>
+          <p name="searchSpaceId">2</p>
+          <p name="searchSpaceType">3</p>
+          <p name="slotOffset">0</p>
+        </item>
+        <item>
+          <p name="coresetId">1</p>
+          <p name="dciFormat">1</p>
+          <p name="duration">1</p>
+          <p name="monitoringSymbolWithinSlot">1</p>
+          <p name="numOfPdcchCandidatesInAL1">0</p>
+          <p name="numOfPdcchCandidatesInAL16">0</p>
+          <p name="numOfPdcchCandidatesInAL2">0</p>
+          <p name="numOfPdcchCandidatesInAL4">2</p>
+          <p name="numOfPdcchCandidatesInAL8">0</p>
+          <p name="periodicity">1</p>
+          <p name="searchSpaceId">3</p>
+          <p name="searchSpaceType">11</p>
+          <p name="slotOffset">0</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:PDCCH_CONFIG_COMMON" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/BWP_PROFILE-49/PDCCH-1/PDCCH_CONFIG_COMMON-1" id="174792" operation="create">
+      <list name="searchSpaceCommon">
+        <item>
+          <p name="coresetId">0</p>
+          <p name="dciFormat">0</p>
+          <p name="duration">1</p>
+          <p name="monitoringSymbolWithinSlot">1</p>
+          <p name="numOfPdcchCandidatesInAL16">0</p>
+          <p name="numOfPdcchCandidatesInAL2">0</p>
+          <p name="numOfPdcchCandidatesInAL4">2</p>
+          <p name="numOfPdcchCandidatesInAL8">0</p>
+          <p name="periodicity">1</p>
+          <p name="searchSpaceId">1</p>
+          <p name="searchSpaceType">1</p>
+          <p name="slotOffset">0</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.nrbts:NRMTRACEDU" version="NRBTSDU5G21B_2105_200" distName="PLMN-PLMN/MRBTS-4223/NRBTS-4223/NRDU-1/NRCTRLTSDU-1/NRMTRACEDU-1" id="174791" operation="create">
+      <p name="actPCMDReporting">1</p>
+      <p name="cellMaxActiveUEsTraced">65535</p>
+      <p name="jobType">1</p>
+      <list name="nrRanTraceReference">
+        <item>
+          <p name="mcc">262</p>
+          <p name="mnc">3</p>
+          <p name="mncLength">2</p>
+          <p name="traceId">1</p>
+        </item>
+      </list>
+      <p name="nrTceIdentifier">1</p>
+      <p name="scope">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:L2SWI" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/L2SWI-1" id="174789" operation="create">
+      <p name="l2QoSEnabled">1</p>
+      <p name="l2SwitchingEnabled">1</p>
+      <p name="l2WeightAF1">1</p>
+      <p name="l2WeightAF2">2</p>
+      <p name="l2WeightAF3">3</p>
+      <p name="l2WeightAF4">4</p>
+      <p name="l2WeightBE">3</p>
+      <p name="priorityQueueNonClassified">0</p>
+      <p name="qosClassificationCriteria">0</p>
+      <p name="vlanAwarenessEnabled">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHIF" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHIF-1" id="174790" operation="create">
+      <p name="linkSelectorDN">MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/L2SWI-1/IBRGPRT-1</p>
+      <p name="sbsTotal">20000</p>
+      <p name="shapingOverhead">1</p>
+      <p name="sirTotal">1000000</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHLK" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHLK-1" id="174788" operation="create">
+      <p name="administrativeState">1</p>
+      <p name="connectorLabel">1</p>
+      <p name="l2IngressRate">10000000</p>
+      <p name="modDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/SMOD-1</p>
+      <p name="speedAndDuplex">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:QOS" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/QOS-1" id="174787" operation="create">
+      <p name="arpPcp">7</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPIF" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1" id="174785" operation="create">
+      <p name="interfaceDN">MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHIF-1</p>
+      <p name="ipMtu">1500</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPRT" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPRT-1" id="174784" operation="create">
+      <list name="staticRoutes">
+        <item>
+          <p name="destinationIpPrefixLength">0</p>
+          <p name="destIpAddr">0.0.0.0</p>
+          <p name="gateway">10.68.90.129</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:RTPOL" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/RTPOL-1" id="174786" operation="create">
+      <list name="routingPolicies">
+        <item>
+          <p name="orderNumber">1</p>
+          <p name="routingTableDN">MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPRT-1</p>
+          <p name="srcIpAddress">0.0.0.0</p>
+          <p name="srcIpPrefixLength">24</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPRTV6" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPRTV6-1" id="174783" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:ETHIF" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHIF-3" id="174781" operation="create">
+      <p name="linkSelectorDN">MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHLK-2</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHLK" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHLK-2" id="174782" operation="create">
+      <p name="administrativeState">1</p>
+      <p name="connectorLabel">11</p>
+      <p name="modDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/BBMOD-1</p>
+      <p name="speedAndDuplex">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:SECADM_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SECADM-1/SECADM_R-1" id="174818" operation="create">
+      <p name="serviceAccountSshStatus">1</p>
+      <p name="servicePortStatus">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:BBPOOL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/BBADM-1/BBPOOL-1" id="174823" operation="create">
+      <list name="bbPoolCellsList">
+        <p>1</p>
+      </list>
+      <p name="bbPoolTech">6</p>
+      <list name="bbPwrGroupDNList">
+        <p>MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1/POWERGROUP_R-1</p>
+      </list>
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:MPLANENW_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/MPLANENW-1/MPLANENW_R-1" id="174811" operation="create">
+      <p name="oamTlsStatus">2</p>
+      <p name="tls11EnabledStatus">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:ECPRIMASTER" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/ECPRIMASTER-1" id="174822" operation="create">
+      <p name="eCpriMasterAnnounceMessageRate">8</p>
+      <p name="eCpriMasterDomainNumber">24</p>
+      <p name="eCpriMasterEthMulticastAddress">0</p>
+      <p name="eCpriMasterSsmEnabled">1</p>
+      <p name="eCpriMasterSsmType">0</p>
+      <p name="eCpriMasterStandardProfile">2</p>
+      <p name="eCpriMasterSyncMessageRate">16</p>
+      <p name="phaseHoldoverSpecThreshold">1325</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TIME" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/TIME-1" id="174820" operation="create">
+      <p name="timeZone">498</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CLOCK" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1" id="174821" operation="create">
+      <p name="holdOverModeUsed">0</p>
+      <p name="outputConfiguration1Pps">0</p>
+      <p name="outputConfiguration1PpsBackplane">2</p>
+      <p name="outputConfiguration1PpsFHS">0</p>
+      <p name="outputConfiguration2M048">0</p>
+      <p name="outputConfigurationFCLK">0</p>
+      <p name="outputConfigurationPdh">0</p>
+      <p name="sModDN">MRBTS-4223/EQM-1/APEQM-1/CABINET-1/SMOD-1</p>
+      <list name="syncInputList">
+        <item>
+          <p name="syncInputPrio">1</p>
+          <p name="syncInputType">15</p>
+        </item>
+      </list>
+      <p name="syncMaster">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:NECERT_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/NECERT_R-1" id="174814" operation="create">
+      <p name="authorityKeyIdentifier">5D:CC:D0:C5:07:36:CC:10:E2:FF:09:79:83:14:25:AE:9B:21:7E:DA</p>
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="fingerprint">B1:2F:E7:56:CD:8C:C9:C6:06:5B:97:96:EB:57:8F:25:4C:4B:BA:0A</p>
+      <p name="issuedTo">O = Nokia Solutions and Networks, CN = EA193954901.nokiasolutionsandnetworks.com</p>
+      <p name="issuer">O = Nokia Siemens Networks, CN = Factory Certification Authority</p>
+      <p name="serialNumber">8D442D523B</p>
+      <p name="signatureAlgorithm">sha256WithRSAEncryption</p>
+      <p name="source">0</p>
+      <p name="subjectAlternateName">DNS:EA193954901.nokiasolutionsandnetworks.com</p>
+      <p name="subjectKeyIdentifier">2E:00:B4:E9:EA:11:2D:8F:8D:8A:B5:72:77:18:57:A8:9B:F5:74:94</p>
+      <p name="subjectPublicKeyAlgorithm">RSA</p>
+      <p name="trustChain">1</p>
+      <p name="validFrom">Sep 28 14:58:07 2019 GMT</p>
+      <p name="validTo">Sep 25 15:28:07 2031 GMT</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CACERT_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/CACERT_R-1" id="174817" operation="create">
+      <p name="authorityKeyIdentifier">7C:49:11:73:0E:7F:A2:DB:0F:16:41:DD:3F:82:83:F6:BF:34:BC:08</p>
+      <p name="caType">1</p>
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="fingerprint">58:A1:DC:B3:FC:6B:9E:6C:16:BF:D3:7B:BF:3A:5C:65:A3:DC:3E:0B</p>
+      <p name="issuedTo">O = Nokia, CN = Nokia Root CA</p>
+      <p name="issuer">O = Nokia, CN = Nokia Root CA</p>
+      <p name="keyUsage">100001100</p>
+      <p name="serialNumber">02</p>
+      <p name="signatureAlgorithm">sha256WithRSAEncryption</p>
+      <p name="source">0</p>
+      <p name="subjectKeyIdentifier">7C:49:11:73:0E:7F:A2:DB:0F:16:41:DD:3F:82:83:F6:BF:34:BC:08</p>
+      <p name="subjectPublicKeyAlgorithm">RSA</p>
+      <p name="trustChain">2</p>
+      <p name="validFrom">Jun 13 07:36:41 2017 GMT</p>
+      <p name="validTo">Jun 13 07:36:41 2067 GMT</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CACERT_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/CACERT_R-2" id="174813" operation="create">
+      <p name="authorityKeyIdentifier">C0:1D:9D:9A:9F:E8:4E:91:A9:14:48:C5:DC:D7:03:69:03:6C:69:A4</p>
+      <p name="caType">1</p>
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="fingerprint">B7:61:3D:5A:EB:3A:98:33:7A:9B:51:A5:A6:BC:75:F3:7E:63:31:4F</p>
+      <p name="issuedTo">O = Nokia, CN = Nokia Root CA</p>
+      <p name="issuer">O = Nokia, CN = Nokia Root CA</p>
+      <p name="keyUsage">100001100</p>
+      <p name="serialNumber">01</p>
+      <p name="signatureAlgorithm">sha256WithRSAEncryption</p>
+      <p name="source">0</p>
+      <p name="subjectKeyIdentifier">C0:1D:9D:9A:9F:E8:4E:91:A9:14:48:C5:DC:D7:03:69:03:6C:69:A4</p>
+      <p name="subjectPublicKeyAlgorithm">RSA</p>
+      <p name="trustChain">2</p>
+      <p name="validFrom">May 19 11:43:51 2017 GMT</p>
+      <p name="validTo">Aug 27 09:12:45 2034 GMT</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CACERT_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/CACERT_R-3" id="174812" operation="create">
+      <p name="authorityKeyIdentifier">C0:1D:9D:9A:9F:E8:4E:91:A9:14:48:C5:DC:D7:03:69:03:6C:69:A4</p>
+      <p name="caType">2</p>
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="fingerprint">6B:7E:06:58:4D:92:A7:EE:11:65:A7:CC:15:9E:38:57:72:41:10:30</p>
+      <p name="issuedTo">O = Nokia Siemens Networks, CN = Factory Certification Authority</p>
+      <p name="issuer">O = Nokia, CN = Nokia Root CA</p>
+      <p name="keyUsage">110001100</p>
+      <p name="serialNumber">0459</p>
+      <p name="signatureAlgorithm">sha256WithRSAEncryption</p>
+      <p name="source">0</p>
+      <p name="subjectKeyIdentifier">5D:CC:D0:C5:07:36:CC:10:E2:FF:09:79:83:14:25:AE:9B:21:7E:DA</p>
+      <p name="subjectPublicKeyAlgorithm">RSA</p>
+      <p name="trustChain">2</p>
+      <p name="validFrom">May 19 11:51:51 2017 GMT</p>
+      <p name="validTo">Aug 27 09:12:45 2034 GMT</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CACERT_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/CACERT_R-4" id="174815" operation="create">
+      <p name="authorityKeyIdentifier">7C:49:11:73:0E:7F:A2:DB:0F:16:41:DD:3F:82:83:F6:BF:34:BC:08</p>
+      <p name="caType">2</p>
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="fingerprint">16:FC:BC:26:DB:ED:AC:2B:52:F3:1A:51:E6:E9:97:3C:E2:72:E8:92</p>
+      <p name="issuedTo">O = Nokia, CN = Factory Certification Authority</p>
+      <p name="issuer">O = Nokia, CN = Nokia Root CA</p>
+      <p name="keyUsage">110001100</p>
+      <p name="serialNumber">04</p>
+      <p name="signatureAlgorithm">sha256WithRSAEncryption</p>
+      <p name="source">0</p>
+      <p name="subjectKeyIdentifier">CC:2A:B4:79:B6:B0:A1:CF:60:8C:BE:E8:1F:73:4F:C5:F3:F4:11:CF</p>
+      <p name="subjectPublicKeyAlgorithm">RSA</p>
+      <p name="trustChain">2</p>
+      <p name="validFrom">Jun 13 08:41:21 2017 GMT</p>
+      <p name="validTo">Jun 13 07:36:41 2067 GMT</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CMP_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1/CMP_R-1" id="174816" operation="create">
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/CERTHENT-1</p>
+      <p name="state">99</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:LCELNR" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1" id="174819" operation="create"/>
+    <managedObject class="com.nokia.srbts.mnl:LTAC" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/TAC-1/LTAC-1" id="174824" operation="create">
+      <p name="tacLimitGbrEmergency">1000000</p>
+      <p name="tacLimitGbrHandover">1000000</p>
+      <p name="tacLimitGbrNormal">1000000</p>
+      <p name="tacOverbookingLimit">0</p>
+      <p name="transportNwId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TRBLCADM_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/TRBLCADM-1/TRBLCADM_R-1" id="174810" operation="create">
+      <p name="remoteSyslogTransmissionStatus">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:PHYANTU_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/PHYANT_R-1/PHYANTU_R-1" id="174837" operation="create">
+      <p name="trxPosition">PHYANT1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:PHYANTU_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/RMOD_R-2/PHYANT_R-1/PHYANTU_R-2" id="174836" operation="create">
+      <p name="trxPosition">PHYANT2</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:SFP_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1/SFP_R-1" id="174859" operation="create">
+      <p name="complianceCode">UNKNOWN</p>
+      <p name="connectorType">LC</p>
+      <p name="cooledTransceiverDeclaration">1</p>
+      <p name="dateCode">191015</p>
+      <p name="diagMonType">AOP</p>
+      <list name="maxTransmissionDistanceList">
+        <item>
+          <p name="maxLinkLength">10</p>
+          <p name="maxLinkLengthType">Length (SMF,km)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">100</p>
+          <p name="maxLinkLengthType">Length (SMF)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (50um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (62.5um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (OM4 or copper cable)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">-</p>
+          <p name="maxLinkLengthType">Length (OM3)</p>
+        </item>
+      </list>
+      <p name="nokiaPN">P462270</p>
+      <p name="physicalPort">S_RF1</p>
+      <p name="productCode">-</p>
+      <p name="rxPowerHighAlarmThreshold">3</p>
+      <p name="rxPowerHighWarnThreshold">2</p>
+      <p name="rxPowerLowAlarmThreshold">-20</p>
+      <p name="rxPowerLowWarnThreshold">-18</p>
+      <p name="serialNumber">VF19420012D</p>
+      <p name="temperatureHighAlarmThreshold">95</p>
+      <p name="temperatureLowAlarmThreshold">-48</p>
+      <p name="transceiverIdentifier">SFP_PLUS_SFP28</p>
+      <p name="transmissionMode">-</p>
+      <p name="transmissionRate">25500</p>
+      <p name="txPowerHighAlarmThreshold">4</p>
+      <p name="txPowerHighWarnThreshold">3</p>
+      <p name="txPowerLowAlarmThreshold">-9</p>
+      <p name="txPowerLowWarnThreshold">-8</p>
+      <p name="vendorName">FINISAR CORP.</p>
+      <p name="vendorPartNumber">FTLF1436W4BTV-NN</p>
+      <p name="vendorRevision">A</p>
+      <p name="waveLength">1310</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:POWERGROUP_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1/POWERGROUP_R-1" id="174858" operation="create">
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:SFP_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/SFP_R-1" id="174846" operation="create">
+      <p name="complianceCode">SFF_8472_REV_10_2</p>
+      <p name="connectorType">LC</p>
+      <p name="cooledTransceiverDeclaration">0</p>
+      <p name="dateCode">190706</p>
+      <p name="diagMonType">AOP</p>
+      <list name="maxTransmissionDistanceList">
+        <item>
+          <p name="maxLinkLength">0</p>
+          <p name="maxLinkLengthType">Length (SMF,km)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">0</p>
+          <p name="maxLinkLengthType">Length (SMF)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">8</p>
+          <p name="maxLinkLengthType">Length (50um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">3</p>
+          <p name="maxLinkLengthType">Length (62.5um)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">0</p>
+          <p name="maxLinkLengthType">Length (OM4 or copper cable)</p>
+        </item>
+        <item>
+          <p name="maxLinkLength">30</p>
+          <p name="maxLinkLengthType">Length (OM3)</p>
+        </item>
+      </list>
+      <p name="nokiaPN">P206937</p>
+      <p name="physicalPort">EIF1</p>
+      <p name="productCode">-</p>
+      <p name="rxPowerHighAlarmThreshold">0</p>
+      <p name="rxPowerHighWarnThreshold">-1</p>
+      <p name="rxPowerLowAlarmThreshold">-20</p>
+      <p name="rxPowerLowWarnThreshold">-18</p>
+      <p name="serialNumber">FR192707529</p>
+      <p name="temperatureHighAlarmThreshold">90</p>
+      <p name="temperatureLowAlarmThreshold">-45</p>
+      <p name="transceiverComplianceCode">SFP_10G_SR</p>
+      <p name="transceiverIdentifier">SFP_PLUS_SFP28</p>
+      <p name="transmissionMode">Unallocated</p>
+      <p name="transmissionRate">10300</p>
+      <p name="txPowerHighAlarmThreshold">0</p>
+      <p name="txPowerHighWarnThreshold">-1</p>
+      <p name="txPowerLowAlarmThreshold">-5</p>
+      <p name="txPowerLowWarnThreshold">-5</p>
+      <p name="vendorName">WTD</p>
+      <p name="vendorPartNumber">RTXM228-553-C40</p>
+      <p name="vendorRevision">1.0</p>
+      <p name="waveLength">850</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:GNSSE_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/GNSSE_R-1" id="174839" operation="create">
+      <p name="configDN">MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/GNSSE-1</p>
+      <p name="gnssAntennaAltitude">19</p>
+      <p name="gnssAntennaLatitude">301816565</p>
+      <p name="gnssAntennaLongitude">1201386972</p>
+      <p name="gnssConstellationMode">7</p>
+      <p name="gnssReceiverHoldoverMode">0</p>
+      <p name="gnssUnitName">FYGM</p>
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-1" id="174838" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-10" id="174853" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-11" id="174851" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-12" id="174849" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-13" id="174847" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-14" id="174844" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-15" id="174842" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-16" id="174840" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-17" id="174857" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-18" id="174856" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-2" id="174841" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-3" id="174843" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-4" id="174845" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-5" id="174848" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-6" id="174850" operation="create">
+      <p name="direction">1</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-7" id="174852" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-8" id="174854" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:EAC_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/EAC_R-9" id="174855" operation="create">
+      <p name="direction">2</p>
+      <p name="lineState">0</p>
+      <p name="operationalState">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IBRGPRT" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/L2SWI-1/IBRGPRT-1" id="174833" operation="create">
+      <p name="portDefaultVlanId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:BRGPRT" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/L2SWI-1/BRGPRT-1" id="174834" operation="create">
+      <p name="acceptableFrameTypes">0</p>
+      <p name="ethlkDN">MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHLK-1</p>
+      <p name="flushFdbOnLos">0</p>
+      <p name="l2BurstSize">16384</p>
+      <p name="l2ShaperRate">10000000</p>
+      <p name="portDefaultVlanId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHIF_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHIF-1/ETHIF_R-1" id="174835" operation="create">
+      <p name="macAddr">c0:41:21:12:6a:e8</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHLK_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/ETHSVC-1/ETHLK-1/ETHLK_R-1" id="174832" operation="create">
+      <p name="detectedClock">0</p>
+      <p name="detectedSpeedAndDuplex">7</p>
+      <p name="eapPortStatus">0</p>
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPADDRESSV4" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1" id="174831" operation="create">
+      <p name="ipAddressAllocationMethod">0</p>
+      <p name="localIpAddr">10.68.90.139</p>
+      <p name="localIpPrefixLength">27</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPIF_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPIF_R-1" id="174830" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:IPRT_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPRT-1/IPRT_R-1" id="174829" operation="create">
+      <list name="forwardingEntries">
+        <item>
+          <p name="destinationIpPrefixLength">27</p>
+          <p name="destIpAddr">10.68.90.128</p>
+          <p name="preSrcIpv4Addr">10.68.90.139</p>
+          <p name="routeIpMtu">1500</p>
+          <p name="routeType">2</p>
+        </item>
+        <item>
+          <p name="destinationIpPrefixLength">0</p>
+          <p name="destIpAddr">0.0.0.0</p>
+          <p name="gateway">10.68.90.129</p>
+          <p name="preference">1</p>
+          <p name="routeIpMtu">1500</p>
+          <p name="routeType">3</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPRTV6_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPRTV6-1/IPRTV6_R-1" id="174828" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:VLANIF" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHIF-3/VLANIF-1" id="174825" operation="create">
+      <p name="vlanId">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:ETHIF_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHIF-3/ETHIF_R-1" id="174826" operation="create"/>
+    <managedObject class="com.nokia.srbts.tnl:ETHLK_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-2/ETHSVC-1/ETHLK-2/ETHLK_R-1" id="174827" operation="create">
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CLOCK_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/CLOCK_R-1" id="174863" operation="create">
+      <p name="activeSyncMode">1</p>
+      <p name="activeTimeSource">6</p>
+      <p name="selectedSyncInput">15</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:ECPRIMASTERSTATUS_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/ECPRIMASTERSTATUS_R-1" id="174864" operation="create">
+      <p name="eCpriMasterClockAccuracy">21</p>
+      <p name="eCpriMasterClockClass">6</p>
+      <p name="eCpriMasterClockIdentity">C0:41:21:FF:FE:12:6A:E6</p>
+      <p name="eCpriMasterClockState">0</p>
+      <p name="eCpriMasterCurrentUtcOffset">37</p>
+      <p name="eCpriMasterCurrentUtcOffsetValid">1</p>
+      <p name="eCpriMasterFreqTraceable">1</p>
+      <p name="eCpriMasterLeap59">0</p>
+      <p name="eCpriMasterLeap61">0</p>
+      <p name="eCpriMasterOffsetScaledLogVariance">4e5d</p>
+      <p name="eCpriMasterPtpTimescale">1</p>
+      <p name="eCpriMasterSsmValue">0</p>
+      <p name="eCpriMasterStepsRemoved">0</p>
+      <p name="eCpriMasterTimeSource">40</p>
+      <p name="eCpriMasterTimeTraceable">1</p>
+      <p name="eCpriMasterTransmitPriority1">128</p>
+      <p name="eCpriMasterTransmitPriority2">128</p>
+      <p name="eCpriMasterTwoStepFlag">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:GNSSE" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/GNSSE-1" id="174861" operation="create">
+      <p name="actGnssOutputLnaPowerSupply">1</p>
+      <p name="actPoorSkyVisibilityAlarm">0</p>
+      <p name="gnssCableLength">0</p>
+      <p name="gnssControlMode">7</p>
+      <p name="gnssReceiverHoldoverMode">0</p>
+      <p name="locationMode">3</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TOP" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/TOP-1" id="174862" operation="create">
+      <p name="sPlaneDscp">63</p>
+      <p name="sPlaneIpAddressDN">MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1</p>
+      <p name="topDomainNumber">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CHANNELGROUP" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1/CHANNELGROUP-1" id="174860" operation="create"/>
+    <managedObject class="com.nokia.srbts.eqmr:LANE_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/BBMOD_R-1/SFP_R-1/LANE_R-1" id="174867" operation="create">
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.eqmr:LANE_R" version="EQMR21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/EQM_R-1/APEQM_R-1/CABINET_R-1/SMOD_R-1/SFP_R-1/LANE_R-4" id="174866" operation="create">
+      <p name="operationalState">1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.tnl:IPADDRESSV4_R" version="TNL5GC21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/TNLSVC-1/TNL-1/IPNO-1/IPIF-1/IPADDRESSV4-1/IPADDRESSV4_R-1" id="174865" operation="create">
+      <p name="localIpAddrAllocated">10.68.90.139</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TOPP" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/TOP-1/TOPP-1" id="174872" operation="create">
+      <list name="acceptedClockClass">
+        <p>6</p>
+        <p>7</p>
+      </list>
+      <p name="syncMessageRate">128</p>
+      <list name="topMasterList">
+        <item>
+          <p name="localPriority">128</p>
+          <p name="masterIpAddr">10.97.126.186</p>
+          <p name="maximumNetworkTimingError">0</p>
+          <p name="phaseErrorComp">0</p>
+          <p name="topMasterId">1</p>
+        </item>
+      </list>
+      <p name="topStandardProfile">1</p>
+      <p name="tuningProfile">0</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CHANNEL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1/CHANNELGROUP-1/CHANNEL-1" id="174871" operation="create">
+      <p name="direction">1</p>
+      <p name="resourceDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1/PHYANT-1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CHANNEL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1/CHANNELGROUP-1/CHANNEL-2" id="174870" operation="create">
+      <p name="direction">2</p>
+      <p name="resourceDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1/PHYANT-1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CHANNEL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1/CHANNELGROUP-1/CHANNEL-3" id="174869" operation="create">
+      <p name="direction">2</p>
+      <p name="resourceDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1/PHYANT-1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:CHANNEL" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-1/CHANNELGROUP-1/CHANNEL-4" id="174868" operation="create">
+      <p name="direction">1</p>
+      <p name="resourceDN">MRBTS-4223/EQM-1/APEQM-1/RMOD-1/PHYANT-1</p>
+    </managedObject>
+    <managedObject class="com.nokia.srbts.mnl:TOPP_R" version="MNLDU21B_2105_002" distName="PLMN-PLMN/MRBTS-4223/MNL-1/MNLENT-1/SYNC-1/CLOCK-1/TOP-1/TOPP-1/TOPP_R-1" id="174873" operation="create">
+      <p name="lockState">0</p>
+      <list name="topMasterList">
+        <item>
+          <p name="currentUtcOffset">37</p>
+          <p name="currentUtcOffsetValid">1</p>
+          <p name="freqTraceable">1</p>
+          <p name="leap59">0</p>
+          <p name="leap61">0</p>
+          <p name="masterIpAddr">10.97.126.186</p>
+          <p name="ptpTimescale">1</p>
+          <p name="receivedPriority_1">1</p>
+          <p name="receivedPriority_2">100</p>
+          <p name="timeSource">20</p>
+          <p name="timeTraceable">1</p>
+          <p name="topGMasterClockAccuracy">21</p>
+          <p name="topGMasterClockClass">6</p>
+          <p name="topGMasterClockIdentity">00:B0:AE:01:FF:FE:90:E6</p>
+          <p name="topGMasterOffsetScaledLogVariance">6400</p>
+          <p name="topMasterClockIdentity">00:B0:AE:01:FF:FE:90:E6</p>
+          <p name="topMasterClockState">0</p>
+          <p name="topMasterId">1</p>
+          <p name="topMasterPortNumber">1</p>
+          <p name="topMasterUsed">0</p>
+          <p name="topSlavePortNumber">1</p>
+          <p name="topStepsRemoved">1</p>
+        </item>
+      </list>
+      <list name="topSlaveClockInfo">
+        <item>
+          <p name="topSlaveClockClass">255</p>
+          <p name="topSlaveClockIdentity">C0:41:21:FF:FE:12:6A:E8</p>
+        </item>
+      </list>
+      <p name="waitingTime">35</p>
+    </managedObject>
+  </cmData>
+</raml>

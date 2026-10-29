@@ -1,0 +1,39 @@
+AppServer1: &APP_SERVER_1                              # application server definition
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'                      # ip of interface used for LTE data transfer
+   expected_prompt: '5g@SKA-HC14-15-AppServer'
+
+
+
+UE_POOLS:
+    TafUeAtPool:                         # Ue Pool class defined by library
+        inline_config:
+            QUECTEL_UE:                        # UE name
+                CAPABILITIES:            # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - QUECTEL_UE
+                CLASS: AtUe
+                CONSTRUCTOR_PARAMETERS:  # Parameters that will be passed to AtUe constructor when Ue instance is created.
+                    com_port: '8'        # number of com port supporting AT commands
+                    configuration:
+                        ue_pc_address: '10.84.182.31'      # UE PC domain address or IP
+                        address: '10.84.182.31'
+                        ue_pc_login: 'user-lab0'
+                        login: 'user-lab0'
+                        ue_pc_password: 'Rz0dkiewk@2022'
+                        password: 'Rz0dkiewk@2022'
+                        ue_pc_port: 80                                        # OPTIONAL, default is 80
+                        ue_pc_expected_prompt: 'user-lab0@PLKR-ASIR-CIT1'    # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+                        expected_prompt: 'user-lab0@PLKR-ASIR-CIT1'
+                        data_transfer:                                        # data transfer protocols
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                interface_name: 'Cellular 2'                  # OPTIONAL   <- trzeba sprawdziæ na którym interfejsie jest adres po attachu
+                                dt_from_uepc: True                            # OPTIONAL, default is False, if True dt is run from interface on ue pc
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1

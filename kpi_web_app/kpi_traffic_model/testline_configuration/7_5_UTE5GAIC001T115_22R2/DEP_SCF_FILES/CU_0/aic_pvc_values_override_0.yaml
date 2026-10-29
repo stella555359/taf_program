@@ -1,0 +1,66 @@
+# - Description: the deployment mode of the CU, Non-Standalone(NSA) or Standalone mode(SA).
+# support values: NSA or SA
+aic-vcu-network:
+  deploymentmode: "SA"
+  # Precondition: tenant's configuration is ready before deploy internal network
+  # internal network
+  internalNetwork:
+  #Value range: string, no default value.
+  #Note: This value need to match with the tenant's configuration. eg."ens1f1"
+    internal:
+      devicePool: "ens1f1"
+
+  # - Description: the network interface device pool list, support link redundancy
+  # - Note: if fastPathDevicePoolBackup and slowPathDevicePoolBackup are empty, will not use link redundancy
+  # - the fastPathDevicePool and slowPathDevicePoolBackup must not be same
+  # - the slowPathDevicePool and slowPathDevicePoolBackup must not be same
+  devicePoolList:
+    # The SR-IOV Device Pool used by s1u,x2u,f1u,xnu,ngu networks (fast path)
+    fastPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+    # The SR-IOV Backup Device Pool used by s1u-s,x2u-s,f1u-s,xnu-s,ngu-s networks (fast path),should be different with fastPathDevicePool
+    fastPathDevicePoolBackup: ""
+    # The SR-IOV Device Pool used by oam,tracing,f1c,x2c,xnc,ngc,internale1 networks (slow path)
+    slowPathDevicePool: "openshift.io/sriov_netdevice_ens1f1"
+    # The SR-IOV Device Pool used by oam-s,f1c-s,x2c-s,xnc-s,ngc-s networks (slow path),should be different with slowPathDevicePool
+    slowPathDevicePoolBackup: ""
+
+# In third-party kubernetes platform
+# If variable storageClassName isn't declared, the default storage class will be used in PVC.
+# If variable storageClassName is declared, the specific storage class will be used in PVC.
+# The backend persistentVolume resources must support the ReadWriteMany access mode.
+aic-vcu-pvc:
+  storageClassName: &storageClassName "ocs-storagecluster-cephfs"
+  accessModes: &accessModes "ReadWriteMany"
+
+  logservice-pvc:
+    syslog:
+      storageClassName: *storageClassName
+    auditlog:
+      storageClassName: *storageClassName
+
+  pm-pvc:
+    hfrw:
+      storageClassName: *storageClassName
+    lfrw:
+      storageClassName: *storageClassName
+
+  rcpfm-pvc:
+    storageClassName: *storageClassName
+
+  rcpum-pvc:
+    storageClassName: *storageClassName
+
+  cnum-pvc:
+    accessModes: *accessModes
+    storageClassName: *storageClassName
+
+  secret-storage-framework-pvc:
+    vaultmanagerpvc:
+      storageClassName: *storageClassName
+    vaultserverpvc:
+      storageClassName: *storageClassName
+
+  certificate-management-pvc:
+    certmantlsconfigpvc:
+      accessModes: *accessModes
+      storageClassName: *storageClassName

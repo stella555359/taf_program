@@ -1,0 +1,27 @@
+# ##########################################################################################
+#
+#    7_20_UTE5GCLASSSV511  -  IV_PS_511  -  CV511
+#
+#
+# ##########################################################################################
+
+
+tl_name: 'TL511'
+
+
+custom:
+  TL_Number: '511'
+  GNB_Friendly_TL_Name: 'CV511'
+  GNB_Architecture: 'CLASSICAL'
+  UE_Architecture: 'QCT'
+  eNB_Architecture: 'REAL'
+  Core_Architecture: 'REAL'
+  GNB_First_CellID: '8372225'
+  GNB_First_Cell_nrArfcn: '663334'
+
+
+  # ------------- QCT -------------
+  ATEN_QCT:
+    -
+      Address IP: '1.1.1.1'
+      Port Number: '8'

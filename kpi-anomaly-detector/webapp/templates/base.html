@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}KPI Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="portal-body{% block body_class %}{% endblock %}">
+    <header class="portal-header-shell">
+        <div class="portal-header">
+            <a class="portal-brand" href="{{ url_for('portal.home') }}">
+                <span class="portal-brand-mark">KP</span>
+                <span>
+                    <strong>KPI Portal</strong>
+                    <small>Flask workspace for analytics tools</small>
+                </span>
+            </a>
+            <nav class="portal-nav" aria-label="Primary navigation">
+                <a class="portal-nav-link{% if request.endpoint == 'portal.home' %} is-active{% endif %}" href="{{ url_for('portal.home') }}">Portal Home</a>
+                <a class="portal-nav-link{% if request.blueprint == 'kpi' %} is-active{% endif %}" href="{{ url_for('kpi.index') }}">KPI Workspace</a>
+            </nav>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

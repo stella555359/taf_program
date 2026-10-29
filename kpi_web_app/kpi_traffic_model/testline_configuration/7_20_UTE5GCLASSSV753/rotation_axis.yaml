@@ -1,0 +1,22 @@
+Gear: 'EMGC-60-P-G35-SEC-67'
+Axis_Type: 'Rotative Axis (360°)'
+device_id : 1
+SERVER_HOST : '192.168.0.2'
+SERVER_PORT : 502
+max_velocity : 24
+default_velocity : 3
+default_acceleration : 1.0
+max_acceleration : 100
+max_limit : 100.0
+min_limit : -100.0
+ref_point : 0.0
+unit_factor : 100.0
+invert_axis : false
+err_margin : 0.5
+measurment_unit : '°'
+velocity_unit : '°/s'
+accelration_unit : '°/s²'
+festo_PC_IP: '10.0.97.65'
+festo_PC_user: 'ftps5g'
+festo_PC_pswd: 'Fr@TelS6'
+festo_PC_Port: 59031

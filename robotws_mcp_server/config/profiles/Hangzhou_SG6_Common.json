@@ -1,0 +1,117 @@
+{
+  "name": "Hangzhou_SG6_Common",
+  "description": "Common SG6 ownership and keyword boundary profile for Hangzhou RAN_PZ_HAZ_34.",
+  "profile_type": "common",
+  "path_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34",
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "case_candidate_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34",
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34"
+  ],
+  "confirmed_case_scopes": [
+    "testsuite/Hangzhou/RRM/RAN_PZ_HAZ_34/None_Feature_SG6",
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "allowed_resource_scopes": [
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "feature_allowlist": {
+    "RRM": [
+      "CB007949",
+      "CB008015",
+      "CB008247",
+      "CB008360",
+      "CB009198",
+      "CB009235",
+      "CB009363",
+      "CB010767",
+      "CB010774",
+      "CB010887",
+      "CB010889",
+      "CB012544",
+      "None_Feature_SG6"
+    ],
+    "SISO": [
+      "5GC002510",
+      "CB009008",
+      "CB009275_AEHC",
+      "CB009464",
+      "CB009843_SG6",
+      "CB010889",
+      "CB012195",
+      "CB012591",
+      "FGCR_3610",
+      "None_Feature_SG6"
+    ]
+  },
+  "hard_exclude_patterns": [
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG1",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG11"
+  ],
+  "preferred_keywords": {
+    "coam": [
+      "Connect to gnb coam via ssl",
+      "Change status for parameter cellBarred on GNB",
+      "COAM Teardown gnb connections"
+    ],
+    "pa": [
+      "Modify PA Value Setting For Required RU",
+      "Set Maritix PA Port"
+    ],
+    "kpi": [
+      "Compass.KPI Generate And Upload To Remote Server",
+      "Compass.Single KPI Generate And Upload To Remote Server",
+      "Compass.Generate KPI Report"
+    ],
+    "evidence": [
+      "Get syslog file with duration and Compress File",
+      "Check ERR Or WRN From Syslog",
+      "Start Container Capture Wireshark Log",
+      "Stop Container Wireshark Log Collection",
+      "COAM Save snapshot via rest api"
+    ],
+    "ue": [
+      "Procedures.Start UE Prepare",
+      "power_ue.Prepare UE",
+      "power_ue.UE Attach",
+      "power_ue.UE Detach",
+      "Perform Mutli-UE Prepare",
+      "Perform Mutli-UE Attach",
+      "Perform Mutli-UE Disconnect"
+    ]
+  },
+  "negative_patterns": [
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG1",
+      "message": "SG6 testcase generation must not recommend SG1 resource keywords."
+    },
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG11",
+      "message": "SG6 testcase generation must not recommend SG11 resource keywords."
+    },
+    {
+      "pattern": "csn.execute",
+      "message": "Avoid raw SSH commands in new testcase bodies when an existing SG6 common keyword can express the operation."
+    }
+  ],
+  "style_rules": [
+    "Use only SG6 allowed common keyword scopes by default: lines/SG6, python, and robot.",
+    "Apply SG6 ownership filtering before similar-case ranking.",
+    "Only feature folders listed in feature_allowlist are part of the SG6 testcase pool.",
+    "Hard-exclude features with other SG tags or other SG resource imports.",
+    "Prefer SG6 common keywords over direct low-level TAF APIs."
+  ],
+  "required_fields": [
+    "Documentation",
+    "Tags",
+    "Setup",
+    "Teardown"
+  ]
+}

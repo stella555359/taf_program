@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Traffic Model Job {{ job.id }}{% endblock %}
+
+{% block content %}
+{% set result = job.result_payload or {} %}
+{% set selected_ues = result.get('selected_ues', []) if result else [] %}
+{% set precondition_results = result.get('precondition_results', []) if result else [] %}
+{% set traffic_results = result.get('traffic_results', []) if result else [] %}
+<main class="page-shell module-shell">
+    <section class="detail-panel">
+        <p class="eyebrow">KPI traffic model job</p>
+        <h1 class="detail-filename">{{ job.env or 'kpi_traffic_model' }}</h1>
+        <p class="hero-text">Job id: {{ job.id }}</p>
+        <div class="module-meta">
+            <span class="status-chip status-{{ job.status }}">{{ job.status }}</span>
+            <span class="meta-chip">Created {{ job.created_at }}</span>
+            {% if job.started_at %}<span class="meta-chip">Started {{ job.started_at }}</span>{% endif %}
+            {% if job.completed_at %}<span class="meta-chip">Completed {{ job.completed_at }}</span>{% endif %}
+        </div>
+        <div class="button-row">
+            <a class="button-link" href="{{ url_for('kpi_traffic_model.index', env=job.env) }}">Back to module</a>
+            <form class="inline-form" action="{{ url_for('kpi_traffic_model.delete', job_id=job.id) }}" method="post">
+                <button class="button-link button-link-danger button-link-compact" type="submit" {% if job.status in ['queued', 'running'] %}disabled{% endif %}>Delete</button>
+            </form>
+            {% for artifact in job.platform_download_artifacts %}
+            <a class="button-link button-link-secondary button-link-compact" href="{{ url_for(artifact.artifact_endpoint, job_id=job.id, artifact_kind=artifact.download_endpoint_kind) }}">{{ 'Download ' ~ artifact.link_label }}</a>
+            {% endfor %}
+        </div>
+    </section>
+
+    {% if auto_refresh %}
+    <section class="table-panel notice-panel">
+        <p class="eyebrow">Running job</p>
+        <h2>Page refreshes while the orchestrator job is still active.</h2>
+        <p class="hero-text">Progress updates come from the runner stage and item callbacks.</p>
+    </section>
+    {% endif %}
+
+    {% if job.error_message %}
+    <section class="table-panel error-panel">
+        <p class="eyebrow">Execution error</p>
+        <pre>{{ job.error_message }}</pre>
+    </section>
+    {% endif %}
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Execution</p>
+                <h2>Runtime summary</h2>
+            </div>
+        </div>
+        <dl class="dashboard-notes compact-dashboard-notes compact-dashboard-notes-3">
+            <div><dt>Env</dt><dd>{{ job.env or '-' }}</dd></div>
+            <div><dt>Config id</dt><dd>{{ job.config_id or result.get('testline_config', {}).get('config_id', '-') }}</dd></div>
+            <div><dt>Progress stage</dt><dd>{{ job.progress_stage or '-' }}</dd></div>
+            <div><dt>Progress message</dt><dd>{{ job.progress_message or '-' }}</dd></div>
+            <div><dt>KPI start</dt><dd>{{ job.kpi_test_starttime or result.get('kpi_test_starttime', '-') }}</dd></div>
+            <div><dt>KPI end</dt><dd>{{ job.kpi_test_endtime or result.get('kpi_test_endtime', '-') }}</dd></div>
+        </dl>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Artifacts</p>
+                <h2>Platform artifact registry</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kind</th>
+                        <th>Source field</th>
+                        <th>Path</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artifact in job.platform_artifacts %}
+                    <tr>
+                        <td>{{ artifact.artifact_kind }}</td>
+                        <td>{{ artifact.payload.get('field_name', '-') }}</td>
+                        <td>{{ artifact.artifact_path }}</td>
+                        <td>
+                            {% if artifact.downloadable and artifact.is_available %}
+                            <a class="text-link" href="{{ url_for('kpi_traffic_model.artifact', job_id=job.id, artifact_kind=artifact.download_endpoint_kind) }}">Open</a>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No platform artifacts recorded.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Links</p>
+                <h2>Platform linked jobs</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kind</th>
+                        <th>Module</th>
+                        <th>Job id</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for link in job.platform_links %}
+                    <tr>
+                        <td>{{ link.link_kind }}</td>
+                        <td>{{ link.linked_module_title }}</td>
+                        <td>{{ link.linked_job_id }}</td>
+                        <td>
+                            {% if link.detail_endpoint %}
+                            <a class="text-link" href="{{ url_for(link.detail_endpoint, job_id=link.linked_job_id) }}">Open job</a>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No linked jobs recorded.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Events</p>
+                <h2>Platform lifecycle trail</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Event</th>
+                        <th>Payload</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in job.platform_timeline_events %}
+                    <tr>
+                        <td>{{ event.created_at }}</td>
+                        <td>{{ event.summary_label }}</td>
+                        <td><pre>{{ event.summary_text }}{% if event.payload.get('update_count') %}
+updates: {{ event.payload.get('update_count') }}{% endif %}</pre></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">No lifecycle events recorded.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Selected UEs</p>
+                <h2>Request UE objects</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ue_index</th>
+                        <th>ue_type</th>
+                        <th>label</th>
+                        <th>ue_ip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ue in selected_ues %}
+                    <tr>
+                        <td>{{ ue.ue_index }}</td>
+                        <td>{{ ue.ue_type }}</td>
+                        <td>{{ ue.label }}</td>
+                        <td>{{ ue.ue_ip or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No selected UE data in result.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Preconditions</p>
+                <h2>Precondition results</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Status</th>
+                        <th>Used UEs</th>
+                        <th>Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in precondition_results %}
+                    <tr>
+                        <td>{{ item.item_id }}</td>
+                        <td><span class="status-chip status-{{ item.status }}">{{ item.status }}</span></td>
+                        <td>{{ item.used_ues|join(', ') if item.used_ues else '-' }}</td>
+                        <td>{{ item.summary }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No precondition results yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="table-panel compact-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Traffic items</p>
+                <h2>Traffic execution results</h2>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Model</th>
+                        <th>Status</th>
+                        <th>Used UEs</th>
+                        <th>Summary</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in traffic_results %}
+                    <tr>
+                        <td>{{ item.item_id }}</td>
+                        <td>{{ item.model }}</td>
+                        <td><span class="status-chip status-{{ item.status }}">{{ item.status }}</span></td>
+                        <td>{{ item.used_ues|join(', ') if item.used_ues else '-' }}</td>
+                        <td>{{ item.summary }}</td>
+                        <td>{{ item.error_message or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No traffic results yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+{% if auto_refresh %}
+<script>
+window.setTimeout(function () {
+    window.location.reload();
+}, 4000);
+</script>
+{% endif %}
+{% endblock %}

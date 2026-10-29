@@ -1,0 +1,137 @@
+global:
+  image:
+    registry: "harbor-vrf1.ocp.hz.nsn-rdnet.net:443/vrf1"
+  devicePoolList:
+    fastPathBipPool: openshift.io/sriov_vfio_1
+    fastPathF1uPool: openshift.io/sriov_vfio_0
+    fastPathF1uPoolBackup: ""
+    slowPathCommonPool: openshift.io/sriov_netdevice_0
+    slowPathCommonPoolBackup: ""
+  externalNetwork:
+    f1:
+      vlanInfo:
+        vid: "515"
+    f1c:
+      vlanInfo:
+        vid: "515"
+    l2biphi:
+      vlanInfo:
+        vid: "513"
+    l2biprt:
+      vlanInfo:
+        vid: "513"
+    oam:
+      vlanInfo:
+        vid: "516"
+    ahm-a:
+      sn: "L1242202633"
+      fhuc:
+        - defaultUnderlyingIface: ecpri3
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane0c
+        - defaultUnderlyingIface: ecpri7
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane04
+        - defaultUnderlyingIface: ecpri2
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane0b
+        - defaultUnderlyingIface: ecpri6
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane03
+        - defaultUnderlyingIface: ecpri1
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane0a
+        - defaultUnderlyingIface: ecpri5
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane02
+        - defaultUnderlyingIface: ecpri0
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane09
+        - defaultUnderlyingIface: ecpri4
+          pcp: "7"
+          vid: "301"
+          vlName: fhucplane01
+      fhm:
+        - defaultUnderlyingIface: ecpri3
+          vid: "295"
+          vlName: fhmplane0c
+        - defaultUnderlyingIface: ecpri7
+          vid: "295"
+          vlName: fhmplane04
+        - defaultUnderlyingIface: ecpri2
+          vid: "295"
+          vlName: fhmplane0b
+        - defaultUnderlyingIface: ecpri6
+          vid: "295"
+          vlName: fhmplane03
+        - defaultUnderlyingIface: ecpri1
+          vid: "295"
+          vlName: fhmplane0a
+        - defaultUnderlyingIface: ecpri5
+          vid: "295"
+          vlName: fhmplane02
+        - defaultUnderlyingIface: ecpri0
+          vid: "295"
+          vlName: fhmplane09
+        - defaultUnderlyingIface: ecpri4
+          vid: "295"
+          vlName: fhmplane01
+  storageClassName: lvms-vg1
+  aic-oamfh:
+    nodeSelector: {}
+    dhcp:
+      service:
+        dhcpv4:
+          subnets:
+          - subnet: "192.168.254.0/26"
+            pools:
+            - startAddress: "192.168.254.34"
+              endAddress: "192.168.254.40"
+              ruProtocol: "Nokia"
+            - startAddress: "192.168.254.41"
+              endAddress: "192.168.254.47"
+              ruProtocol: "Nokia"
+            - startAddress: "192.168.254.48"
+              endAddress: "192.168.254.54"
+              ruProtocol: "Oran"
+            - startAddress: "192.168.254.55"
+              endAddress: "192.168.254.60"
+              ruProtocol: "Oran"
+            optionData:
+            - code: 61
+              alwaysSend: "true"
+              data:
+                clientIdentifier:
+          - subnet: "192.169.0.0/16"
+            type: "eCPRI"
+          - subnet: "192.170.0.0/24"
+            type: "CPRI"
+          sztpIpAddressesAndPorts:
+          - ip: ""
+            port: ""
+        dhcpv6:
+          subnets:
+          - subnet: "fd5f:4268:2387:77c1::/64"
+            pools:
+            - startAddress: "fd5f:4268:2387:77c1::11"
+              endAddress: "fd5f:4268:2387:77c1::20"
+              ruProtocol: "Nokia"
+            - startAddress: "fd5f:4268:2387:77c1::21"
+              endAddress: "fd5f:4268:2387:77c1::30"
+              ruProtocol: "Oran"
+            - startAddress: "fd5f:4268:2387:77c1::31"
+              endAddress: "fd5f:4268:2387:77c1::40"
+              ruProtocol: "Nokia"
+            - startAddress: "fd5f:4268:2387:77c1::41"
+              endAddress: "fd5f:4268:2387:77c1::50"
+              ruProtocol: "Oran"
+          subnetsForDC:
+          - subnet: "fd5f:4268:2387:87C1:0000:0000:0000:0000/116"
+            type: "eCPRI"

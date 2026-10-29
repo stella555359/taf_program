@@ -1,0 +1,35 @@
+AppServer1: &APP_SERVER_1
+   address: '10.84.168.120'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.60'
+   expected_prompt: '5g@SKA-HC14-15-AppServer'
+
+
+UE_POOLS:
+    TafUeAtPool:
+        inline_config:
+            Smawave:
+                CAPABILITIES:
+                    - REAL_UE
+                    - Smawave
+                CLASS: Smawave
+                CONSTRUCTOR_PARAMETERS:
+                    com_port: '552765'
+                    serial_number: 'CPX60P-AF220332WKT'
+                    configuration:
+                        ue_pc_address: 'PLKR-VRF-PC02.p08.ska-lab.nsn-rdnet.net'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-VRF-PC02 ~ #'
+                        ue_address: '10.255.27.65'
+                        ue_login: 'root'
+                        ue_password: 'Cb4Ik3Ma8Fl0'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                server_close_delay: 50
+                                binary_path: ''
+                                dt_from_uepc: False
+                                version: 2

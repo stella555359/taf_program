@@ -1,0 +1,68 @@
+APP_SERVER: &APP_SERVER_1
+    address: '10.84.168.120'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.60'
+
+CELLS:
+    GNB1:
+        CELL1:
+            ID: 1
+            PCI: 111
+        CELL2:
+            ID: 2
+            PCI: 112
+        CELL3:
+            ID: 3
+            PCI: 113
+        CELL4:
+            ID: 4
+            PCI: 114
+        CELL5:
+            ID: 5
+            PCI: 121
+        CELL6:
+            ID: 6
+            PCI: 122
+        CELL7:
+            ID: 7
+            PCI: 123
+        CELL8:
+            ID: 8
+            PCI: 124
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            Samsung_S21:
+                CAPABILITIES:
+                    - REAL_ANDROID_UE
+                    - MTP
+                    - ANDROID_PLUGIN
+                STARTING_CELL: '20225025'   #1294352385
+                STARTING_CELL_5G_PCI: 111
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R3CR100L75B'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'PLKR-SCSV-UE34.p08.ska-lab.nsn-rdnet.net'
+                        ue_pc_port: '80'
+                        ue_pc_ip: 'PLKR-SCSV-UE34.p08.ska-lab.nsn-rdnet.net'
+                        login: 'user-lab0'
+                        password: 'Bts2003'
+#                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copied (create empty directory on UE-PC)
+#                        server_python: 'C:/Python36/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'no'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+#                        airplane_mode_switcher_text: 'Airplane'
+                        service_call_attach: '14' # service call which will be used for attaching UE
+#                        service_call_detach: '14' # service call which will be used for detaching UE
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                binary_path: '/data/data/com.nokia.android.application/'
+#                                interface_name: '5gkrk2/rmnet_data1'
+

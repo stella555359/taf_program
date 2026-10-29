@@ -1,0 +1,28 @@
+vlan:
+  oam: 616
+  f1: 615
+  l1bip: 612
+  l2bip: 613
+  xpbip: 615
+  internal_range: 611-611
+  tracing: 614
+network:
+  host_device_1: openshift.io/sriov_vfio_ens1f1
+  host_device_2: openshift.io/sriov_netdevice_ens1f1
+  f1subnet: 10.108.203.224/29
+  oamsubnet: 10.108.203.232/29 
+  oam_ordernumber: 5 
+  tracingsubnet: 10.108.203.216/29 
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: ocp10705
+  fecVFNum: 0
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+  storage_class_name: localfs-lvm-sc
+  deployment_type: OE19
+  upCellFlag: single
+  upActiveSiblingCore: false
+oct_server: 10.109.3.195

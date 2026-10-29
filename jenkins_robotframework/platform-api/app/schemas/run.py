@@ -1,0 +1,265 @@
+from typing import Any, Literal
+
+from pydantic import BaseModel, ConfigDict, Field
+
+
+ExecutorType = Literal["robot", "python_orchestrator", "internal_tool"]
+ExecutionMode = Literal["serial", "parallel"]
+ToolKind = Literal["kpi_generator", "kpi_detector"]
+DispatchBackend = Literal["jenkins"]
+
+
+class ArtifactDescriptor(BaseModel):
+    kind: str = Field(min_length=1)
+    label: str = Field(min_length=1)
+    path: str | None = None
+    url: str | None = None
+    content_type: str | None = None
+    source: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class WorkflowItem(BaseModel):
+    item_id: str = Field(min_length=1)
+    model: str = Field(min_length=1)
+    enabled: bool = True
+    order: int = 0
+    execution_mode: ExecutionMode = "serial"
+    continue_on_failure: bool = False
+    ue_scope: dict[str, Any] = Field(default_factory=lambda: {"mode": "all_selected_ues"})
+    params: dict[str, Any] = Field(default_factory=dict)
+
+
+class WorkflowStage(BaseModel):
+    stage_id: int = Field(ge=1)
+    stage_name: str = Field(min_length=1)
+    execution_mode: ExecutionMode = "serial"
+    items: list[WorkflowItem] = Field(default_factory=list)
+
+
+class WorkflowSpec(BaseModel):
+    name: str = Field(min_length=1)
+    stages: list[WorkflowStage] = Field(default_factory=list)
+    runtime_options: dict[str, Any] = Field(default_factory=dict)
+    portal_followups: dict[str, Any] = Field(default_factory=dict)
+
+
+class KpiConfig(BaseModel):
+    source_type: str = "compass"
+    template_set: str | None = None
+    build: str | None = None
+    environment: str | None = None
+    scenario: str | None = None
+    case_start_time: str | None = None
+    case_end_time: str | None = None
+    report_timestamps_list: list[list[str]] = Field(default_factory=list)
+
+
+class RunCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    testline: str = Field(min_length=1)
+    robotcase_path: str | None = None
+    executor_type: ExecutorType = "robot"
+    dispatch_backend: DispatchBackend | None = None
+    workflow_spec: WorkflowSpec | None = None
+    build: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    enable_kpi_generator: bool = False
+    enable_kpi_anomaly_detector: bool = False
+    kpi_config: KpiConfig | None = None
+
+
+class RunCreateResponse(BaseModel):
+    run_id: str
+    executor_type: ExecutorType
+    status: str
+    message: str
+
+
+class RunTriggerResponse(BaseModel):
+    run_id: str
+    executor_type: ExecutorType
+    status: str
+    message: str
+    scheduler: str
+    dispatch: dict[str, Any] = Field(default_factory=dict)
+
+
+class ToolExecutionHandoff(BaseModel):
+    run_id: str
+    tool_kind: ToolKind
+    detail_url: str
+    callback_url: str
+
+
+class ToolRunCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    tool_kind: ToolKind
+    payload: dict[str, Any] = Field(default_factory=dict)
+    testline: str | None = None
+    build: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class ToolRunCreateResponse(BaseModel):
+    run_id: str
+    executor_type: ExecutorType
+    tool_kind: ToolKind
+    status: str
+    message: str
+    handoff: ToolExecutionHandoff
+
+
+class RunListItem(BaseModel):
+    run_id: str
+    executor_type: ExecutorType
+    testline: str
+    robotcase_path: str | None = None
+    build: str | None = None
+    status: str
+    message: str
+    enable_kpi_generator: bool
+    enable_kpi_anomaly_detector: bool
+    jenkins_build_ref: str | None = None
+    started_at: str | None = None
+    finished_at: str | None = None
+    created_at: str
+    updated_at: str
+
+
+class RunListResponse(BaseModel):
+    items: list[RunListItem]
+
+
+class RunDetailResponse(BaseModel):
+    run_id: str
+    executor_type: ExecutorType
+    workflow_spec: WorkflowSpec | None = None
+    testline: str
+    robotcase_path: str | None = None
+    build: str | None = None
+    status: str
+    message: str
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    enable_kpi_generator: bool
+    enable_kpi_anomaly_detector: bool
+    kpi_config: KpiConfig | None = None
+    artifact_manifest: list[ArtifactDescriptor] = Field(default_factory=list)
+    kpi_summary: dict[str, Any] = Field(default_factory=dict)
+    detector_summary: dict[str, Any] = Field(default_factory=dict)
+    jenkins_build_ref: str | None = None
+    started_at: str | None = None
+    finished_at: str | None = None
+    created_at: str
+    updated_at: str
+
+
+class RunArtifactsResponse(BaseModel):
+    run_id: str
+    items: list[ArtifactDescriptor] = Field(default_factory=list)
+
+
+class RunKpiResponse(BaseModel):
+    run_id: str
+    generator_enabled: bool
+    detector_enabled: bool
+    kpi_config: KpiConfig | None = None
+    kpi_summary: dict[str, Any] = Field(default_factory=dict)
+    detector_summary: dict[str, Any] = Field(default_factory=dict)
+    artifact_manifest: list[ArtifactDescriptor] = Field(default_factory=list)
+
+
+class RunCallbackRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    status: str = Field(min_length=1)
+    message: str | None = None
+    jenkins_build_ref: str | None = None
+    started_at: str | None = None
+    finished_at: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    artifact_manifest: list[ArtifactDescriptor] = Field(default_factory=list)
+    kpi_summary: dict[str, Any] = Field(default_factory=dict)
+    detector_summary: dict[str, Any] = Field(default_factory=dict)
+
+
+class RunCallbackResponse(BaseModel):
+    run_id: str
+    status: str
+    updated_at: str
+
+
+StageStatus = Literal["started", "completed", "failed", "skipped"]
+
+
+class RunStageUpdateRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    stage_name: str = Field(min_length=1)
+    stage_status: StageStatus
+    message: str | None = None
+
+
+class RunStageUpdateResponse(BaseModel):
+    run_id: str
+    stage_name: str
+    stage_status: str
+    updated_at: str
+
+
+class RunDeleteResponse(BaseModel):
+    run_id: str
+    deleted: bool
+    message: str
+
+
+class RunRebuildResponse(BaseModel):
+    original_run_id: str
+    new_run_id: str
+    tool_kind: ToolKind
+    status: str
+    message: str
+
+
+class ProgressEvent(BaseModel):
+    stage: str
+    message: str
+    timestamp: str
+    extra: dict[str, Any] = Field(default_factory=dict)
+
+
+class ProgressUpdateRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    events: list[ProgressEvent] = Field(default_factory=list)
+
+
+class ProgressUpdateResponse(BaseModel):
+    run_id: str
+    event_count: int
+
+
+class RunProgressResponse(BaseModel):
+    run_id: str
+    status: str
+    events: list[ProgressEvent] = Field(default_factory=list)
+
+
+class OperationDescriptor(BaseModel):
+    model: str
+    label: str
+    category: str
+    requires_ue: bool
+    default_stage: str
+    default_execution_mode: ExecutionMode = "serial"
+    resource_domain: str
+    default_ue_scope: dict[str, Any] = Field(default_factory=dict)
+    default_params: dict[str, Any] = Field(default_factory=dict)
+    description: str = ""
+
+
+class OperationCatalogResponse(BaseModel):
+    items: list[OperationDescriptor]
+

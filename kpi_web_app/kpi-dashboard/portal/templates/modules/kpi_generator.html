@@ -1,0 +1,744 @@
+{% extends 'base.html' %}
+
+{% block title %}KPI Generator{% endblock %}
+
+{% block content %}
+<main class="page-shell module-shell">
+    <section class="detail-panel">
+        <p class="eyebrow">Capability module</p>
+        <h1>{{ module.title }} 🍏</h1>
+        <p class="hero-text">{{ module.summary }}</p>
+        <div class="module-meta">
+            <span class="meta-chip{% if module.repo_exists %} ok-chip{% else %} warn-chip{% endif %}">Repository {{ 'available' if module.repo_exists else 'missing' }}</span>
+            <span class="meta-chip">Jobs {{ module.job_count }}</span>
+        </div>
+    </section>
+
+    <section class="hero-card">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Start generator job</p>
+                <h2>Generate Compass KPI report</h2>
+            </div>
+        </div>
+        <form class="upload-form" action="{{ url_for('kpi_generator.submit') }}" method="post">
+            <label class="search-field">
+                <span>Template set</span>
+                <input type="text" name="template_set_name" list="kpi-generator-template-set-options" placeholder="Leave empty, choose a preset, or type a custom template set">
+                <datalist id="kpi-generator-template-set-options">
+                    {% for option in module.template_set_options %}
+                    <option value="{{ option.name }}">{{ option.name }}{% if option.template_count %} ({{ option.template_count }} templates){% endif %}</option>
+                    {% endfor %}
+                </datalist>
+            </label>
+            <label class="search-field">
+                <span>template_names</span>
+                <input type="text" name="template_names" id="kpi-generator-template-names-input" placeholder="TemplateA; Template B, Template C or one per line">
+            </label>
+            <section class="template-preview-panel">
+                <div class="template-preview-grid">
+                    <label class="search-field">
+                        <span>Template names from selected template set</span>
+                        <textarea id="kpi-generator-template-set-preview" rows="6" placeholder="Selected template set template_names will appear here." readonly></textarea>
+                    </label>
+                    <label class="search-field">
+                        <span>Merged final template_names</span>
+                        <textarea id="kpi-generator-template-merged-preview" rows="6" placeholder="Merged template_names will appear here." readonly></textarea>
+                    </label>
+                </div>
+                <p class="upload-hint upload-hint-small" id="kpi-generator-template-preview-summary">No template_names resolved yet.</p>
+            </section>
+            <label class="search-field">
+                <span>Build</span>
+                <input type="text" name="build" placeholder="SBTS26R3_ENB_9999_260319_000005 or SBTS26R3.ENB.9999.260319.000005" required>
+            </label>
+            <label class="search-field">
+                <span>Env</span>
+                <input type="text" name="environment" list="kpi-generator-environment-options" placeholder="T813 or T1234" required>
+                <datalist id="kpi-generator-environment-options">
+                    {% for environment, test_line in module.environment_test_line_map.items() %}
+                    <option value="{{ environment }}">{{ test_line }}</option>
+                    {% endfor %}
+                </datalist>
+            </label>
+            <label class="search-field">
+                <span>Scenario</span>
+                <input type="text" name="scenario" placeholder="7UE_DL_Burst" required>
+            </label>
+            <section class="timestamp-builder" id="kpi-generator-timestamp-builder">
+                <input type="hidden" name="report_timestamps_list" id="kpi-generator-report-timestamps" required>
+                <div class="timestamp-builder-toolbar">
+                    <div>
+                        <p class="timestamp-builder-title">report_timestamps_list</p>
+                        <p class="upload-hint upload-hint-small">All report timestamps use server local time. Create one or more source ranges here and Portal merges all generated intervals into the final list.</p>
+                    </div>
+                    <button class="button-link button-link-secondary button-link-compact" type="button" id="kpi-generator-open-draft">Create report timestamps</button>
+                </div>
+                <div class="timestamp-builder-draft" id="kpi-generator-draft" hidden>
+                    <div class="timestamp-builder-grid">
+                        <label class="search-field">
+                            <span>report_start_time</span>
+                            <input type="text" id="kpi-generator-draft-start" placeholder="2026-04-01 11:24:52">
+                        </label>
+                        <label class="search-field">
+                            <span>report_end_time</span>
+                            <input type="text" id="kpi-generator-draft-end" placeholder="2026-04-01 17:24:57">
+                        </label>
+                        <label class="search-field">
+                            <span>split_interval (min)</span>
+                            <select id="kpi-generator-draft-split">
+                                <option value="0">0</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                                <option value="60">60</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="button-row">
+                        <button class="button-link button-link-compact" type="button" id="kpi-generator-create-range">Create</button>
+                        <button class="button-link button-link-secondary button-link-compact" type="button" id="kpi-generator-cancel-draft">Cancel</button>
+                    </div>
+                    <p class="upload-hint upload-hint-small">Use server local time format YYYY-MM-DD HH:MM:SS. Split value 0 keeps the source range unchanged.</p>
+                </div>
+                <div class="timestamp-builder-groups" id="kpi-generator-created-groups">
+                    <p class="upload-hint upload-hint-small">No report timestamps created yet.</p>
+                </div>
+                <label class="search-field">
+                    <span>Merged report_timestamps_list</span>
+                    <textarea id="kpi-generator-report-preview" rows="6" placeholder="Created intervals will appear here." readonly></textarea>
+                </label>
+            </section>
+            <div class="search-field checkbox-field">
+                <span>Workflow</span>
+                <label><input type="checkbox" name="auto_detector" value="1"> Auto run detector</label>
+                <label><input type="checkbox" name="auto_detector_is_base_file" value="1"> Auto run detector as base file</label>
+            </div>
+            <p class="upload-hint">Template set now supports three built-in suggestions: leave it empty, choose <strong>ivy_26R1_vdt</strong> or <strong>ivy_26R2_vdt</strong>, or type any custom template set name directly in the same field. Manual <strong>template_names</strong> accepts separators like <strong>;</strong>, <strong>；</strong>, <strong>,</strong>, <strong>，</strong>, <strong>line breaks</strong>, or <strong>multiple spaces</strong>. Single spaces inside one template name are preserved. If both are provided, Portal merges template names from the selected template set and the manual input, removing duplicates.</p>
+            <p class="upload-hint upload-hint-small">Three supported modes: only template set, only template_names, or both together. At least one of them must be provided.</p>
+            <p class="upload-hint upload-hint-small">Examples: SBTS26R3_ENB_9999_260331_000003 -> SBTS26R3.ENB.9999.260331.000003. Env standard is Txxx or Txxxx. If a longer Env string is provided, Portal extracts and stores the standard Txxx/Txxxx code. Known Env mappings use the table below.</p>
+            <p class="upload-hint">Each click on <strong>Create report timestamps</strong> lets you add one server-time source range with its own split interval. Portal expands each created source range, then merges all resulting intervals into the final <strong>report_timestamps_list</strong>.</p>
+            <p class="upload-hint">If the latest merged interval end time is still in the future, Portal waits until <strong>that server-time end time + 40 minutes</strong> before it starts calling Compass to generate reports.</p>
+            <p class="upload-hint upload-hint-small">Successful combined interval count: 1 = singe_report. 2-3 = compare_merge. 4 or more = horizontal_merge.</p>
+            <p class="upload-hint upload-hint-small">Generated filenames follow the detector rule, for example: <strong>exec20260325T120349_SBTS26R3.ENB.9999.260319.000005_T813.SCF_7UE_DL_Burst_1csv.xlsx</strong>.</p>
+            <button class="button-link" type="submit">Run KPI Generator</button>
+        </form>
+    </section>
+
+    <section class="hero-card">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Scout conversion</p>
+                <h2>Convert Scout report to Compass format</h2>
+            </div>
+        </div>
+        <form class="upload-form" action="{{ url_for('kpi_generator.submit') }}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="job_mode" value="scout_conversion">
+            <label class="search-field">
+                <span>Scout report</span>
+                <input type="file" name="scout_report" accept=".xlsx" required>
+            </label>
+            <label class="search-field">
+                <span>Build</span>
+                <input type="text" name="build" placeholder="SBTS26R3_ENB_9999_260319_000005 or SBTS26R3.ENB.9999.260319.000005" required>
+            </label>
+            <label class="search-field">
+                <span>Env</span>
+                <input type="text" name="environment" list="kpi-generator-environment-options" placeholder="T813 or T1234" required>
+            </label>
+            <label class="search-field">
+                <span>Scenario</span>
+                <input type="text" name="scenario" placeholder="7UEs_SFTPDL" required>
+            </label>
+            <label class="search-field">
+                <span>DistName filters</span>
+                <textarea name="dist_name_filter" rows="4" placeholder="NRCELL-101; NRCELL-102 or one per line" required></textarea>
+            </label>
+            <div class="search-field checkbox-field">
+                <span>Workflow</span>
+                <label><input type="checkbox" name="auto_detector" value="1"> Auto run detector</label>
+                <label><input type="checkbox" name="auto_detector_is_base_file" value="1"> Auto run detector as base file</label>
+            </div>
+            <p class="upload-hint">This mode reads the Scout workbook sheet, filters rows by fuzzy DistName match, and writes one Compass-style sheet per DistName filter into the same workbook.</p>
+            <p class="upload-hint upload-hint-small">Manual <strong>DistName filters</strong> accepts separators like <strong>;</strong>, <strong>；</strong>, <strong>,</strong>, <strong>，</strong>, <strong>line breaks</strong>, or <strong>multiple spaces</strong>. Single spaces inside one filter are preserved.</p>
+            <p class="upload-hint upload-hint-small">Generated filenames follow the same detector-style naming rule using Build, Env, and Scenario, and Portal appends a <strong>scout</strong> suffix. Portal always reads the fixed Scout sheet <strong>Chart Data</strong>.</p>
+            <button class="button-link" type="submit">Run Scout Conversion</button>
+        </form>
+    </section>
+
+    <section class="table-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Repository binding</p>
+                <h2>kpi-generator</h2>
+            </div>
+        </div>
+        <dl class="dashboard-notes compact-dashboard-notes compact-dashboard-notes-2">
+            <div><dt>Repository path</dt><dd>{{ module.repo_path }}</dd></div>
+            <div><dt>Available entry files</dt><dd>{% if module.available_entries %}{{ module.available_entries|join(', ') }}{% else %}No known entry file found{% endif %}</dd></div>
+            <div><dt>Execution contract</dt><dd><code>{{ sample_command }}</code></dd></div>
+            <div><dt>Env to tl_id map</dt><dd>{% for environment, test_line in module.environment_test_line_map.items() %}{{ environment }} -> {{ test_line }}{% if not loop.last %}<br>{% endif %}{% endfor %}<br>Fallback: Txxx -> {{ module.environment_fallback_prefix }}Txxx<br>Fallback: Txxxx -> {{ module.environment_fallback_prefix }}Txxxx</dd></div>
+        </dl>
+    </section>
+
+    <section class="table-panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Recent jobs</p>
+                <h2>KPI generator history</h2>
+            </div>
+        </div>
+        <form class="search-form" method="get" action="{{ url_for('kpi_generator.index') }}">
+            <label class="search-field">
+                <span>Search template set, file, or job id</span>
+                <input type="text" name="q" value="{{ filters.q }}" placeholder="template set, filename, or job id">
+            </label>
+            <label class="search-field">
+                <span>Status</span>
+                <select name="status">
+                    <option value="" {% if not filters.status %}selected{% endif %}>All</option>
+                    <option value="queued" {% if filters.status == 'queued' %}selected{% endif %}>Queued</option>
+                    <option value="running" {% if filters.status == 'running' %}selected{% endif %}>Running</option>
+                    <option value="completed" {% if filters.status == 'completed' %}selected{% endif %}>Completed</option>
+                    <option value="failed" {% if filters.status == 'failed' %}selected{% endif %}>Failed</option>
+                </select>
+            </label>
+            <label class="search-field">
+                <span>Environment</span>
+                <select name="environment">
+                    <option value="" {% if not filters.environment %}selected{% endif %}>All</option>
+                    {% for environment in filter_options.environments %}
+                    <option value="{{ environment }}" {% if filters.environment == environment %}selected{% endif %}>{{ environment }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label class="search-field">
+                <span>Scenario</span>
+                <select name="scenario">
+                    <option value="" {% if not filters.scenario %}selected{% endif %}>All</option>
+                    {% for scenario in filter_options.scenarios %}
+                    <option value="{{ scenario }}" {% if filters.scenario == scenario %}selected{% endif %}>{{ scenario }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button class="button-link" type="submit">Apply filters</button>
+            {% if filters.q or filters.status or filters.environment or filters.scenario %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_generator.index') }}">Clear</a>
+            {% endif %}
+        </form>
+        <p class="upload-hint">
+            {% if job_page.total_count %}
+            Showing {{ job_page.page_start }}-{{ job_page.page_end }} of {{ job_page.total_count }} jobs.
+            {% else %}
+            No jobs matched the current filters.
+            {% endif %}
+        </p>
+        {% if jobs %}
+        <div class="table-wrap">
+            <table class="job-list-table job-list-table-generator">
+                <colgroup>
+                    <col class="job-col-created">
+                    <col class="job-col-filename">
+                    <col class="job-col-workflow">
+                    <col class="job-col-operation">
+                    <col class="job-col-status">
+                    <col class="job-col-platform">
+                    <col class="job-col-artifacts">
+                    <col class="job-col-actions">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Created</th>
+                        <th>Filename / Context</th>
+                        <th>Workflow / Result</th>
+                        <th>Operation</th>
+                        <th>Status</th>
+                        <th>Platform state</th>
+                        <th>Artifacts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td class="job-created-cell">{{ job.created_at }}</td>
+                        <td class="filename-cell filename-cell-generator">
+                            {% set generator_filename = job.generated_filename or job.scout_report_original_filename or job.history_title or ((job.display_environment or job.environment or '-') ~ '_' ~ (job.build or '-')) %}
+                            <a class="text-link filename-link filename-link-generator" href="{{ url_for('kpi_generator.job_detail', job_id=job.id) }}">{{ generator_filename }}</a>
+                            <div class="job-metadata-grid job-metadata-grid-generator-history">
+                                <div class="job-metadata-history-row">
+                                    {% if job.display_environment %}
+                                    <span class="job-metadata-history-label">Env</span>
+                                    <span class="job-metadata-history-value">{{ job.display_environment }}</span>
+                                    {% endif %}
+                                    {% if job.build %}
+                                    <span class="job-metadata-history-label">Build</span>
+                                    <span class="job-metadata-history-value job-metadata-history-value-wide">{{ job.build }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="job-metadata-history-row">
+                                    {% if job.scenario %}
+                                    <span class="job-metadata-history-label">Scenario</span>
+                                    <span class="job-metadata-history-value job-metadata-history-value-wide">{{ job.scenario }}</span>
+                                    {% endif %}
+                                    {% if job.request_mode_display %}
+                                    <span class="job-metadata-history-label">Mode</span>
+                                    <span class="job-metadata-history-value">{{ job.request_mode_display }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="job-metadata-history-row">
+                                    {% if job.request_mode != 'scout_conversion' and job.history_time_summary and job.history_time_summary != 'time ranges' %}
+                                    <span class="job-metadata-history-label">Time</span>
+                                    <span class="job-metadata-history-value job-metadata-history-value-wide">{{ job.history_time_summary }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="job-summary-cell">
+                            <div class="job-summary-stack">
+                                {% if job.request_mode_display %}
+                                <div class="job-summary-line">
+                                    <span class="job-summary-label">Mode</span>
+                                    <span class="job-summary-value">{{ job.request_mode_display }}</span>
+                                </div>
+                                {% endif %}
+                                <div class="job-summary-line">
+                                    <span class="job-summary-label">Result</span>
+                                    <span class="job-summary-value">{% if job.request_mode == 'scout_conversion' %}{{ job.summary.get('matched_dist_name_count', '-') }} matched / {{ job.summary.get('timestamp_count', '-') }} timestamps{% else %}{{ job.summary.get('original_interval_count', '-') }} -> {{ job.summary.get('expanded_interval_count', '-') }}{% endif %}</span>
+                                </div>
+                                {% if job.template_set_name and job.request_mode != 'scout_conversion' %}
+                                <div class="job-summary-line">
+                                    <span class="job-summary-label">Set</span>
+                                    <span class="job-summary-value">{{ job.template_set_name }}</span>
+                                </div>
+                                {% endif %}
+                                {% if job.manual_template_names and job.request_mode != 'scout_conversion' %}
+                                <div class="job-summary-line">
+                                    <span class="job-summary-label">Manual</span>
+                                    <span class="job-summary-value">{{ job.manual_template_names|length }} templates</span>
+                                </div>
+                                {% endif %}
+                                {% if job.auto_detector_enabled %}
+                                <div class="job-summary-line">
+                                    <span class="job-summary-label">Detector</span>
+                                    <span class="job-summary-value">{{ job.auto_detector_status }}{% if job.auto_detector_is_base_file %} | base file{% endif %}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="job-metric-cell">{{ job.final_operation_display or '-' }}</td>
+                        <td class="job-status-cell">
+                            <span class="status-chip status-{{ job.status }}">{{ job.status }}</span>
+                            {% if job.waiting_to_start_generate %}
+                            <div class="filename-context countdown-context" data-countdown-target="{{ job.scheduled_generate_start_at_iso }}" data-countdown-prefix="Start in " data-countdown-done="Starting generate flow now">Start in {{ job.generate_start_remaining_text }}</div>
+                            {% endif %}
+                            {% if job.scheduled_generate_start_at %}
+                            <div class="filename-context">Scheduled start {{ job.scheduled_generate_start_at }}</div>
+                            {% endif %}
+                            {% if job.latest_interval_end_at %}
+                            <div class="filename-context">Latest end {{ job.latest_interval_end_at }}</div>
+                            {% endif %}
+                        </td>
+                        <td class="job-platform-cell">
+                            <div class="filename-context">
+                                <span class="meta-chip filename-context-chip">{{ job.platform_recent_stage }}</span>
+                            </div>
+                            <div class="filename-context">{{ job.platform_recent_message }}</div>
+                            {% if job.platform_links %}
+                            <div class="filename-context">
+                                {% for link in job.platform_links %}
+                                <span class="meta-chip filename-context-chip">{{ link.link_kind }} {{ link.linked_module_title }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="job-artifacts-cell job-artifacts-cell-minimal">
+                            {% set history_artifacts = job.history_list_artifacts or [] %}
+                            <div class="job-artifact-summary job-artifact-summary-minimal">
+                                {% if history_artifacts %}
+                                <div class="artifact-links artifact-links-compact history-artifact-links">
+                                    {% for artifact in history_artifacts %}
+                                    <a href="{{ artifact.download_href }}" title="{{ artifact.link_label }}" {% if artifact.open_in_new_tab %}target="_blank"{% endif %}>{{ artifact.link_label }}</a>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                <div class="job-artifact-count">-</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="job-actions-cell">
+                            <div class="action-stack">
+                                <form class="inline-form" action="{{ url_for('kpi_generator.rerun', job_id=job.id) }}" method="post">
+                                    <button class="button-link button-link-secondary button-link-compact" type="submit">{% if job.status == 'failed' %}Retry{% else %}Run again{% endif %}</button>
+                                </form>
+                                {% if job.status in ['queued', 'running'] %}
+                                <form class="inline-form" action="{{ url_for('kpi_generator.cancel', job_id=job.id) }}" method="post">
+                                    <button class="button-link button-link-secondary button-link-compact" type="submit">Cancel</button>
+                                </form>
+                                {% endif %}
+                                <form class="inline-form" action="{{ url_for('kpi_generator.delete', job_id=job.id) }}" method="post">
+                                    <button class="button-link button-link-danger button-link-compact" type="submit" {% if job.status in ['queued', 'running'] %}disabled{% endif %}>Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if job_page.total_pages > 1 %}
+        <nav class="pagination" aria-label="KPI generator pagination">
+            {% if job_page.current_page > 1 %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_generator.index', q=filters.q, status=filters.status, environment=filters.environment, scenario=filters.scenario, page=job_page.current_page - 1) }}">Previous</a>
+            {% else %}
+            <span class="action-disabled">Previous</span>
+            {% endif %}
+            <div class="page-number-list">
+                {% for page_number in page_numbers %}
+                    {% if page_number == job_page.current_page %}
+                    <span class="page-number current">{{ page_number }}</span>
+                    {% else %}
+                    <a class="page-number" href="{{ url_for('kpi_generator.index', q=filters.q, status=filters.status, environment=filters.environment, scenario=filters.scenario, page=page_number) }}">{{ page_number }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% if job_page.current_page < job_page.total_pages %}
+            <a class="button-link button-link-secondary" href="{{ url_for('kpi_generator.index', q=filters.q, status=filters.status, environment=filters.environment, scenario=filters.scenario, page=job_page.current_page + 1) }}">Next</a>
+            {% else %}
+            <span class="action-disabled">Next</span>
+            {% endif %}
+        </nav>
+        {% endif %}
+        {% else %}
+        <p class="hero-text">No Portal-triggered KPI generator jobs yet.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var builder = document.getElementById('kpi-generator-timestamp-builder');
+        var countdownNodes = document.querySelectorAll('[data-countdown-target]');
+        var templateSetMap = {{ module.template_set_options|tojson }};
+
+        function formatCountdown(totalSeconds) {
+            var remaining = Math.max(totalSeconds, 0);
+            var hours = Math.floor(remaining / 3600);
+            var minutes = Math.floor((remaining % 3600) / 60);
+            var seconds = remaining % 60;
+            var parts = [];
+            if (hours) {
+                parts.push(hours + 'h');
+            }
+            if (minutes || hours) {
+                parts.push(minutes + 'm');
+            }
+            parts.push(seconds + 's');
+            return parts.join(' ');
+        }
+
+        function refreshCountdowns() {
+            countdownNodes.forEach(function (node) {
+                var target = node.getAttribute('data-countdown-target');
+                var targetMs = Date.parse(target || '');
+                if (Number.isNaN(targetMs)) {
+                    return;
+                }
+                var remainingSeconds = Math.max(Math.ceil((targetMs - Date.now()) / 1000), 0);
+                if (remainingSeconds === 0) {
+                    node.textContent = node.getAttribute('data-countdown-done') || 'Starting now';
+                    return;
+                }
+                node.textContent = (node.getAttribute('data-countdown-prefix') || '') + formatCountdown(remainingSeconds);
+            });
+        }
+
+        if (countdownNodes.length) {
+            refreshCountdowns();
+            window.setInterval(refreshCountdowns, 1000);
+        }
+
+        if (!builder) {
+            return;
+        }
+
+        var form = builder.closest('form');
+        var templateSetSelect = form.querySelector('[name="template_set_name"]');
+        var templateNamesInput = document.getElementById('kpi-generator-template-names-input');
+        var templateSetPreview = document.getElementById('kpi-generator-template-set-preview');
+        var templateMergedPreview = document.getElementById('kpi-generator-template-merged-preview');
+        var templatePreviewSummary = document.getElementById('kpi-generator-template-preview-summary');
+        var hiddenInput = document.getElementById('kpi-generator-report-timestamps');
+        var preview = document.getElementById('kpi-generator-report-preview');
+        var groupsContainer = document.getElementById('kpi-generator-created-groups');
+        var draft = document.getElementById('kpi-generator-draft');
+        var openDraftButton = document.getElementById('kpi-generator-open-draft');
+        var createRangeButton = document.getElementById('kpi-generator-create-range');
+        var cancelDraftButton = document.getElementById('kpi-generator-cancel-draft');
+        var startInput = document.getElementById('kpi-generator-draft-start');
+        var endInput = document.getElementById('kpi-generator-draft-end');
+        var splitInput = document.getElementById('kpi-generator-draft-split');
+        var groups = [];
+        var nextGroupId = 1;
+
+        function pad(value) {
+            return String(value).padStart(2, '0');
+        }
+
+        function formatLocalDate(date) {
+            return [
+                date.getFullYear(),
+                '-',
+                pad(date.getMonth() + 1),
+                '-',
+                pad(date.getDate()),
+                ' ',
+                pad(date.getHours()),
+                ':',
+                pad(date.getMinutes()),
+                ':',
+                pad(date.getSeconds())
+            ].join('');
+        }
+
+        function parseLocalText(value) {
+            var match = String(value || '').trim().match(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/);
+            if (!match) {
+                throw new Error('Time must use YYYY-MM-DD HH:MM:SS.');
+            }
+            var year = Number(match[1]);
+            var month = Number(match[2]);
+            var day = Number(match[3]);
+            var hour = Number(match[4]);
+            var minute = Number(match[5]);
+            var second = Number(match[6]);
+            var date = new Date(year, month - 1, day, hour, minute, second);
+            if (
+                date.getFullYear() !== year ||
+                date.getMonth() + 1 !== month ||
+                date.getDate() !== day ||
+                date.getHours() !== hour ||
+                date.getMinutes() !== minute ||
+                date.getSeconds() !== second
+            ) {
+                throw new Error('Time is invalid.');
+            }
+            return date;
+        }
+
+        function buildIntervals(startDate, endDate, splitMinutes) {
+            if (splitMinutes === 0) {
+                return [[formatLocalDate(startDate), formatLocalDate(endDate)]];
+            }
+
+            var intervals = [];
+            var currentMs = startDate.getTime();
+            var endMs = endDate.getTime();
+            var deltaMs = splitMinutes * 60 * 1000;
+            while (currentMs < endMs) {
+                var nextMs = Math.min(currentMs + deltaMs, endMs);
+                if ((nextMs - currentMs) >= deltaMs) {
+                    intervals.push([
+                        formatLocalDate(new Date(currentMs)),
+                        formatLocalDate(new Date(nextMs))
+                    ]);
+                }
+                currentMs = nextMs;
+            }
+            if (!intervals.length) {
+                throw new Error('This split_interval does not produce any full time range.');
+            }
+            return intervals;
+        }
+
+        function mergedIntervals() {
+            return groups.reduce(function (result, group) {
+                return result.concat(group.intervals);
+            }, []);
+        }
+
+        function splitTemplateNameTokens(value) {
+            if (Array.isArray(value)) {
+                return value.reduce(function (result, item) {
+                    return result.concat(splitTemplateNameTokens(item));
+                }, []);
+            }
+
+            var text = String(value || '').trim();
+            if (!text) {
+                return [];
+            }
+
+            if (/[;；,，、|]+/.test(text)) {
+                return text.split(/[;；,，、|]+/);
+            }
+            if (/[\r\n]+/.test(text)) {
+                return text.split(/[\r\n]+/);
+            }
+            if (/\s{2,}|\t+/.test(text)) {
+                return text.split(/\s{2,}|\t+/);
+            }
+            return [text];
+        }
+
+        function parseTemplateNames(value) {
+            var seen = Object.create(null);
+            return splitTemplateNameTokens(value).map(function (item) {
+                return item.trim();
+            }).filter(function (item) {
+                var key = item.toLowerCase();
+                if (!item || seen[key]) {
+                    return false;
+                }
+                seen[key] = true;
+                return true;
+            });
+        }
+
+        function selectedTemplateSetNames() {
+            var selectedName = templateSetSelect ? String(templateSetSelect.value || '') : '';
+            if (!selectedName) {
+                return [];
+            }
+            var matchedOption = templateSetMap.find(function (option) {
+                return String(option.name || '') === selectedName;
+            });
+            return matchedOption ? (matchedOption.template_names || []) : [];
+        }
+
+        function renderTemplatePreview() {
+            var setTemplateNames = selectedTemplateSetNames();
+            var manualTemplateNames = parseTemplateNames(templateNamesInput ? templateNamesInput.value : '');
+            var mergedTemplateNames = parseTemplateNames(setTemplateNames.concat(manualTemplateNames));
+
+            if (templateSetPreview) {
+                templateSetPreview.value = setTemplateNames.join('; ');
+            }
+            if (templateMergedPreview) {
+                templateMergedPreview.value = mergedTemplateNames.join('; ');
+            }
+            if (templatePreviewSummary) {
+                if (!setTemplateNames.length && !manualTemplateNames.length) {
+                    templatePreviewSummary.textContent = 'No template_names resolved yet.';
+                } else if (setTemplateNames.length && manualTemplateNames.length) {
+                    templatePreviewSummary.textContent = 'Merged ' + mergedTemplateNames.length + ' template_names from selected template set and manual input.';
+                } else if (setTemplateNames.length) {
+                    templatePreviewSummary.textContent = 'Resolved ' + setTemplateNames.length + ' template_names from the selected template set.';
+                } else {
+                    templatePreviewSummary.textContent = 'Resolved ' + manualTemplateNames.length + ' manual template_names.';
+                }
+            }
+        }
+
+        function renderGroups() {
+            var merged = mergedIntervals();
+            hiddenInput.value = merged.length ? JSON.stringify(merged) : '';
+            preview.value = hiddenInput.value;
+            hiddenInput.setCustomValidity(merged.length ? '' : 'Please create at least one report timestamp range.');
+
+            if (!groups.length) {
+                groupsContainer.innerHTML = '<p class="upload-hint upload-hint-small">No report timestamps created yet.</p>';
+                return;
+            }
+
+            groupsContainer.innerHTML = groups.map(function (group, index) {
+                var intervalHtml = group.intervals.map(function (interval) {
+                    return '<li class="timestamp-builder-interval"><span>' + interval[0] + '</span><span>to</span><span>' + interval[1] + '</span></li>';
+                }).join('');
+                return [
+                    '<article class="timestamp-builder-group">',
+                    '<div class="timestamp-builder-group-header">',
+                    '<div>',
+                    '<p class="timestamp-builder-group-title">Range ' + (index + 1) + '</p>',
+                    '<p class="upload-hint upload-hint-small">source ' + group.start + ' to ' + group.end + ' | split ' + group.split + ' min</p>',
+                    '</div>',
+                    '<button class="button-link button-link-danger button-link-compact" type="button" data-remove-group="' + group.id + '">Remove</button>',
+                    '</div>',
+                    '<ol class="timestamp-builder-interval-list">',
+                    intervalHtml,
+                    '</ol>',
+                    '</article>'
+                ].join('');
+            }).join('');
+        }
+
+        function resetDraft() {
+            startInput.value = '';
+            endInput.value = '';
+            splitInput.value = '0';
+        }
+
+        function openDraft() {
+            draft.hidden = false;
+            startInput.focus();
+        }
+
+        function closeDraft() {
+            draft.hidden = true;
+            resetDraft();
+        }
+
+        openDraftButton.addEventListener('click', openDraft);
+        cancelDraftButton.addEventListener('click', closeDraft);
+        if (templateSetSelect) {
+            templateSetSelect.addEventListener('change', renderTemplatePreview);
+        }
+        if (templateNamesInput) {
+            templateNamesInput.addEventListener('input', renderTemplatePreview);
+        }
+
+        createRangeButton.addEventListener('click', function () {
+            try {
+                var startDate = parseLocalText(startInput.value);
+                var endDate = parseLocalText(endInput.value);
+                if (endDate.getTime() <= startDate.getTime()) {
+                    throw new Error('report_end_time must be later than report_start_time.');
+                }
+                var splitMinutes = Number(splitInput.value || '0');
+                var intervals = buildIntervals(startDate, endDate, splitMinutes);
+                groups.push({
+                    id: nextGroupId++,
+                    start: formatLocalDate(startDate),
+                    end: formatLocalDate(endDate),
+                    split: splitMinutes,
+                    intervals: intervals
+                });
+                renderGroups();
+                closeDraft();
+            } catch (error) {
+                window.alert(error && error.message ? error.message : 'Failed to create report timestamps.');
+            }
+        });
+
+        groupsContainer.addEventListener('click', function (event) {
+            var button = event.target.closest('[data-remove-group]');
+            if (!button) {
+                return;
+            }
+            var groupId = Number(button.getAttribute('data-remove-group'));
+            groups = groups.filter(function (group) {
+                return group.id !== groupId;
+            });
+            renderGroups();
+        });
+
+        form.addEventListener('submit', function (event) {
+            renderGroups();
+            if (!hiddenInput.value) {
+                event.preventDefault();
+                window.alert('Please create at least one report timestamp range before submitting.');
+            }
+        });
+
+        renderGroups();
+        renderTemplatePreview();
+    })();
+</script>
+{% endblock %}

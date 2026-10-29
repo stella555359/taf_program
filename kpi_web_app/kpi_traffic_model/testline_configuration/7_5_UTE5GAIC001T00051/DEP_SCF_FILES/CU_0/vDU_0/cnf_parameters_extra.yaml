@@ -1,0 +1,207 @@
+# - Override values for deployment in cloud-development environment
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+
+global:
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+  fhmSiso: switch-network
+  externalNetwork:
+    fhm:
+      vlanInfo:
+        vid: 212
+        pcp: ""
+      ipInfo:
+      - rangeStart: "192.168.254.33"
+        rangeEnd: "192.168.254.33"
+        subnet: "192.168.254.0/26"
+        type: "physical"
+        role:
+        - "fhm"
+    ahm-0:
+      fhm:
+      - defaultUnderlyingIface: ecpri0
+        vid: ""
+        vlName: fhmplane01
+      fhuc:
+      - defaultUnderlyingIface: ecpri0
+        pcp: "7"
+        vid: "211"
+        vlName: fhucplane01
+    # - CB009567 max support 12 RANNIC/36 cells, max support 36 fhuc interfaces.
+    # - three fhuc interfaces mapping ecpri0-ecpri2 of one RANNIC.
+    # - Note: currently only support single vlan for each RANNIC, so please only set the vid value
+    #         of the first fhuc for each RANNIC such as fhuc1/fhuc4/fhuc7/fhuc10...fhuc34
+    # - fhuc1-fhuc3 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-0 pod
+    fhuc1:
+      vlanInfo:
+        vid: "211"
+        pcp: "7"
+    fhuc2:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc3:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc4-fhuc6 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-1 pod
+    fhuc4:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc5:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc6:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc7-fhuc9 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-2 pod
+    fhuc7:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc8:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc9:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc10-fhuc12 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-3 pod
+    fhuc10:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc11:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc12:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc13-fhuc15 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-4 pod
+    fhuc13:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc14:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc15:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc16-fhuc18 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-5 pod
+    fhuc16:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc17:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc18:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc19-fhuc21 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-6 pod
+    fhuc19:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc20:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc21:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc22-fhuc24 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-7 pod
+    fhuc22:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc23:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc24:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc25-fhuc27 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-8 pod
+    fhuc25:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc26:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc27:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc28-fhuc30 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-9 pod
+    fhuc28:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc29:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc30:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc31-fhuc33 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-10 pod
+    fhuc31:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc32:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc33:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    # - fhuc34-fhuc36 mapping ecpri0-ecpri2 of the RANNIC on node which ahm-11 pod
+    fhuc34:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc35:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+    fhuc36:
+      vlanInfo:
+        vid: ""
+        pcp: "7"
+
+    twampF1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: "215"
+      ipInfo:
+      - rangeStart: "2a00:8a00:8000:117:1:2:a47:be0c"
+        rangeEnd: "2a00:8a00:8000:117:1:2:a47:be0c"
+        subnet: "2a00:8a00:8000:117:1:2:a47:be08/125"
+        type: "physical"
+        role:
+        - "twamp_f1"
+    # - End example for twamp vlan interface

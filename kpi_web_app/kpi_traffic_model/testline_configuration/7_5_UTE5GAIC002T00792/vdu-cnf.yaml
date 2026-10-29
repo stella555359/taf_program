@@ -1,0 +1,465 @@
+USER-SUPPLIED VALUES:
+USER-SUPPLIED VALUES: null
+aic-ahm:
+  nodeSelector: {}
+aic-oamasm:
+  nodeSelector: {}
+aic-oambb:
+  nodeSelector: {}
+aic-oamcalc:
+  nodeSelector: {}
+aic-oamcm:
+  nodeSelector: {}
+aic-oamconfig:
+  nodeSelector: {}
+aic-oamctp:
+  nodeSelector: {}
+aic-oamext:
+  nodeSelector: {}
+aic-oamfh:
+  dhcp:
+    service:
+      dhcpv4:
+        subnets:
+        - optionData:
+          - alwaysSend: "true"
+            code: 61
+            data:
+              clientIdentifier: null
+          pools:
+          - endAddress: 192.168.254.60
+            startAddress: 192.168.254.34
+          subnet: 192.168.254.0/26
+        subnetsForDC:
+        - subnet: 192.169.0.0/16
+          type: eCPRI
+        - subnet: 192.170.0.0/24
+          type: CPRI
+  nodeSelector: {}
+aic-oamfm:
+  nodeSelector: {}
+aic-oamkpianalyzer:
+  nodeSelector: {}
+aic-oampm:
+  nodeSelector: {}
+aic-oamswm:
+  nodeSelector: {}
+aic-twamp:
+  nodeSelector: {}
+aic-vdu-cprt:
+  nodeSelector: {}
+aic-vdu-l2nrt:
+  activeSiblingCore: "true"
+  deploymentType: NR_L2NRT_3CL2HI
+  l2hi:
+    dptrace:
+      dump_payload: "0"
+      enable: "0"
+      filter: none:none
+    securityContext:
+      privilegedMode: "false"
+  nodeSelector: {}
+aic-vdu-l2rt:
+  activeSiblingCore: "true"
+  deploymentType: NR_L2RT_2CL2PS_2CL2LO
+  l2rt:
+    dptrace:
+      dump_payload: "0"
+      enable: "0"
+      filter: none:none
+  nodeSelector: {}
+certman-auto-cmp:
+  configuration:
+    additionalTACertSecretName: []
+    cmp:
+      ca_subject_name: null
+      cmp_secret_name: ""
+      ee_subject_fqdn: []
+      ee_subject_ip_addr: []
+      ee_subject_name: null
+      ip: null
+      path: null
+      port: null
+fheoammgmt:
+  nodeSelector: {}
+fhnwmgmt:
+  nodeSelector: {}
+global:
+  agentIP: ""
+  cnfLayout: DRAN
+  coreDumpPath: ""
+  custom_extensions:
+    labels: {}
+  devicePoolList:
+    fastPathCommonPool: openshift.io/sriov_vfio_ens43f1
+    fastPathRanNicPool: nokia.com/sriov_rinline_up
+    slowPathCommonPool: openshift.io/sriov_netdevice_ens43f1
+    slowPathRanNicPool: nokia.com/sriov_rinline_cp
+  externalNetwork:
+    f1:
+      ipInfo:
+      - rangeEnd: 10.71.173.139
+        rangeStart: 10.71.173.139
+        role:
+        - Tracing
+        - F1-U
+        subnet: 10.71.173.136/29
+        type: physical
+      vlanInfo:
+        vid: 2315
+        vlName: f1uplane
+    f1OP1:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_OP_1
+        subnet: ""
+        type: physical
+      vlanInfo:
+        vid: ""
+        vlName: f1uplane1
+    f1OP2:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_OP_2
+        subnet: ""
+        type: physical
+      vlanInfo:
+        vid: ""
+        vlName: f1uplane2
+    f1OP3:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_OP_3
+        subnet: ""
+        type: physical
+      vlanInfo:
+        vid: ""
+        vlName: f1uplane3
+    f1OP4:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_OP_4
+        subnet: ""
+        type: physical
+      vlanInfo:
+        vid: ""
+        vlName: f1uplane4
+    f1OP5:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_OP_5
+        subnet: ""
+        type: physical
+      vlanInfo:
+        vid: ""
+        vlName: f1uplane5
+    f1Slice1:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - F1-U_slice1
+        subnet: ""
+        type: physical
+      vlanInfo:
+        defaultUnderlyingIface: f1
+        vid: ""
+        vlName: f1u_slice1
+    f1c:
+      ipInfo:
+      - rangeEnd: 10.71.173.138
+        rangeStart: 10.71.173.138
+        role:
+        - F1-C
+        subnet: 10.71.173.136/29
+        type: physical
+      vlanInfo:
+        vid: 2315
+    fhm:
+      ipInfo:
+      - rangeEnd: 192.168.254.33
+        rangeStart: 192.168.254.33
+        role:
+        - fhm
+        subnet: 192.168.254.0/26
+        type: physical
+      vlanInfo:
+        pcp: ""
+        vid: 295
+    fhuc1:
+      vlanInfo:
+        pcp: "7"
+        vid: "301"
+    fhuc2:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc3:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc4:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc5:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc6:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc7:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc8:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc9:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc10:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc11:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc12:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc13:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc14:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc15:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc16:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc17:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc18:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc19:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc20:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc21:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc22:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc23:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc24:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc25:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc26:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc27:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc28:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc29:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc30:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc31:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc32:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc33:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc34:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc35:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    fhuc36:
+      vlanInfo:
+        pcp: "7"
+        vid: ""
+    l2biphi:
+      vlanInfo:
+        vid: 2312
+    l2biprt:
+      vlanInfo:
+        vid: 2312
+    oam:
+      ipInfo:
+      - rangeEnd: 10.71.173.146
+        rangeStart: 10.71.173.146
+        role:
+        - oam
+        - certman-server
+        - tracecontroller
+        subnet: 10.71.173.144/29
+        type: physical
+      policyRouteInfo:
+      - gateway: 10.71.173.145
+        orderNumber: "5"
+        table: "2"
+      vlanInfo:
+        vid: 2316
+    tracing:
+      ipInfo:
+      - rangeEnd: 10.71.173.154
+        rangeStart: 10.71.173.154
+        role:
+        - Tracing
+        subnet: 10.71.173.152/29
+        type: physical
+      vlanInfo:
+        vid: 2314
+    twampF1:
+      ipInfo:
+      - rangeEnd: ""
+        rangeStart: ""
+        role:
+        - twamp_f1
+        subnet: ""
+        type: physical
+      vlanInfo:
+        defaultUnderlyingIface: twamp
+        vid: ""
+        vlName: twamp_f1
+  fhmInternalNetworkIpPool: 192.168.251.0/27
+  fhmIpForDC:
+    ipAddress: 70.70.70.1/32
+    role:
+    - fhm
+  fhmSiso: switch-network
+  highPerformanceRuntimeClass: nokia-performance
+  image:
+    imagePullSecret: default-dockercfg-lg6q5
+    registry: image-registry.openshift-image-registry.svc:5000/cran1
+  l2nrtCount: 1
+  l2rtL2PSHyperThreading: false
+  name_convention:
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+    deployment_prefix:
+    - ute
+    - _NAMESPACE_
+    pod_prefix:
+    - ute
+    - _NAMESPACE_
+    statefulset_prefix:
+    - ute
+    - _NAMESPACE_
+  networkInfo:
+    bip:
+      mtu: 9000
+    f1:
+      mtu: 1500
+    f1c:
+      mtu: 1500
+    fhm:
+      mtu: 1500
+    fhuc:
+      mtu: 1500
+    oam:
+      mtu: 1500
+    tracing:
+      mtu: 1500
+  nodeSelector:
+    config.nokia.com/application: vDU
+  pvcName: vdupvc
+  seLinux: "true"
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  siteDescription: MRBTS-1234
+  stackTraceEnabled: "false"
+  storageClassName: lvms-vg1
+  timezone: UTC
+  upInstanceCount: 1
+  upInstanceNodeSelector: {}
+  urlNms:
+  - ""
+  - ""
+healing-controller:
+  nodeSelector: {}
+kubeapisymptomdataprovider:
+  nodeSelector: {}
+logservice:
+  nodeSelector: {}
+lwsd:
+  nodeSelector: {}
+pm:
+  nodeSelector: {}
+rcpfm:
+  nodeSelector: {}
+rcpsdl:
+  nodeSelector: {}
+rcpum:
+  nodeSelector: {}
+remote-storage:
+  nodeSelector: {}
+secret-storage-framework:
+  nodeSelector: {}
+trsconfig:
+  nodeSelector: {}

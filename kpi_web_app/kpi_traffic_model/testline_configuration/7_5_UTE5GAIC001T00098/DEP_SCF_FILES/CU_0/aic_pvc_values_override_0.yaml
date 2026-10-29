@@ -1,0 +1,14 @@
+USER-SUPPLIED VALUES:
+aic-vcu-network:
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_ens12f0
+    fastPathDevicePoolBackup: openshift.io/sriov_netdevice_ens12f1
+    slowPathDevicePool: openshift.io/sriov_netdevice_ens12f0
+    slowPathDevicePoolBackup: openshift.io/sriov_netdevice_ens12f1
+global:
+  accessModes: ReadWriteMany
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace
+      }}
+  nodeSelector: {}
+  storageClassName: ocs-storagecluster-cephfs

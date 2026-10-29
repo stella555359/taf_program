@@ -1,0 +1,52 @@
+{
+  "name": "Hangzhou_SISO_SG6_TMO",
+  "description": "Hangzhou SISO RAN_PZ_HAZ_34 SG6 TMO/None_Feature testcase style profile.",
+  "profile_type": "case",
+  "area": "SISO",
+  "case_type": "TMO",
+  "path_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34/None_Feature_SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "case_candidate_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "confirmed_case_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "allowed_resource_scopes": [
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "preferred_keywords": {
+    "setup": [
+      "SetUp.TMO Case Common SetUp"
+    ],
+    "teardown": [
+      "TMO_Common_Case_Teardown"
+    ]
+  },
+  "negative_patterns": [
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG1",
+      "message": "Do not use SG1 resource keywords for SG6 SISO TMO testcase generation."
+    },
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG11",
+      "message": "Do not use SG11 resource keywords for SG6 SISO TMO testcase generation."
+    }
+  ],
+  "style_rules": [
+    "None_Feature_SG6 SISO cases are confirmed SG6 cases.",
+    "Prefer SG6 common resources under lines/SG6, python, and robot."
+  ],
+  "required_fields": [
+    "Documentation",
+    "Tags",
+    "Setup",
+    "Teardown"
+  ]
+}

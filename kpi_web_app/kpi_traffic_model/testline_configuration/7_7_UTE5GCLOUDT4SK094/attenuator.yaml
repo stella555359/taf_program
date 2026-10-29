@@ -1,0 +1,19 @@
+CELLS_ATTENUATION:
+    GNB_2_CELL_1:
+        - 1
+        - 69
+    GNB_2_CELL_4:
+        - 52
+        - 120
+    GNB_2_CELL_11:
+        - 137
+        - 205
+    GNB_2_CELL_12:
+        - 154
+        - 222
+    GNB_2_CELL_13:
+        - 171
+        - 239
+    GNB_2_CELL_14:
+        - 188
+        - 256

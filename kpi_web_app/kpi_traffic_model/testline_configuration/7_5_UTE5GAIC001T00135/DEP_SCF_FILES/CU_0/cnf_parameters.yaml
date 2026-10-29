@@ -1,0 +1,67 @@
+# if start
+ENV:  env 1
+IP:  https://api.hzdc-vrf2-10-110-18-226.ocp.hz.nsn-rdnet.net:6443
+namespace:  cran30
+deploymentmode:  SA
+cnflayout:  redundant
+cpuecount:  2
+upuecount:  2
+cpifInstanceCount:  1
+dedicatedCore:  numa_0
+vCU_network:
+  tracing_orderNumber:  1000
+  tracing_subnet:  2a00:8a00:8000:5801:0:19:0:1500/120
+  tracing:  200
+  tracing_start: 2a00:8a00:8000:5801:0:19:0:1521
+  tracing_end: 2a00:8a00:8000:5801:0:19:0:1521
+  oam_subnet: 2a00:8a00:8000:5801:0:19:0:1b00/120
+  oam:  206
+  oam_start:  2a00:8a00:8000:5801:0:19:0:1b21
+  oam_end:  2a00:8a00:8000:5801:0:19:0:1b21
+  x2u_subnet:  
+  x2u:  
+  x2u_start:
+  x2u_end:
+  x2c_subnet:
+  x2c:
+  x2c_start:
+  x2c_end:
+  f1u_subnet:  2a00:8a00:8000:5801:0:19:0:1700/120
+  f1u:  202
+  f1u_start:  2a00:8a00:8000:5801:0:19:0:1721
+  f1u_end:  2a00:8a00:8000:5801:0:19:0:1722
+  f1c_subnet:  2a00:8a00:8000:5801:0:19:0:1600/120
+  f1c:  201
+  f1c_start:  2a00:8a00:8000:5801:0:19:0:1621
+  f1c_end:  2a00:8a00:8000:5801:0:19:0:1621
+  s1u_subnet:
+  s1u:
+  s1u_start:
+  s1u_end:
+  ngu_subnet:  2a00:8a00:8000:5801:0:19:0:1d00/120
+  ngu:  208
+  ngu_start:  2a00:8a00:8000:5801:0:19:0:1d21
+  ngu_end:  2a00:8a00:8000:5801:0:19:0:1d21
+  ngc_subnet:  2a00:8a00:8000:5801:0:19:0:1c00/120
+  ngc:  207
+  ngc_start:  2a00:8a00:8000:5801:0:19:0:1c21
+  ngc_end:  2a00:8a00:8000:5801:0:19:0:1c21
+  xnu_subnet:  2a00:8a00:8000:5801:0:19:0:1f00/120
+  xnu:  210
+  xnu_start:  2a00:8a00:8000:5801:0:19:0:1f21
+  xnu_end:  2a00:8a00:8000:5801:0:19:0:1f21
+  xnc_subnet:  2a00:8a00:8000:5801:0:19:0:1e00/120
+  xnc:  209
+  xnc_start:  2a00:8a00:8000:5801:0:19:0:1e21
+  xnc_end:  2a00:8a00:8000:5801:0:19:0:1e21
+  internale1:  240
+  fastPathDevicePool:  openshift.io/sriov_netdevice_0
+  slowPathDevicePool:  openshift.io/sriov_netdevice_0
+  fastPathDevicePoolBackup: openshift.io/sriov_netdevice_ens1f1
+  slowPathDevicePoolBackup: openshift.io/sriov_netdevice_ens1f1
+misc:
+  hardAntiAffinity:  TRUE
+  timezone:  UTC
+  platform_type:  OCP
+  storageClassName: ocs-storagecluster-cephfs
+  accessModes: ReadWriteMany

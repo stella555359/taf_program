@@ -1,0 +1,36 @@
+scc_name:  cnf5g
+vlan:
+  oam: 161
+  f1: 191
+  f1c: 181
+  fhm: 296
+  fhuc: 308
+  l1bip: 123
+  l2bip: 124
+  internal_range:
+  tracing: 172
+network:
+  fastPathCommonPool: openshift.io/sriov_vfio_ens35f0
+  slowPathCommonPool: openshift.io/sriov_netdevice_ens35f0
+  fastPathFhPool: openshift.io/sriov_vfio_ens37
+  slowPathFhPool: openshift.io/sriov_netdevice_ens37
+   f1subnet: 10.106.150.128/28
+   f1usubnet: 10.106.150.128/28
+   f1csubnet: 10.106.150.100/30
+   oamsubnet: 10.106.150.68/30 
+   oam_ordernumber: 5 
+   tracingsubnet: 10.106.150.84/30 
+   tracing_ordernumber: 1000
+misc:
+   pvc_name: vdupvc
+  fecVFNum: 1
+  timezone: UTC
+   platform_type: OCP
+   access_mode: ReadWriteMany
+  l1hi_dedicated_core: 6
+
+   # you can get it by command "kubectl get storageclasses.storage.k8s.io"
+   storage_class_name: ocs-storagecluster-cephfs
+  deployment_type: OE20_FULL_CAP
+   upCellFlag: multi
+   upActiveSiblingCore: true

@@ -1,0 +1,11 @@
+global:
+  fecDevicePool:
+    fecVF: 'intel.com/intel_fec_acc100'
+  siteDescription: 'MRBTS-10705'
+healing-controller:
+  custom:
+    criticalContainersCauseVNFRestart: []   
+aic-vdu-up:
+  l1hi:
+    l1_default_scs: "30"   # it's just a example, please make sure it's match to real environment
+  privilegedMode: "true"

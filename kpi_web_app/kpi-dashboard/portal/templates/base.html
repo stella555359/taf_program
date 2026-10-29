@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}KPI Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', v='20260406n') }}">
+</head>
+<body>
+    <header class="portal-header-shell">
+        <div class="portal-header">
+            <a class="portal-brand" href="{{ url_for('portal.home') }}">
+                <span class="portal-brand-mark">KP</span>
+                <span>
+                    <strong>KPI Portal</strong>
+                    <small>Hosted in kpi-dashboard</small>
+                </span>
+            </a>
+            <nav class="portal-nav" aria-label="Primary navigation">
+                <a class="portal-nav-link{% if request.endpoint == 'portal.home' %} is-active{% endif %}" href="{{ url_for('portal.home') }}">Portal Home</a>
+                <a class="portal-nav-link{% if request.blueprint == 'kpi_detector' %} is-active{% endif %}" href="{{ url_for('kpi_detector.index') }}">KPI Anomaly Detector</a>
+                <a class="portal-nav-link{% if request.blueprint == 'kpi_generator' %} is-active{% endif %}" href="{{ url_for('kpi_generator.index') }}">KPI Generator</a>
+                <a class="portal-nav-link{% if request.blueprint == 'kpi_traffic_model' %} is-active{% endif %}" href="{{ url_for('kpi_traffic_model.index') }}">KPI Traffic Model</a>
+            </nav>
+        </div>
+    </header>
+    <div class="flash-stack page-shell page-shell-tight">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

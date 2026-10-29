@@ -1,0 +1,38 @@
+global:
+  devicePoolList:
+    fastPathCommonPool: openshift.io/sriov_vfio_ens1f1
+    slowPathCommonPool: openshift.io/sriov_netdevice_ens1f1
+    fastPathRanNicPool: nokia.com/sriov_rinline_up
+    slowPathRanNicPool: nokia.com/sriov_rinline_cp
+
+
+  externalNetwork:
+    oam:
+      vlanInfo:
+        vid: "3492"
+    tracing:
+      vlanInfo:
+        vid: "3489"
+    f1c:
+      vlanInfo:
+        vid: "3487"
+    fhm:
+      vlanInfo:
+        vid: "2328"
+    f1:
+      vlanInfo:
+        vid: "3487"
+    l2biprt:
+      vlanInfo:
+        vid: "109"
+    l2biphi:
+      vlanInfo:
+        vid: "109"
+    ahm-0:
+      fhuc:
+        - vlName: fhucplane01
+          vid: "2327"
+          defaultUnderlyingIface: ecpri0
+          pcp: "7"
+
+  storageClassName: lvms-vg1

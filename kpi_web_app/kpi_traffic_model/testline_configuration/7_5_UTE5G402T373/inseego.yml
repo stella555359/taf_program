@@ -1,0 +1,50 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            INSEEGO0:                                    # UE name - change if you want
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE1
+                    - REAL_ANDROID_UE
+                #STARTING_CELL: 0x33101                    # Cell ID to which UE should attach
+
+                CLASS: QualcommNoLicenseUe                # UE type is QualcommNoLicenseUe
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to QualcommNoLicenseUe constructor when Ue instance is created.
+                    serial_number: '6cb8cbbe'          ###### Not SN which is checked via adb devices
+                    configuration:
+                        serial_com: '10'                  # COM ID obtained from qualcomm modem
+                        diag_com: '11'                    # Diagnostic COM ID
+                        ue_pc_ip: '10.71.217.63'           # UE PC IP address
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started?????
+                        login: 'nokia5G'                # SSH login to UE PC
+                        password: 'noki@123'                                # SSH password to UE PC
+                        centOSpc_pc_ip: '10.71.217.64'           # Iperf PC IP address
+                        centOSpc_login: 'ute'                # SSH login to Iperf PC
+                        centOSpc_password: 'zxcvbnmP+12'                                # SSH password to Iperf PC
+                        server_dir: '/cygdrive/c/pyro_server'                # UE PC directory where all server files will be copied
+                        server_python: '/cygdrive/c/Python27/python.exe'     # UE PC python location
+                        clear_logs: 'yes'                                   # clears server_dir/logs folder before connecting to server
+                        clear_server_files: 'yes'         # clears server_dir/ta_ue_plugin_android folder on UE PC, forcing new files upload
+                        turn_off_on_firewall: 'yes'       # turn off firewall before connecting to server and on before shutdown. Windows only.
+                        enable_disable_cfun: 'yes'        # enables CFUN (AT+CFUN=1) before attach, disables (AT+CFUN=0) after detach
+                        reset_interface: 'no'            # Disable and Enable the interface=interface_name before test
+                        processes_to_kill:                # phrases based on which processes names will be found and killed before test (case insensitive)
+                            - 'putty'
+                            - 'QXDM'
+                            - 'adb'
+                            - 'iperf'
+                            - 'QPSTConfig'
+                            - 'QMITestPro'
+                            - 'ttermpro'
+                            - 'ATCom'
+                        data_transfer:                    # Application Server (for Iperf) details
+                            iperf_path: 'adb shell iperf'
+                            iperf_options:
+                                qci: {5: _iperf.port, 6: _iperf.ssh_connection_details.port}           # qci is for setting iperf port?????
+                            ssh:
+                                host: '10.57.163.50'       # Application Server IP
+                                user: 'cmw_sg3'             # Application Server SSH login
+                                password: 'cmw_sg3'      # Application Server SSH password         # available: nbiot. Changes output parsing.
+                                # APP_2:
+                                    # host: '10.57.163.35'       # Application Server IP
+                                    # user: 'root'             # Application Server SSH login
+                                    # password: 'nokia123'      # Application Server SSH password

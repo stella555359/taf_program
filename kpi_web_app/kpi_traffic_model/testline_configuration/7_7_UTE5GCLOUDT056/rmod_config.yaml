@@ -1,0 +1,10 @@
+RSI:
+    056:
+        host: 'PLKR-TP-UE81.sc5g.krk-lab.nsn-rdnet.net'
+        user: 'plkrsg09'
+        password: 'ssp123!!Macro'
+        port: '2001'
+        remote_dir: 'C:/rsi'
+        python_path: 'py -3'
+        RMODs:
+            COM12: 'ASMR' # MUMIN

@@ -1,0 +1,53 @@
+global:
+  internalE1Network:
+    internalE1:
+      vlanInfo:
+        vlName: "internale1"
+        defaultUnderlyingIface: "e1"
+        secUnderlyingIface: "e1s"
+        vid: 2804
+        mtu: 1500
+      # - Description: define which group IP will be used when install the cnf
+      # - Support value: "groupA","groupB"
+      #                  "useGroup" set as "groupA" will only use the ipAddress under section "groupA"
+      #                  "useGroup" set as "groupB" will only use the ipAddress under section "groupB"
+      #                  if do Blue/Green upgrade, both of the ip addresses for "groupA" and "groupB" need to be configured
+      # - Default value: "groupA"
+      # - Note: "groupA" and "groupB" IP address should not be conflict, but need in the same subnet,
+      #          reserved ip address count for cpif should be equal to "global.cpifInstance"
+      # - Example: "global.cpifInstance" is 4, and useGroup is "groupA", the ip addresses 192.168.200.5-192.168.200.8 would be
+      #             used for cpif instance, then "groupB" ipAddress should not be conflict with these IPs 192.168.200.4-192.168.200.8
+      useGroup: "groupA"
+      ipInfo:
+      - subnet: "192.168.218.0/24"
+        role:
+        - "E1-C"
+        ipAddress:
+          groupA:
+            cpif:
+              rangeStart: "192.168.218.5"
+              rangeEnd: "192.168.218.5"
+            cpnrt:
+              rangeStart: "192.168.218.4"
+              rangeEnd: "192.168.218.4"
+          # - recommend vlaues for groupB according current groupA default values
+          # groupB:
+          #   cpif:
+          #      rangeStart: "192.168.200.11"
+          #      rangeEnd: "192.168.200.11"
+          #   cpnrt:
+          #      rangeStart: "192.168.200.10"
+          #      rangeEnd: "192.168.200.10"
+          groupB:
+            cpif:
+              rangeStart: ""
+              rangeEnd: ""
+            cpnrt:
+              rangeStart: ""
+              rangeEnd: ""
+      # - Description: this parameter is only for internale1 LRIP configuration
+      # - Feature ID: CNI-74580
+      # - Note: this gateway also should be configured on the switch
+      lripInternalE1Info:
+        gatewayList:
+        - "192.168.200.1"

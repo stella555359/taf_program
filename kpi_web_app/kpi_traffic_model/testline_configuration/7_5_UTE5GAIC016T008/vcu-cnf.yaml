@@ -1,0 +1,48 @@
+global:
+  image:
+    registry: "harbor-vrf1.ocp.hz.nsn-rdnet.net:443/vrf1"
+  accessModes: ReadWriteMany
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_1
+    fastPathDevicePoolBackup: ""
+    slowPathDevicePool: openshift.io/sriov_netdevice_1
+    slowPathDevicePoolBackup: ""
+  externalNetwork:
+    f1c:
+      vlanInfo:
+        vid: "100"
+    f1u:
+      vlanInfo:
+        vid: "101"
+    ngc:
+      vlanInfo:
+        vid: "106"
+    ngu:
+      vlanInfo:
+        vid: "104"
+    oam:
+      vlanInfo:
+        vid: "105"
+    s1u:
+      vlanInfo:
+        vid: "111"
+    x2c:
+      vlanInfo:
+        vid: ""
+    x2u:
+      vlanInfo:
+        vid: "110"
+    xnc:
+      vlanInfo:
+        vid: "102"
+    xnu:
+      vlanInfo:
+        vid: "103"
+    e2:
+      vlanInfo:
+        vid: ""
+  internale1Network:
+    internale1:
+      vlanInfo:
+        vid: "207"
+  storageClassName: ocs-storagecluster-cephfs

@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robotws-mcp-server"
+version = "0.1.0"
+description = "Read-only RobotWS MCP server for Robot Framework testcase generation context."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "mcp>=1.0.0",
+    "robotframework",
+    "uvicorn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx",
+    "pytest",
+]
+
+[project.scripts]
+robotws-mcp = "robotws_mcp.server:main"
+robotws-knowledge-api = "robotws_mcp.api:main"
+robotws-mcp-index = "robotws_mcp.indexer.__main__:main"
+robotws-layer1-scan = "robotws_mcp.layer1.scanner:main"
+robotws-layer2-build = "robotws_mcp.layer2.build_graph:main"
+robotws-layer7-import = "robotws_mcp.layer7.import_feedback:main"
+robotws-mcp-query = "robotws_mcp.query:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

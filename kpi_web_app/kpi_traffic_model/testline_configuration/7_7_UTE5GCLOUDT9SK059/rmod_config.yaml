@@ -1,0 +1,9 @@
+RSI:
+    # LOCALHOST section applies to RMODs that are directly accessible from (connected to) test_vm/test_pc
+    LOCALHOST:
+        AHFII:
+            # In case of MUMIN-ETH telnet <IP:port> is needed:
+            10.255.10.134:2001: 'AHPE'
+            10.255.10.135:2001: 'AHEH'
+            10.255.10.140:2001: 'AZQS'
+            10.255.10.141:2001: 'AZQU'

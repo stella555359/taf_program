@@ -1,0 +1,16 @@
+aic-intnet:
+  sn:
+  - L1242202633
+  devicePoolList:
+    fastPathBipPool: openshift.io/sriov_vfio_1
+    fastPathF1uPool: openshift.io/sriov_vfio_0
+    fastPathF1uPoolBackup: ""
+    slowPathCommonPool: openshift.io/sriov_netdevice_0
+    slowPathCommonPoolBackup: ""
+global:
+  accessModes: ReadWriteOnce
+  storageClassName: lvms-vg1
+  image:
+    registry: "harbor-vrf1.ocp.hz.nsn-rdnet.net:443/vrf1"
+
+

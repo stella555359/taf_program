@@ -1,0 +1,125 @@
+# ##########################################################################################
+#
+#    7_20_UTE5GCLASSSV511  -  IV_PS_511  -  CV511
+#
+# ##########################################################################################
+
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE_1
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x5669896
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'a7e26180'
+                    configuration:
+                        chipset_NR5G_mode: 'SDX55'
+                        ue_pc_ip: '10.0.116.143'
+                        pyro_port: '9090'
+                        login: 'cyg_server'
+                        password: 'Nokia@2018'
+                        server_dir: 'C:/pyro_server'
+                        server_python: 'C:/Python27/python.exe'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'
+                        data_transfer:
+                            ssh:
+                                host: '10.14.42.188' # 10.14.53.68
+                                user: 'ran5g'
+                                password: 'nokia2018Ne!'
+                            ping:
+                                ping_host_ip: '10.11.70.76' # old ip10.11.70.221
+                                ping_count: '10'
+                                allowed_packet_loss: '5'
+                            iperf_interface_ip: '10.11.70.76' # old ip 10.11.70.221
+                            iperf_path: '/data/data/com.nokia.android.application'
+                            iperf_options:
+                                buffer: '2M'
+                                qci:
+                                    0: 34501
+                                    1: 34601
+                                    2: 34701
+                                    3: 5005
+                                    9: 34021
+                                packet: '1330B'
+            UE_2:
+                CAPABILITIES:
+                    - REAL_UE_2
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x5669896
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'a883f619'
+                    configuration:
+                        chipset_NR5G_mode: 'SDX55'
+                        ue_pc_ip: '10.0.117.136'
+                        pyro_port: '9090'
+                        login: 'cv5g1_6'
+                        password: 'Er!cZ0rn'
+                        server_dir: 'C:/pyro_server'
+                        server_python: 'C:/Python27/python.exe'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'
+                        data_transfer:
+                            ssh:
+                                host: '10.14.42.188' # 10.14.53.68
+                                user: 'ran5g'
+                                password: 'nokia2018Ne!'
+                            ping:
+                                ping_host_ip: '10.11.70.76' # old ip10.11.70.221
+                                ping_count: '10'
+                                allowed_packet_loss: '5'
+                            iperf_interface_ip: '10.11.70.76' # old ip 10.11.70.221
+                            iperf_path: '/data/data/com.nokia.android.application'
+                            iperf_options:
+                                buffer: '2M'
+                                qci:
+                                    0: 34502
+                                    1: 34602
+                                    2: 34702
+                                    9: 34022 #-p
+                                    3: 5005 #-p
+                                packet: '1330B'
+                            #   parallel_streams: '8'       #  Patch add by GBR to add as sprcial option
+            UE_3:
+                CAPABILITIES:
+                    - REAL_UE_3
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x5669896
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: '19dd9b70'
+                    configuration:
+                        chipset_NR5G_mode: 'SDX55'
+                        ue_pc_ip: '10.0.117.135'
+                        pyro_port: '9090'
+                        login: 'cv5g1_6'
+                        password: 'Er!cZ0rn'
+                        server_dir: 'C:/pyro_server'
+                        server_python: 'C:/Python27/python.exe'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/QCAT.exe'
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'
+                        data_transfer:
+                            ssh:
+                                host: '10.14.42.188' # 10.14.53.68
+                                user: 'ran5g'
+                                password: 'nokia2018Ne!'
+                            ping:
+                                ping_host_ip: '10.11.70.76'  # old ip 10.11.70.221
+                                ping_count: '10'
+                                allowed_packet_loss: '5'
+                            iperf_interface_ip: '10.11.70.76'  #old ip 10.11.70.221
+                            iperf_path: '/data/data/com.nokia.android.application'
+                            iperf_options:
+                                buffer: '2M'
+                                qci:
+                                    0: 34503
+                                    1: 34603
+                                    2: 34703
+                                    9: 34023 #-p
+                                    3: 5005 #-p
+                                packet: '1330B'
+                            #   parallel_streams: '8'       #  Patch add by GBR to add as sprcial option

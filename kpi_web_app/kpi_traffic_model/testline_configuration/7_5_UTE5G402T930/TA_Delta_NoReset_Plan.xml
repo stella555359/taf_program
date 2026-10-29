@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE raml SYSTEM 'raml20.dtd'>
+<raml version="2.0" xmlns="raml20.xsd">
+  <cmData type="plan" scope="all" name="TL930_Delta_Plan" id="PlanConfiguration( 82688 )">
+    <header>
+      <log dateTime="2021-11-26T09:50:39.000+01:00" action="created" appInfo="PlanExporter">UIValues are used</log>
+    </header>
+    <managedObject class="MRBTS" version="SBTS22R2_2112_100" distName="PLMN-PLMN/MRBTS-930" id="2596082" operation="update">
+      <p name="btsName">MRBTS930_DElTA_PLAN_no_reset</p>
+    </managedObject>
+    <managedObject class="NRSCTP" version="NRBTSCL22R2_2112_110" distName="PLMN-PLMN/MRBTS-930/NRBTS-930/NRSCTP-1" id="2655826" operation="update">
+      <list name="sctpProfile">
+        <item>
+          <p name="sctpChunkBundlingEnabled">false</p>
+          <p name="sctpHeartbeatInterval">20</p>
+          <p name="sctpMaxBurst">4</p>
+          <p name="sctpMaxPayloadSize">1395</p>
+          <p name="sctpMaxTimeSctpSetup">60</p>
+          <p name="sctpPathMaxRetrans">6</p>
+          <p name="sctpProfileId">1</p>
+          <p name="sctpRandomTimeInitSeqRetry">11</p>
+          <p name="sctpRtoInit">3000</p>
+          <p name="sctpRtoMax">30000</p>
+          <p name="sctpRtoMin">250</p>
+          <p name="sctpSackDelay">200</p>
+          <p name="sctpSackFreq">2</p>
+          <p name="sctpValidCookieLife">60000</p>
+          <p name="sctpWaitTimeInitSeqRetry">239</p>
+        </item>
+      </list>
+    </managedObject>
+    <managedObject class="NRPMRNL" version="NRBTSCL22R2_2112_110" distName="PLMN-PLMN/MRBTS-930/NRBTS-930/NRPMRNL-1" id="2655827" operation="update">
+      <p name="miNrNTRAF">5min</p>
+      <p name="miNrRacDu">5min</p>
+    </managedObject>
+    <managedObject class="PMCADM" version="MNL22R2_2112_100" distName="PLMN-PLMN/MRBTS-930/MNL-1/MNLENT-1/PMCADM-1" id="2655729" operation="update">
+      <p name="reportingIntervalPm">30min</p>
+    </managedObject>
+    <managedObject class="FMCADM" version="MNL22R2_2112_100" distName="PLMN-PLMN/MRBTS-930/MNL-1/MNLENT-1/FMCADM-1" id="2655733" operation="update">
+      <p name="actPipePowerDecreased1dBFaults">false</p>
+    </managedObject>
+    <managedObject class="PMMNL" version="MNL22R2_2112_100" distName="PLMN-PLMN/MRBTS-930/MNL-1/MNLENT-1/PMMNL-1" id="2655735" operation="update">
+      <p name="miPtpMasterBH">5min</p>
+      <p name="miTrRxWindowStats">5min</p>
+    </managedObject>
+  </cmData>
+</raml>

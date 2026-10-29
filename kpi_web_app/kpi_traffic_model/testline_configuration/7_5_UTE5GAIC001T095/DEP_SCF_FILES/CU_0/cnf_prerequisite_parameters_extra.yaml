@@ -1,0 +1,4 @@
+aic-vcu-network:
+  devicePoolList:
+    fastPathDevicePool: "openshift.io/sriov_netdevice_ens12f0"
+    slowPathDevicePool: "openshift.io/sriov_netdevice_ens12f0"

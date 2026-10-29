@@ -1,0 +1,76 @@
+# - Override values for deployment in cloud-development environment
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+
+global:
+  fhmSiso: switch-network
+  #########################################################
+  # global configuration shared by parent and sub charts
+  #########################################################
+  externalNetwork:
+    f1c:
+      vlanInfo:
+        vid: 315
+      ipInfo:
+        - rangeStart: "10.71.164.138"
+          rangeEnd: "10.71.164.138"
+          subnet: "10.71.164.136/29"
+          type: "physical"
+          role:
+            - "F1-C"
+    f1Slice1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "f1u_slice1"
+        defaultUnderlyingIface: "f1"
+        vid: "325"
+      ipInfo:
+      - rangeStart: "10.69.73.186"
+        rangeEnd: "10.69.73.186"
+        subnet: "10.69.73.184/29"
+        type: "physical"
+        role:
+        - "F1-U_slice1"
+    f1Slice2:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "f1u_slice2"
+        defaultUnderlyingIface: "f1"
+        vid: "315"
+      ipInfo:
+      - rangeStart: "10.71.164.139"
+        rangeEnd: "10.71.164.139"
+        subnet: "10.71.164.136/29"
+        type: "physical"
+        role:
+        - "F1-U_slice2"        
+    # - End example for network slice
+
+    #  - Description: this is only one twamp vlan interface example
+    #    Add one vlan interface for the Measurement network as followed steps
+    #      1. copy the whole section from "twamp_f1" to "- 'twamp_f1'" including all the spaces
+    #      2. paste the whole section after line "- 'twamp_f1'"
+    #      3. modify the section key name "twamp_f1", align with the new vlName and role
+    #      4. configure vid( vlan id), pcp ,rangeStart,rangeEnd,subnet,family
+    #  - Feature ID: CB008468
+    #  - Note:
+    #    defaultUnderlyingIface and secUnderlyingIface are not recommended to modify
+    #    vlName should be unique under twamp section and can be defined by user, please not exceed 15 characters
+    #    role should be unique and same in the SCF file
+    #    subnet should be same as the Measurement network
+    #    if f1 and f1c use the same subnet, only need create one vlan interface here
+    twampF1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: "315"
+      ipInfo:
+      - rangeStart: "10.71.164.140"
+        rangeEnd: "10.71.164.140"
+        subnet: "10.71.164.136/29"
+        type: "physical"
+        role:
+        - "twamp_f1"
+    # - End example for twamp vlan interface

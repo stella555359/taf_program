@@ -1,0 +1,134 @@
+heat_template_version: 2016-10-14
+description: Template to create network interface
+
+parameters:
+  role:
+    type: string
+    description: Usage role for the port
+    default: internal
+    constraints:
+      - allowed_values: [internal, external, oam]
+  networks:
+    type: json
+  name_prefix:
+    type: string
+    description: Prefix name of ports
+  mtu:
+    type: number
+    description: MTU value for the port
+    default: 1500
+    constraints:
+      - range: {min: 1280, max: 9000}
+  pmtu:
+    type: number
+    description: Maximum MTU value supported by the port, i.e. provider network MTU
+    default: 9000
+    constraints:
+      - range: {min: 1280, max: 9000}
+  port_property:
+    description: Type specific port parameters
+    type: json
+    default:
+      virtio: normal
+      avp:    normal
+      sriov:  direct
+  oam_security_group:
+    description: oam port security group
+    type: string
+
+conditions:
+  create_security_group: {equals : [{get_param: oam_security_group}, ""]}
+
+resources:
+  security_group:
+    type: OS::Neutron::SecurityGroup
+    condition: create_security_group
+    properties:
+      name:
+        str_replace:
+          template: $prefix-security-group
+          params:
+            $prefix: {get_param: name_prefix}
+      description: Ping and SSH and HTTPS
+      rules:
+      - protocol: icmp
+      - protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+      - protocol: tcp
+        port_range_min: 443
+        port_range_max: 443
+      - protocol: tcp
+        port_range_min: 8443
+        port_range_max: 8443
+      - protocol: icmp
+        ethertype: IPv6
+      - protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        ethertype: IPv6
+      - protocol: tcp
+        port_range_min: 443
+        port_range_max: 443
+        ethertype: IPv6
+      - protocol: tcp
+        port_range_min: 8443
+        port_range_max: 8443
+        ethertype: IPv6
+
+  port:
+    type: OS::Neutron::Port
+    properties:
+      name:
+        str_replace:
+          template: $prefix-$name
+          params:
+            $prefix: {get_param: name_prefix}
+            $name: {get_param: [networks, name]}
+      network: {get_param: [networks, uuid]}
+      fixed_ips:
+        - ip_address: {get_param: [networks, ip_address]}
+      security_groups:
+        if:
+          - equals:
+            - {get_param: oam_security_group}
+            - ''
+          - [{get_resource: security_group}]
+          - [{get_param: oam_security_group}]
+      binding:vnic_type: { get_param: [port_property, {get_param: [networks, port_type]}]}
+
+outputs:
+  ip_address:
+    value: {get_attr: [port, fixed_ips, 0, ip_address]}
+  ip_prefix:
+    value: {str_split: ['/', {get_attr: [port, subnets, 0, cidr]}, 1]}
+  gw_address:
+    value: {get_attr: [port, subnets, 0, gateway_ip]}
+  port:
+    value: {get_resource: port}
+  ip-info:
+    value:
+      map_merge:
+        repeat:
+          for_each:
+            <%name%>: [{get_param: [networks, name]}]
+          template:
+            ip-info.<%name%>.mac: {get_attr: [port, mac_address]}
+            ip-info.<%name%>.role: {get_param: role}
+            ip-info.<%name%>.ip_addrs:
+            -
+              str_replace:
+               template: <%ip%>/<%prefix%>
+               params:
+                 <%ip%>: {get_attr: [port, fixed_ips, 0, ip_address]}
+                 <%prefix%>: {str_split: ['/', {get_attr: [port, subnets, 0, cidr]}, 1]}
+            ip-info.<%name%>.mtu:
+              str_replace:
+               template: <%mtu%>
+               params:
+                 <%mtu%>: {get_param: [networks, mtu]}
+            ip-info.<%name%>.provider-network-mtu:
+              str_replace:
+               template: <%pmtu%>
+               params:
+                 <%pmtu%>: {get_param: [networks, pmtu]}

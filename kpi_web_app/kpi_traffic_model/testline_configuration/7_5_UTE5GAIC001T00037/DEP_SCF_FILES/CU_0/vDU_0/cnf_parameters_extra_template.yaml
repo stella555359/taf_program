@@ -1,0 +1,13 @@
+# It's just a example, please make sure it's match to real environment
+aic-vdu-up:
+  l1hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"

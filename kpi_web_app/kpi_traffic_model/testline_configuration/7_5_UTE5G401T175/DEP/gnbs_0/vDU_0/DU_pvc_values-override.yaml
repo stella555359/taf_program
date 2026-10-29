@@ -1,0 +1,103 @@
+# - Override values for deployment in cloud-development environment
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+
+#########################################################
+# top level configuration private to sub charts
+#########################################################
+
+# - Description: sub chart aic-intnet private configuration
+aic-intnet:
+  # - Description: Host VLAN network or Guest VLAN network. Support value: HOST and GUEST
+  # - Default value: GUEST
+  bipVLANMode: "GUEST"
+  f1VLANMode: "GUEST"
+  f1cVLANMode: "GUEST"
+  fhmVLANMode: "GUEST"
+  fhucVLANMode: "GUEST"
+  oamVLANMode: "GUEST"
+  tracingVLANMode: "GUEST"
+
+  # - Description: device Pool List
+  # - Note: need to be filled according to the real environment!!!
+  devicePoolList:
+    # The SR-IOV Device Pool used by f1/bip networks (fast path)
+    fastPathCommonPool: "openshift.io/sriov_vfio_ens85f1"
+    # The SR-IOV Device Pool used by oam/tracing/f1c networks (slow path)
+    slowPathCommonPool: "openshift.io/sriov_netdevice_ens85f1"
+    # The SR-IOV Device Pool used by fhuc networks (fast path)
+    fastPathFhPool: "openshift.io/sriov_vfio_ens87"
+    # The SR-IOV Device Pool used by fhm networks (slow path)
+    slowPathFhPool: "openshift.io/sriov_netdevice_ens87"
+
+  # Define the VLAN ID for Host VLAN mode
+  VLANID:
+    l1bip: ""
+    l2bip: ""
+    oam: ""
+    f1: ""
+    f1c: ""
+    fhm: ""
+    fhuc: ""
+    tracing: ""
+
+# - Description: sub chart aic-pvc private configuration
+aic-pvc:
+  # - Description: the name of persistent volume
+  # -       consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+  pvcName: "vdupvc"
+  # - Description: the accessModes of persistent volume.
+  #   OCP multi node: ReadWriteMany
+  #   OCP single node: ReadWriteOnce
+  accessModes: "ReadWriteMany"
+  # - Description: the storageclass name of persistent volume. Will use default storageclass in case not filled.
+  # - Values:
+  # -   OCP multi node: ocs-storagecluster-cephfs
+  # -   OCP single node: localfs-lvm-sc
+  storageClassName: &sc "ocs-storagecluster-cephfs"
+
+  certificate-management-pvc:
+    certmantlsconfigpvc:
+      storageClassName: *sc
+
+  logservice-pvc:
+    syslog:
+      storageClassName: *sc
+    auditlog:
+      storageClassName: *sc
+
+  pm-pvc:
+    hfrw:
+      storageClassName: *sc
+    lfrw:
+      storageClassName: *sc
+
+  rcpfm-pvc:
+    storageClassName: *sc
+
+  rcpum-pvc:
+    storageClassName: *sc
+
+  cnum-pvc:
+    storageClassName: *sc
+    accessModes: "ReadWriteOnce"
+
+  dhcp-pvc:
+    storageClassName: *sc
+
+  secret-storage-framework-pvc:
+    vaultmanagerpvc:
+      storageClassName: *sc
+    vaultserverpvc:
+      storageClassName: *sc
+
+  ne3sagent-pvc:
+    storageClassName: *sc
+
+  providercontroller-pvc:
+    providercontroller:
+      storageClassName: *sc
+
+# - Description: sub chart aic-vdu-rbac private configuration
+# aic-vdu-rbac:

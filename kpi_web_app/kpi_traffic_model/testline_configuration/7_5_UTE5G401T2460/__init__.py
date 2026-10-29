@@ -1,0 +1,273 @@
+__maintainer__ = "zhu baijie"
+__team__ = "NSB MN RAN RD VRF HAZ3 7"
+__email__ = "baijie.zhu@nokia-sbell.com"
+
+import os
+
+from taf.config.testline import (
+    CloudDeployment,
+    DeploymentNetworkStack,
+    DeploymentVnfStack,
+    MasterNode,
+    K8S,
+)
+from taf.config.testline import (
+    SshServiceDetails,
+    HttpConnectionDetails,
+    K8SConnectionDetails,
+    HelmChart,
+    IperfDataTransferDetails,
+)
+from taf.config.testline import NetworkAddress, RoutingInformation
+from taf.config.testline import RealEnb, Airscale, CommonUnit
+from taf.config.testline import HBTE_PDU as HBTE
+from taf.config.testline.pdu import FPFH
+from taf.config.testline import RU, RadioTypes
+from taf.config.testline import CloudBts, CU
+from taf.config.testline import VDU, FHGW, RANNIC
+from taf.config.testline import PxeServer
+from taf.config.testline import TestLine
+from taf.config.testline import RealEnb
+from taf.config.testline import TestPc
+from taf.config.testline.appserver import AppServer
+from taf.config.testline import LicenseKeeper
+
+#from taf.config.testline.taf_ue_data_transfer_protocol import TafUeDataTransferProtocol
+#from taf.config.testline.ue import TafUeFastmile
+#from taf.config.testline.appserver import TafUeAppServer
+from taf.config.testline.ue import (
+    AirphoneCloud,
+    Airphone,
+    Prisma,
+    TM500,
+    Qualcomm,
+    QualcommUeType,
+    Android,
+    MediaTek,
+)
+# common
+__all__ = ["tl"]
+
+_cfg_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Testpc
+_test_pc = TestPc(
+    default_ssh_connection_details=SshServiceDetails(
+        addr="10.57.177.122", username="ute", password="iW_K#8.ute%A10h0m0ra"
+    )
+)
+
+# CU
+_cu = CU(
+    instance_id=37390,
+    global_bts_id=37390,
+    backhaul_site_oam_ip=NetworkAddress(v4="10.57.165.18"),
+    oam_ssh_connection_details=SshServiceDetails(
+        addr="10.57.165.130", username="core", password="system123"
+    ),
+    oam_http_connection_details=HttpConnectionDetails(
+        addr="10.57.165.18", username="Nemuadmin", password="nemuuser", port=443
+    ),
+    f1c=NetworkAddress(
+        v4="10.57.166.32",
+        vlan_id=2689,
+        routing=RoutingInformation(gateway="10.57.166.1/26"),
+    ),
+    f1u=NetworkAddress(
+        v4="10.57.166.33",
+        vlan_id=2689,
+        routing=RoutingInformation(gateway="10.57.166.1/26"),
+    ),
+    ngc=NetworkAddress(
+        v4="10.57.166.160",
+        vlan_id=2691,
+        routing=RoutingInformation(gateway="10.57.166.129/26"),
+    ),
+    ngu=NetworkAddress(
+        v4="10.57.166.160",
+        vlan_id=2691,
+        routing=RoutingInformation(gateway="10.57.166.129/26"),
+    ),
+    x2c=NetworkAddress(
+        v4="10.57.166.96",
+        vlan_id=2690,
+        routing_v4=RoutingInformation(gateway="10.57.166.65/26"),
+    ),
+    x2u=NetworkAddress(
+        v4="10.57.166.96",
+        vlan_id=2690,
+        routing_v4=RoutingInformation(gateway="10.57.166.65/26"),
+    ),
+    s1u=NetworkAddress(
+        v4="10.57.165.50",
+        vlan_id=2682,
+        routing_v4=RoutingInformation(gateway="10.57.165.33/27"),
+    ),
+)
+
+# ssh connection information of OE, for tenant user
+_vcu_ssh_connection_details = SshServiceDetails(
+    addr="10.57.165.130", username="cranuser2460", password="systeM!23", port=22
+)
+# ssh connection information of OE, for root user
+_vcu_k8s_connection_details = K8SConnectionDetails(
+    ip_addr="10.57.165.130", username="core", password="system123", port=22
+)
+
+_vcu_master_node = MasterNode(
+    k8s_connection_details=_vcu_k8s_connection_details,
+    ssh_connection_details=_vcu_ssh_connection_details,
+)
+
+_vcu_k8s = K8S(namespace="cran2460", master_node=_vcu_master_node)
+
+_cnf_cu_1 = HelmChart(
+    name="vcu2460",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/cnf.yaml"),
+)
+
+_cluster_preparation_cu_1 = HelmChart(
+    name=_cnf_cu_1.name + "-cluster-preparation",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/preparation.yaml"),
+)
+
+_prerequisite_cu_1 = HelmChart(
+    name=_cnf_cu_1.name + "-prerequisite",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/prerequisite.yaml"),
+)
+_vcu_k8s_cloud_deployment = CloudDeployment(
+    default_cfg_dir=_cfg_dir,
+    cloud_hosting=_vcu_k8s,
+    cluster_preparation=_cluster_preparation_cu_1,
+    prerequisite=_prerequisite_cu_1,
+    cnf=_cnf_cu_1,
+)
+
+
+# 5G RU
+_ru_pdu = FPFH(addr="10.64.49.76", port_numbers=[4])                                                      
+
+
+_ru = RU(
+    ru_hw_group="Below6GHz",
+    pdu_port=_ru_pdu.pdu_ports[4],
+    radio_type=RadioTypes.AZQJ,
+    default_ssh_connection_details=SshServiceDetails(
+        addr="192.168.254.37",
+        username="rfsw",
+        password="f6gh0K2nXq0O8XqVFkUuMtJnzuKm0U3box0QcYgugn0=",
+    ),
+)
+
+# vDU
+_pxe_server_ssh_info = SshServiceDetails(
+    addr="10.64.161.14", username="ute", password="!Q2w3e4r5t6y7u"
+)
+
+_pxe_server = PxeServer(
+    nfs_ip="10.64.161.14", ssh_connection_details=_pxe_server_ssh_info
+)
+
+# FHGW information,need update
+_fhgw_0 = FHGW(user_config_path=_cfg_dir, rus=[_ru], pxe_server=_pxe_server)
+_fhgw_0.ip = "x.x.x.x"
+_fhgw_0.username = "toor4nsn"
+_fhgw_0.password = "Fhgw@nokia123"
+_fhgw_0.version = "FHGW24R2"
+
+# RANNIC information
+_rannic_0 = RANNIC(serial_number="L1232903437", product_code="AF1791.102", rus=[_ru])
+
+# ssh connection information of OE, for tenant user
+_ssh_connection_details_0 = SshServiceDetails(
+    addr="10.64.52.42", username="cranuser2460", password="systeM!23"
+)
+# ssh connection information of OE, for root user
+_k8s_connection_details_0 = K8SConnectionDetails(
+    ip_addr="10.64.52.42", username="core", password="system123", port="22"
+)
+
+_master_node_0 = MasterNode(
+    k8s_connection_details=_k8s_connection_details_0,
+    ssh_connection_details=_ssh_connection_details_0,
+)
+_k8s_0 = K8S(namespace="cran2460", master_node=_master_node_0)
+_vdu_cnf_0 = DeploymentVnfStack(
+    name="vdu2460",
+    yaml_file=os.path.join(
+        _cfg_dir, "DEP_SCF_FILES/CU_0/vDU_0/du_cnf_values-override.yaml"
+    ),
+)
+_vdu_intnet_0 = DeploymentNetworkStack(
+    name=_vdu_cnf_0.name + "-prerequisite",
+    yaml_file=os.path.join(_cfg_dir, "DEP/gnbs_0/vDU_0/DU_pvc_values-override.yaml"),
+)
+
+_cnf_du_0 = HelmChart(
+    name="vdu2460",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/vDU_0/cnf.yaml"),
+)
+_cluster_preparation_du_0 = HelmChart(
+    name=_cnf_du_0.name + "-cluster-preparation",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/vDU_0/preparation.yaml"),
+)
+
+_prerequisite_du_0 = HelmChart(
+    name=_cnf_du_0.name + "-prerequisite",
+    yaml_file=os.path.join(_cfg_dir, "DEP_SCF_FILES/CU_0/vDU_0/prerequisite.yaml"),
+)
+
+_vdu_k8s_cloud_deployment_0 = CloudDeployment(
+    default_cfg_dir=_cfg_dir,
+    cloud_hosting=_k8s_0,
+    networks=[_vdu_intnet_0],
+    vnfs=[_vdu_cnf_0],
+    cluster_preparation=_cluster_preparation_du_0,
+    prerequisite=_prerequisite_du_0,
+    cnf=_cnf_du_0,
+)
+
+_du_0 = VDU(
+    cloud_deployment=_vdu_k8s_cloud_deployment_0,
+    oam_http_connection_details=HttpConnectionDetails(
+        addr="10.64.52.66", username="Nemuadmin", password="nemuuser", port="443"
+    ),
+    rannics=[_rannic_0],
+    instance_id=37390,
+    global_bts_id=37390,
+)
+
+# BTS
+_cbts = CloudBts(
+    dus=[_du_0],
+    cu=_cu,
+    cloud_deployment=_vcu_k8s_cloud_deployment,
+)
+
+# _common_unit_2 = CommonUnit(
+#    lmp_connection=SshServiceDetails(
+#        addr="10.71.212.163", username="toor4nsn", password="oZPS0POrRieRtu"
+#    ),
+#    capacity_units=[],
+# )
+
+# _real_enb = Airscale(common_units=[_common_unit_2])
+
+# _lte_real_enb = RealEnb(
+#    airscale=_real_enb,
+#    oam_ip="10.71.212.163",
+#    global_bts_id="2460",
+# )
+
+# CI_Detail_UE_Type='Nokia FastMile 5G Gateway 3.1'
+
+# TestLine
+tl = TestLine(
+    test_pc=_test_pc,
+    gnbs=[_cbts],
+    ues=[],
+    # appserver=_appserver,
+    tl_cloud_topology="CLOUD_5G_AIC_RM17_OCP_FHGW_AEQY",
+    test_pcs=[_test_pc]
+    # enbs=[_lte_real_enb],
+)

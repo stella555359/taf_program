@@ -1,0 +1,29 @@
+AppServer1: &APP_1
+   address: '10.84.168.121'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.84.169.61' # OPTIONAL Application Server interface used to bind IP (-B iperf parameter)
+
+UE_POOLS:
+  TafUeAndroidPool:                           # Ue Pool class defined by library
+    inline_config:
+      ANDROID_UE_1:                           # UE name
+        CAPABILITIES:                         # Capabilities that UE has (used to find select UE with Require Ue keyword)
+          - REAL_UE
+          - REAL_ANDROID_UE
+        CLASS: AndroidUe                      # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+        CONSTRUCTOR_PARAMETERS:               # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+          serial_number: '3daa3843'           # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+          configuration:                      # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+            ue_pc_address: 'PLKR-P04-UE149.intra.noklab.net'    # UE PC IP address
+            ue_pc_port: '8080'                # TCP Port number on UE PC on which Pyro server will be started
+            ue_pc_login: 'user-lab0'          # SSH login to UE PC
+            ue_pc_password: 'Bts2003'         # SSH password to UE PC
+            network_mode_switch_method: 'ADB' # method for change network mode keyword
+            service_call_attach: "15"
+            service_call_detach: "15"
+            data_transfer:
+              iperf:
+                app_server: *APP_1
+                binary_path: '/data/data/com.nokia.android.application' # OPTIONAL iperf binary location (it is optional when you want to use your own iperf version or unable to install UeManager apk)
+                iperf_interval: '1'           # Iperf interval in seconds (default: 1)

@@ -1,0 +1,14 @@
+USER-SUPPLIED VALUES:
+aic-vcu-network:
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_vfio_0
+    fastPathDevicePoolBackup: ""
+    slowPathDevicePool: openshift.io/sriov_netdevice_0
+    slowPathDevicePoolBackup: ""
+global:
+  accessModes: ReadWriteMany
+  cniType: sriov
+  image:
+    registry: harbor-vrf34.ocp.hz.nsn-rdnet.net:443/vrf34
+  nodeSelector: {}
+  storageClassName: ocs-storagecluster-cephfs

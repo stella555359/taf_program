@@ -1,0 +1,35 @@
+vlan:
+  oam: 316
+  f1: 324
+  l1bip: 312
+  l2bip: 313
+  xpbip: 313
+  internal_range: 311-311
+  tracing: 314
+network:
+  fastPathF1uPool: openshift.io/sriov_vfio_0
+  fastPathBipPool: openshift.io/sriov_vfio_1
+  slowPathCommonPool: openshift.io/sriov_netdevice_0
+  f1subnet: 10.69.73.176/29
+  f1csubnet: 10.71.164.136/29
+  f1usubnet: 10.69.73.176/29
+  oamsubnet: 10.71.164.144/29
+  oam_ordernumber: 5 
+  tracingsubnet: 10.71.164.152/29
+  tracing_ordernumber: 1000
+misc:
+  fhmSiso: switch-network
+  pvc_name: vdupvc
+  fecVFNum: 0
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+  storage_class_name: lvms-vg1
+  l2rtDeploymentType: NR_L2RT_20vCPU
+  l2nrtDeploymentType: NR_L2NRT_10vCPU
+  deployment_type: OE20
+  upCellFlag: multi
+  upActiveSiblingCore: true
+oct_server: 10.109.3.195
+cloudRanVersion: 4.0

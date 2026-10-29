@@ -1,0 +1,48 @@
+global:
+  externalNetwork:
+    f1:
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ab4a'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ab4a'
+        subnet: '2a00:8a00:8000:117:1:2:a47:ab48/125'
+        type: physical
+    f1c:
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ab4b'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ab4b'
+        subnet: '2a00:8a00:8000:117:1:2:a47:ab48/125'
+        type: physical
+    oam:
+      ipInfo:
+      - family: ipv6
+        rangeEnd: '2a00:8a00:8000:117:1:2:a47:ab52'
+        rangeStart: '2a00:8a00:8000:117:1:2:a47:ab52'
+        role:
+        - oam
+        - certman-server
+        subnet: '2a00:8a00:8000:117:1:2:a47:ab50/125'
+        type: physical
+      policyRouteInfo:
+      - gateway: '2a00:8a00:8000:117:1:2:a47:ab51'
+        orderNumber: '5'
+        table: '2'
+    tracing:
+      ipInfo:
+      - family: ipv6
+        ipAddress:
+          cprt:
+            rangeEnd: '2a00:8a00:8000:117:1:2:a47:ab5a'
+            rangeStart: '2a00:8a00:8000:117:1:2:a47:ab5a'
+          oam:
+            rangeEnd: '2a00:8a00:8000:117:1:2:a47:ab5b'
+            rangeStart: '2a00:8a00:8000:117:1:2:a47:ab5b'
+        role:
+        - Tracing
+        subnet: '2a00:8a00:8000:117:1:2:a47:ab58/125'
+        type: physical
+      policyRouteInfo:
+      - gateway: '2a00:8a00:8000:117:1:2:a47:ab59'
+        orderNumber: '1000'
+        table: '3'

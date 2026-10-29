@@ -1,0 +1,22 @@
+global:
+  tag: "knife"
+
+#support multiple container
+    
+oam:
+  dockerfile: |    
+    ADD http://10.108.229.158/public/non_root/ping_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    ADD http://10.108.229.158/public/non_root/tcpdump_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    RUN /opt/nokia/bin/vDUAppSecPreCondition
+    
+oamfh:
+  dockerfile: |    
+    ADD http://10.108.229.158/public/non_root/ping_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    ADD http://10.108.229.158/public/non_root/tcpdump_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    RUN /opt/nokia/bin/vDUAppSecPreCondition
+
+cprt:
+  dockerfile: |    
+    ADD http://10.108.229.158/public/non_root/ping_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    ADD http://10.108.229.158/public/non_root/tcpdump_SecPre_bin.sh /opt/nokia/SecPrepare.d/
+    RUN /opt/nokia/bin/vDUAppSecPreCondition    

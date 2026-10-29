@@ -1,0 +1,416 @@
+heat_template_version: 2016-10-14
+
+description: Transfer heat env to cbam json
+
+parameters:
+  image:
+    type: string
+    description: image name or UUID
+  ssh_public_key:
+    type: string
+    description: key pair publich ssh key
+  vnf_name:
+    type: string
+    description: 5GBTS VNF name
+    constraints:
+      - allowed_pattern: "^([a-zA-Z0-9]+-)*[a-zA-Z0-9]+$"
+        description: "Invalid vnf_name format"
+      - length: {min: 1, max: 45}
+        description: "Invalid vnf_name length (should be [1,45])"
+  cluster_id:
+    description: Cluster identification.
+    type: string
+    constraints:
+      - length: {min: 1, max: 8}
+      - allowed_pattern: "[0-9]+"
+  network-interface-enable:
+    description: indicate if external network interfaces should be activated or not after commission.
+    type: boolean
+    default: true
+  vnfc_type_name_case:
+    description: vnfc name case
+    type: string
+    default: lower
+    constraints:
+      - allowed_values: [lower, upper]
+  flavors:
+    type: json
+    description: flavor to use
+    default:
+      oam: 5gbts_oam
+      cpcn: 5gbts_cpcn
+      cpue: 5gbts_cpue
+      upue: 5gbts_upue
+      cpif: 5gbts_cpif
+      cpnb: 5gbts_cpnb
+      cpcl: 5gbts_cpcl
+      cpnrt: 5gbts_cpnrt
+      uvm: 5gbts_uvm
+      db: 5gbts_db
+  timezone:
+    description: timezone region
+    type: string
+    constraints:
+      - {custom_constraint: timezone}
+  availability_zones:
+    description: availability zone region
+    type: json
+    default:
+      default:
+      oam_000:
+      oam_001:
+      cpcl_000:
+      cpcl_001:
+      cpnb_000:
+      cpnb_001:
+      cpif_000:
+      cpif_001:
+      cpnrt_000:
+      cpnrt_001:
+      db_000:
+      db_001:
+      db_002:
+      uvm:
+      cpues:
+        default:
+        availability_zone_list:
+      upues:
+        default:
+        availability_zone_list:
+  oam_network:
+    description: public network from which to allocate OAM IP
+    type: string
+    constraints:
+      - {custom_constraint: neutron.network}
+  oam_ip_logical:
+    description: Logical IP address for OAM and SSH accessing
+    type: string
+    default: 0.0.0.0
+  oam_ip_0:
+    description: IP address for O&M 0
+    type: string
+    default: 0.0.0.0
+  oam_ip_1:
+    description: IP address for O&M 1
+    type: string
+    default: 0.0.0.0
+  ntp_servers:
+    description: list of servers to sync time from
+    type: comma_delimited_list
+    constraints:
+      - length: {min: 1, max: 4}
+  dns_forwarders:
+    description: list of servers to forward queries to
+    type: comma_delimited_list
+    constraints:
+      - length: {min: 0, max: 3}
+    default: []
+  external_networks:
+    description: External network to attach to a interface node
+    type: json
+  ext_port:
+    description: External interface vlans
+    type: json
+  internal_network:
+    description: Internal network uuid
+    type: string
+  internal_srv_network:
+    description: Internal service network uuid
+    type: string
+  internal_e1_network:
+    description: Internal e1 network uuid
+    type: string
+  internal_networks:
+    description: Internal subnet cidr and allocation pool
+    type: json
+  number_of_upue_nodes:
+    description: number of ues nodes to instantiate
+    type: number
+    constraints:
+      - range: {min: 1, max: 36}
+  number_of_cpue_nodes:
+    description: number of cpues nodes to instantiate
+    type: number
+    constraints:
+      - range: {min: 1, max: 10}
+  number_of_uvm_nodes:
+    description: number of ues nodes to instantiate]
+    type: number
+    constraints:
+      - range: {min: 0, max: 1}
+  extra_cloud_config_data:
+    type: json
+    default: {}
+  int_port_mtu:
+    description: mtu value for intenals port (vxlan)
+    type: number
+    default: 1400
+    constraints:
+    - range: {min: 1280, max: 9000}
+  ext_port_mtu:
+    description: mtu value for externals port (flat)
+    type: number
+    default: 1500
+    constraints:
+    - range: {min: 1280, max: 9000}
+  oam_port_mtu:
+    description: mtu value for oam(trace) port (vlan)
+    type: number
+    default: 1500
+    constraints:
+    - range: {min: 1280, max: 9000}
+  int_pmtu:
+    description: max mtu value supported by intenals port, i.e. provider network mtu
+    type: number
+    default: 9000
+    constraints:
+    - range: {min: 1280, max: 9000}
+  ext_pmtu:
+    description: max mtu value supported by external port, i.e. provider network mtu
+    type: number
+    default: 9000
+    constraints:
+    - range: {min: 1280, max: 9000}
+  oam_pmtu:
+    description: max mtu value supported by oam(trace) port, i.e. provider network mtu
+    type: number
+    default: 9000
+    constraints:
+    - range: {min: 1280, max: 9000}
+  vnf_layout:
+    description: vnf_layout
+    type: string
+    default: redundant
+    constraints:
+      - allowed_values: [basic, redundant]
+  oam_default_gw:
+    description: oam network default gw
+    type: string
+  oam_security_group:
+    description: oam port security group
+    type: string
+    default: ''
+  cloudplatform:
+    description: cloud platform
+    type: string
+    default: "osp"
+  int_port_type:
+    description: internals port type
+    type: string
+    default: virtio
+    constraints:
+      - allowed_values: [ virtio ]
+  ext_port_type:
+    description: external port type
+    type: string
+    default: sriov
+    constraints:
+      - allowed_values: [ sriov ]
+  oam_port_type:
+    description: oam port type
+    type: string
+    default: virtio
+    constraints:
+      - allowed_values: [ virtio ]
+  enable_sriov:
+    description: flag of enable sriov vlan tag function
+    type: boolean
+    default: true
+  cleartextpassword:
+    type: json
+    description: cleartext password to use for accounts
+    default: {}
+  password:
+    type: json
+    description: password hash to use for accounts
+    default:
+      _nokfsoperator: '!'
+      root: '!'
+      wsuser: '$6$rounds=10000$eG4lsC1E5KqcMjYS$E6Zq45tZLtxSRXzT9lpqJjQcyhoQpyHR1bLTGRpYxCbPIs4WDW7PrGhV4uVY0hptxsTZU753MpbgxKArio2hh/'
+  nuage:
+    description: List of nuage spesific parameters
+    type: json
+    default: {}
+
+conditions:
+  deploy_basic_condition: {equals: [{get_param: vnf_layout}, "basic"]}
+  deploy_redundant_condition: {equals: [{get_param: vnf_layout}, "redundant"]}
+
+resources:
+  resources_basic:
+    type: OS::Heat::Value
+    condition: deploy_basic_condition
+    properties:
+      type: json
+      value:
+        oam_node:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, oam]}
+        cpif_nodes:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpif]}
+        cpnrt_nodes:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnrt]}
+        cpnb_nodes:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnb]}
+        cpcl_nodes:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpcl]}
+        db_node:
+          server:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, db]}
+        cpue_nodes:
+          count: {get_param: number_of_cpue_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, cpue]}
+        upue_nodes:
+          count: {get_param: number_of_upue_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, upue]}
+        upgrade_node:
+          count: {get_param: number_of_uvm_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, uvm]}
+
+  resources_redundant:
+    type: OS::Heat::Value
+    condition: deploy_redundant_condition
+    properties:
+      type: json
+      value:
+        oam_node_in_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, oam]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, oam]}
+        cpif_nodes_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpif]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpif]}
+        cpnrt_nodes_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnrt]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnrt]}
+        cpnb_nodes_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnb]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpnb]}
+        cpcl_nodes_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpcl]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, cpcl]}
+        db_node_redundant:
+          server_0:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, db]}
+          server_1:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, db]}
+          server_2:
+            imageId: {get_param: image}
+            flavorId: {get_param: [flavors, db]}
+        cpue_nodes_redundant:
+          count: {get_param: number_of_cpue_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, cpue]}
+        upue_nodes_redundant:
+          count: {get_param: number_of_upue_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, upue]}
+        upgrade_node_redundant:
+          count: {get_param: number_of_uvm_nodes}
+          0:
+            server:
+              imageId: {get_param: image}
+              flavorId: {get_param: [flavors, uvm]}
+
+  env_transfer:
+    type: 5gbts_vnf.yaml
+    properties:
+      cloudplatform: {get_param: cloudplatform}
+      int_port_type: {get_param: int_port_type}
+      ext_port_type: {get_param: ext_port_type}
+      oam_port_type: {get_param: oam_port_type}
+      enable_sriov: {get_param: enable_sriov}
+      cbam:
+        publicSshKey: {get_param: ssh_public_key}
+        extensions:
+          cluster_id: {get_param: cluster_id}
+          vnf_layout: {get_param: vnf_layout}
+          network-interface-enable: {get_param: network-interface-enable}
+          vnf_name: {get_param: vnf_name}
+          vnfc_type_name_case: {get_param: vnfc_type_name_case}
+          oam_ip_logical: {get_param: oam_ip_logical}
+          oam_ip_0: {get_param: oam_ip_0}
+          oam_ip_1: {get_param: oam_ip_1}
+          oam_default_gw: {get_param: oam_default_gw}
+          oam_security_group: {get_param: oam_security_group}
+          oam_network: {get_param: oam_network}
+          oam_pmtu: {get_param: oam_pmtu}
+          oam_port_mtu: {get_param: oam_port_mtu}
+          external_networks:
+            extnet_a: {get_param: [external_networks, extnet_a]}
+            extnet_b: {get_param: [external_networks, extnet_b]}
+          ext_pmtu: {get_param: ext_pmtu}
+          ext_port_mtu: {get_param: ext_port_mtu}
+          ext_port: {get_param: ext_port}
+          internal_networks: {get_param: internal_networks}
+          internal_srv_network: {get_param: internal_srv_network}
+          internal_e1_network: {get_param: internal_e1_network}
+          internal_network: {get_param: internal_network}
+          int_pmtu: {get_param: int_pmtu}
+          int_port_mtu: {get_param: int_port_mtu}
+          extra_cloud_config_data: {get_param: extra_cloud_config_data}
+          dns_forwarders: {get_param: dns_forwarders}
+          ntp_servers: {get_param: ntp_servers}
+          timezone: {get_param: timezone}
+          availability_zones: {get_param: availability_zones}
+          cleartextpassword: {get_param: cleartextpassword}
+          password: {get_param: password}
+          nuage: {get_param: ext_port}
+        resources:
+          if:
+          - deploy_basic_condition
+          - {get_attr: [resources_basic, value]}
+          - {get_attr: [resources_redundant, value]}
+
+outputs:
+  management_ip:
+    description: Primary management IP address allocated to access the system
+    value: {get_attr: [env_transfer, management_ip]}
+
+  management_ips:
+    description: All management IP address allocated to access the system
+    value: {get_attr: [env_transfer, management_ips]}

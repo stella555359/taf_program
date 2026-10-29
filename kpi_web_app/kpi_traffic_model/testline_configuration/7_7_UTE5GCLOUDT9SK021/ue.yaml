@@ -1,0 +1,84 @@
+APP_SERVER: &APP_SERVER
+    ssh: &APP_SERV_CRED
+        address: '10.84.168.120'
+        user: '5g'
+        password: '5g'
+        bind_interface_ip: '10.84.169.60'
+    lte_network_ip: '10.84.169.60'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: '20109313'
+                STARTING_CELL_5G_PCI: 51
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CT604WC2T'
+                    configuration:
+                        ue_pc_address: 'PLKR-SG06-02.intra.noklab.net'
+                        ue_pc_port: '80'
+                        voice_call_dialing_timeout: '30'
+                        network_mode_switch_method: 'adb'
+                        service_call_attach: '16'
+                        service_call_detach: '16'
+                        data_transfer:
+                            binary_path: '/data/data/com.nokia.android.application/'
+                            app_servers:
+                                SKA_1: *APP_SERV_CRED
+                            iperf_interval: '1'
+                            iperf_options:
+                                packet: '1200B'
+                                buffer: '4M'
+
+CELLS:
+    GNB1:
+        CELL1:
+            ID: 1
+            PCI: 51
+        CELL2:
+            ID: 2
+            PCI: 52
+        CELL3:
+            ID: 3
+            PCI: 53
+        CELL4:
+            ID: 4
+            PCI: 54
+        CELL9:
+            ID: 5
+            PCI: 55
+        CELL10:
+            ID: 6
+            PCI: 56
+        CELL11:
+            ID: 7
+            PCI: 57
+        CELL12:
+            ID: 8
+            PCI: 58
+ATTENUATORS:
+    JFW:                                      # attenuator name - change if you want
+        TYPE: JFW                               # attenuator type to use; or you may give it directly: ta_attenuator.attenuators_impl.hytem.HytemAttenuator
+        CONSTRUCTOR_PARAMETERS:                       # Parameters that will be passed to Attenuator constructor when Attenuator instance is created.
+            ip: '10.255.40.51'                        # IP address of attenuator device
+            port: 3001                               # TCP Port number of attenuator device
+            min_attenuation: 0
+            max_attenuation: 60
+
+CELLS_ATTENUATION:
+    ENB_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 1
+            - 2
+    ENB_CELL_2:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 3
+            - 4

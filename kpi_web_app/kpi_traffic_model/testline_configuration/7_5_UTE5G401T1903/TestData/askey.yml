@@ -1,0 +1,89 @@
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            ASKEY_1:                                    # UE name - change if you want
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - Askey_1
+                #STARTING_CELL: 0x33101                    # Cell ID to which UE should attach
+
+                CLASS: QualcommNoLicenseUe                # UE type is QualcommNoLicenseUe
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to QualcommNoLicenseUe constructor when Ue instance is created.
+                    serial_number: '35f5b8c7'
+                    configuration:
+                        serial_com: '4'                  # COM ID obtained from qualcomm modem
+                        diag_com: '3'                    # Diagnostic COM ID
+                        ue_pc_ip: '10.71.204.86'           # UE PC IP address
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'MN5GRAN'                # SSH login to UE PC
+                        password: 'nokia123@'              # SSH password to UE PC
+                        server_dir: '/cygdrive/c/pyro_server'      # UE PC directory where all server files will be copied
+                        server_python: 'C:/python313/python.exe'     # UE PC python location
+                        clear_logs: 'yes'                 # clears server_dir/logs folder before connecting to server
+                        clear_server_files: 'yes'         # clears server_dir/ta_ue_plugin_android folder on UE PC, forcing new files upload
+                        turn_off_on_firewall: 'yes'       # turn off firewall before connecting to server and on before shutdown. Windows only.
+                        enable_disable_cfun: 'yes'        # enables CFUN (AT+CFUN=1) before attach, disables (AT+CFUN=0) after detach
+                        reset_interface: 'no'             # Disable and Enable the interface=interface_name before test
+                        processes_to_kill:                # phrases based on which processes names will be found and killed before test (case insensitive)
+                            - 'putty'
+                            - 'QXDM'
+                            - 'adb'
+                            - 'iperf'
+                            - 'QPSTConfig'
+                            - 'QMITestPro'
+                            - 'ttermpro'
+                            - 'ATCom'
+                        data_transfer:                    # Application Server (for Iperf) details
+                            iperf_path: 'adb shell /data/local/tmp/iperf'
+                            iperf_options:
+                                qci: {5: 48996,6: 48997}            # qci is for setting iperf port
+                            ssh:
+                                host: '10.57.191.239'       # Application Server IP
+                                user: 'vrf3_sg8'             # Application Server SSH login
+                                password: 'vrf3@sg8'      # Application Server SSH password         # available: nbiot. Changes output parsing.
+                                # APP_2:
+                                    # host: '10.57.163.35'       # Application Server IP
+                                    # user: 'cmw_sg6'             # Application Server SSH login
+                                    # password: 'nokia321'      # Application Server SSH password
+            ASKEY_2:                                    # UE name - change if you want
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - Askey_2
+                #STARTING_CELL: 0x33101                    # Cell ID to which UE should attach
+
+                CLASS: QualcommNoLicenseUe                # UE type is QualcommNoLicenseUe
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to QualcommNoLicenseUe constructor when Ue instance is created.
+                    serial_number: 'dc8f451c'
+                    configuration:
+                        serial_com: '3'                  # COM ID obtained from qualcomm modem
+                        diag_com: '4'                    # Diagnostic COM ID
+                        ue_pc_ip: '10.71.217.217'           # UE PC IP address
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'MN5GRAN'                # SSH login to UE PC
+                        password: 'nokia123@'              # SSH password to UE PC
+                        server_dir: '/cygdrive/c/pyro_server'      # UE PC directory where all server files will be copied
+                        server_python: 'C:/python313/python.exe'     # UE PC python location
+                        clear_logs: 'yes'                 # clears server_dir/logs folder before connecting to server
+                        clear_server_files: 'yes'         # clears server_dir/ta_ue_plugin_android folder on UE PC, forcing new files upload
+                        turn_off_on_firewall: 'yes'       # turn off firewall before connecting to server and on before shutdown. Windows only.
+                        enable_disable_cfun: 'yes'        # enables CFUN (AT+CFUN=1) before attach, disables (AT+CFUN=0) after detach
+                        reset_interface: 'no'             # Disable and Enable the interface=interface_name before test
+                        processes_to_kill:                # phrases based on which processes names will be found and killed before test (case insensitive)
+                            - 'putty'
+                            - 'QXDM'
+                            - 'adb'
+                            - 'iperf'
+                            - 'QPSTConfig'
+                            - 'QMITestPro'
+                            - 'ttermpro'
+                            - 'ATCom'
+                        data_transfer:                    # Application Server (for Iperf) details
+                            iperf_path: 'adb shell /data/local/tmp/iperf'
+                            iperf_options:
+                                qci: {5: 48999,6: 48998}            # qci is for setting iperf port
+                            ssh:
+                                host: '10.57.191.239'       # Application Server IP
+                                user: 'vrf3_sg8'             # Application Server SSH login
+                                password: 'vrf3@sg8'      # Application Server SSH password         # available: nbiot. Changes output parsing.
+                                # APP_2:
+                                    # host: '10.57.163.35'       # Application Server IP
+                                    # user: 'cmw_sg6'             # Application Server SSH login
+                                    # password: 'nokia321'      # Application Server SSH password

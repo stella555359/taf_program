@@ -1,0 +1,23 @@
+# ##########################################################################################
+#
+#    7_20_CLOUD5GPSIV331  -  IV_PS_331  -  CV331
+#
+#    2022-02-14
+#    
+#
+# ##########################################################################################
+
+
+custom:
+  GNB_Friendly_TL_Name: 'CV331'
+  TL_TECHNOLOGY: 'cmW_TDD'
+  TL_RMOD: 'AZQG'
+  TL_FB: 'n42'
+  TL_SECTOR: '1'
+  TL_CC: '2CC'
+  Repeat_CM_Upload: '1'
+  LNADJGNB_DN_eNB: 'MRBTS-10365/LNBTS-10365/LNADJGNB-2'
+  RFSHARINGENABLED: False
+  DEDICATEDENB: False
+  RMOD_BTSLOG: False
+ 

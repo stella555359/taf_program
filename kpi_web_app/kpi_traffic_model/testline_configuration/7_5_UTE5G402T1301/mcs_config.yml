@@ -1,0 +1,6 @@
+mcs_ip: '10.57.147.210'
+mcs_pc_ip: '10.108.183.125'
+#mcs_db_path: 'C:\\mcsTA\\CSN30019080016_2600_1_ALL.db'
+mcs_db_path: 'C:\\Program Files\\Topyoung\\MCS-NK 2.0\\DataBase\\SN30017080055\\CSN30017080055_2600_1_ALL.db'
+mcs_pc_username: 'sg11-tester'
+mcs_pc_pwd: 'Nokia123!'

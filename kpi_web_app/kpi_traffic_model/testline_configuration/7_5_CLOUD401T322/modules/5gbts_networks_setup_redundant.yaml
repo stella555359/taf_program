@@ -1,0 +1,116 @@
+heat_template_version: 2016-10-14
+description: Instantiate network configuration needed by 5GBTS network configuration
+
+parameters:
+  oam_network:
+    description: Public network from which to allocate external OAM IP address
+    type: string
+  internal_network:
+    description: Internal network uuid 
+    type: string 
+  internal_srv_network:
+    description: Internal service network uuid
+    type: string
+  internal_networks:
+    description: Internal subnet cidr and allocation pool
+    type: json
+    description: internal network cidr and allocation pool
+    default:
+      internal: [192.168.1.0/24, 192.168.1.2, 192.168.1.165]
+      internal_srv: [169.254.0.0/24, 169.254.0.2, 169.254.0.165]
+  external_networks:
+    description: External network uuids
+    type: json
+    default: {}
+  ext_port_vlans:
+    description: External interface vlans
+    type: json
+    default: {}
+  name_prefix:
+    description: Prefix to use in resource names to help differentiate them from similar resources of other stacks
+    type: string
+    default: vBTS
+
+### Internal Networks Information
+
+  internal_ip_version:
+    type: number
+    description: IP version of internal network
+    default: 4
+    constraints:
+      - allowed_values: [4, 6]
+  enable_internal_dhcp:
+    type: boolean
+    description: Enable internal network dhcp
+    default: False
+  internal_srv_ip_version:
+    type: number
+    description: IP version of internal service network
+    default: 4
+    constraints:
+      - allowed_values: [4, 6]
+
+resources:
+  internal_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      name:
+        str_replace:
+          template: $prefix-internal-subnet-v$version
+          params:
+            $prefix: {get_param: name_prefix}
+            $version: {get_param: internal_ip_version}
+      network: {get_param: internal_network}
+      cidr: {get_param: [internal_networks, internal, 0]}
+      ip_version: {get_param: internal_ip_version}
+      enable_dhcp: {get_param: enable_internal_dhcp}
+      gateway_ip: null
+      allocation_pools:
+      -
+        start: {get_param: [internal_networks, internal, 1]}
+        end: {get_param: [internal_networks, internal, 2]}
+
+  internal_srv_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      name:
+        str_replace:
+          template: $prefix-internal_srv-subnet-v$version
+          params:
+            $prefix: {get_param: name_prefix}
+            $version: {get_param: internal_srv_ip_version}
+      network: {get_param: internal_srv_network}
+      cidr: {get_param: [internal_networks, internal_srv, 0]}
+      ip_version: {get_param: internal_srv_ip_version}
+      enable_dhcp: False
+      gateway_ip: null
+      allocation_pools:
+      -
+        start: {get_param: [internal_networks, internal_srv, 1]}
+        end: {get_param: [internal_networks, internal_srv, 2]}
+
+outputs:
+  networks:
+    description: map of networks names to uuids
+    value:
+      map_merge:
+      -
+        internal: {get_param: internal_network}
+        internal_srv: {get_param: internal_srv_network}
+        oam: {get_param: oam_network}
+      -
+        get_param: external_networks
+      -
+        get_param: ext_port_vlans
+  service_ip_map:
+    description: internal-service-ip-pool metadata parameter
+    value:
+      internal-service-ip-pool:
+        internal:
+          cidr: {get_param: [internal_networks, internal, 0]}
+          exclude_range_start: {get_param: [internal_networks, internal, 1]}
+          exclude_range_end: {get_param: [internal_networks, internal, 2]}
+        internal_srv:
+          cidr: {get_param: [internal_networks, internal_srv, 0]}
+          exclude_range_start: {get_param: [internal_networks, internal_srv, 1]}
+          exclude_range_end: {get_param: [internal_networks, internal_srv, 2]}

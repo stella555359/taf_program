@@ -1,0 +1,49 @@
+heat_template_version: 2016-10-14
+description: Template to create network interface
+
+parameters:
+  index:
+    type: number
+    default: 0
+  vnfindex:
+    description: count of each vms
+    type: number
+  lo_info_list:
+    description: lo ipaddress/roles values
+    type: json
+
+outputs:
+  loop_info:
+    value:
+      map_merge:
+        repeat:
+          for_each:
+            <%name%>: [{get_param: [lo_info_list, {get_param: index}, name]}]
+          template:
+            ip-sid-info.<%name%>.ip_addrs:
+              str_replace:
+               template: <%ip%>
+               params:
+                 <%ip%>: {get_param: [lo_info_list, {get_param: index}, ip]}
+            ip-sid-info.<%name%>.role:
+              str_replace:
+               template: <%role%>
+               params:
+                 <%role%>: {get_param: [lo_info_list, {get_param: index}, role]}
+  loop_info_se:
+    value:
+      map_merge:
+        repeat:
+          for_each:
+            <%name%>: [{get_param: [lo_info_list, {get_param: index}, name]}]
+          template:
+            ip-sid-info.<%name%>.ip_addrs:
+              str_replace:
+               template: <%ip%>
+               params:
+                 <%ip%>: {get_param: [lo_info_list, {get_param: index}, ip_se]}
+            ip-sid-info.<%name%>.role:
+              str_replace:
+               template: <%role%>
+               params:
+                 <%role%>: {get_param: [lo_info_list, {get_param: index}, role_se]}

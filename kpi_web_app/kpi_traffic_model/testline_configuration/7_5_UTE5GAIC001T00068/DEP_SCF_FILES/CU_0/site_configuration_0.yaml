@@ -1,0 +1,32 @@
+version: "0.0.1"
+CELL_LIST:
+  - NRCELL_1:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 414
+     physCellId: 414
+     freqBandIndicatorNR: 5
+     chBwDl: 5MHz
+     chBwUl: 5MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_2:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 415
+     physCellId: 415
+     freqBandIndicatorNR: 5
+     chBwDl: 5MHz
+     chBwUl: 5MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300
+  - NRCELL_3:
+     cellTechnology: FDD
+     scs: 15 KHz
+     lcrId: 416
+     physCellId: 416
+     freqBandIndicatorNR: 5
+     chBwDl: 5MHz
+     chBwUl: 5MHz
+     nrarfcnDl: 176300
+     nrarfcnUl: 167300

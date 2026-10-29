@@ -1,0 +1,91 @@
+AppServer1: &APP_SERVER_1                       # application server definition
+   address: '10.83.249.134'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.83.249.164'            # ip of interface used for LTE data transfer
+   expected_prompt: '5g@KRK-SB18s16-App4'
+#   address: '10.83.249.130'
+#   user: '5g'
+#   password: '5g'
+#   bind_interface_ip: '10.83.249.189'            # ip of interface used for LTE data transfer
+#   expected_prompt: '5g@SRN-Appserver-Krakow'
+
+
+UE_POOLS:
+    TafUeAtPool:                         # Ue Pool class defined by library
+        inline_config:
+            QUECTEL_UE:                  # UE name
+                CAPABILITIES:            # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - QUECTEL_UE
+                CLASS: Quectel
+                CONSTRUCTOR_PARAMETERS:  # Parameters that will be passed to AtUe constructor when Ue instance is created.
+                    # processes_to_kill: # processes to kill on UE PC - anything that may interrupt a test case
+                    #   - 'notepad++'
+                    #   - 'putty'
+                    #   - 'QXDM'
+                    #   - 'adb'
+                    #   - 'iperf'
+                    #   - 'QPSTConfig'
+                    #   - 'QMITestPro'
+                    #   - 'uemanager'
+                    com_port: '18'       # number of com port supporting AT commands
+                    configuration:
+                        ue_pc_address: 'plkr-sg07-32.intra.noklab.net'        # UE PC domain address or IP
+                        # 'plkr-sg07-12.intra.noklab.net' raw adres equals '10.84.182.249'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        # ue_pc_port: 80                                        # OPTIONAL, default is 80
+                        proxy_mngr_port: 9955           # ueproxy manager will not be visible unless proxy_mngr_port is configured! (default value: 9955 - used in autostart)
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG07-32'           # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+                        expected_prompt: 'pzkrk@PLKR-SG07-32'
+                        data_transfer:                                        # data transfer protocols
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                version: '3'
+                                interface_name: 'Cellular 4'                  # OPTIONAL
+                                dt_from_uepc: True                            # OPTIONAL, default is False, if True dt is run from interface on ue pc
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1
+            QUECTEL_UE2:                  # UE name
+                CAPABILITIES:            # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - QUECTEL_UE2
+                CLASS: Quectel
+                CONSTRUCTOR_PARAMETERS:  # Parameters that will be passed to AtUe constructor when Ue instance is created.
+                    # processes_to_kill: # processes to kill on UE PC - anything that may interrupt a test case
+                    #   - 'notepad++'
+                    #   - 'putty'
+                    #   - 'QXDM'
+                    #   - 'adb'
+                    #   - 'iperf'
+                    #   - 'QPSTConfig'
+                    #   - 'QMITestPro'
+                    #   - 'uemanager'
+                    com_port: '20'       # number of com port supporting AT commands
+                    configuration:
+                        ue_pc_address: 'plkr-sg07-32.intra.noklab.net'        # UE PC domain address or IP
+                        # 'plkr-sg07-12.intra.noklab.net' raw adres equals '10.84.182.249'
+                        ue_pc_login: 'pzkrk'
+                        ue_pc_password: 'NokiaBts2003'
+                        # ue_pc_port: 80                                        # OPTIONAL, default is 80
+                        proxy_mngr_port: 9955           # ueproxy manager will not be visible unless proxy_mngr_port is configured! (default value: 9955 - used in autostart)
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG07-32'           # OPTIONAL but if you want to run dt from ue pc interface is mandatory
+                        expected_prompt: 'pzkrk@PLKR-SG07-32'
+                        data_transfer:                                        # data transfer protocols
+                            version: '3'
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                                version: '3'
+                                interface_name: 'Cellular 5'                  # OPTIONAL
+                                dt_from_uepc: True                            # OPTIONAL, default is False, if True dt is run from interface on ue pc
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1
+
+

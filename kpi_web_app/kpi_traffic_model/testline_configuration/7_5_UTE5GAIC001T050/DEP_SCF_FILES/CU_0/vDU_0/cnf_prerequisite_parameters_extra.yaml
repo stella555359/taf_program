@@ -1,0 +1,4 @@
+global:
+  fhmSiso: switch-network
+  restoreData: false
+  

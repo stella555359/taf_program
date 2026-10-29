@@ -1,0 +1,86 @@
+CONFIGURATION:
+    ESM1:
+        #NRGRP-1 AVQA
+        NRCELL-1:
+            lbpsSOMethod: TX switch off
+        #PSGRP-1/PSGRP-6 AHFIHA
+        LNCEL-1:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-151:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-201:
+            lbpsSOMethod: TX Switch Off
+#        #PSGRP-2/PSGRP-6 AHFIHA
+        LNCEL-2:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-152:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-202:
+            lbpsSOMethod: TX Switch Off
+        #PSGRP-3/PSGRP-6 AHFIHA
+        LNCEL-3:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-153:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-203:
+            lbpsSOMethod: TX Switch Off
+        BLOCK_WCDMA_GSM_CELLS: False
+    ESM2:
+        #NRGRP-1 AVQA
+        NRCELL-1:
+            lbpsSOMethod: TX switch off
+        #NRGRP-2 AVQA
+        NRCELL-2:
+            lbpsSOMethod: cell switch off
+        #NRGRP-3 AVQA
+        NRCELL-3:
+            lbpsSOMethod: cell switch off
+        #PSGRP-1 AHFIHA
+        LNCEL-1:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-151:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-201:
+            lbpsSOMethod: Cell Switch Off
+        #PSGRP-2 AHFIHA
+        LNCEL-2:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-152:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-202:
+            lbpsSOMethod: Cell Switch Off
+        #PSGRP-3 AHFIHA
+        LNCEL-3:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-153:
+            lbpsSOMethod: Cell Switch Off
+        LNCEL-203:
+            lbpsSOMethod: Cell Switch Off
+        #PSGRP-4 AHPCA
+        LNCEL-51:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-101:
+            lbpsSOMethod: TX Switch Off
+        #PSGRP-5 AHPCA
+        LNCEL-52:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-102:
+            lbpsSOMethod: TX Switch Off
+        #PSGRP-6 AHPCA
+        LNCEL-53:
+            lbpsSOMethod: TX Switch Off
+        LNCEL-103:
+            lbpsSOMethod: TX Switch Off
+        #RMOD_DEEPSLEEP AVQA
+        RMOD-2:
+            energySavingMode: DEEPSLEEP_EXTREME_SFP
+        RMOD-3:
+            energySavingMode: DEEPSLEEP_EXTREME_SFP
+        #RMOD_DEEPSLEEP AHFIHA
+        RMOD-4:
+            energySavingMode: DEEPSLEEP
+        RMOD-5:
+            energySavingMode: DEEPSLEEP
+        RMOD-6:
+            energySavingMode: DEEPSLEEP
+        BLOCK_WCDMA_GSM_CELLS: False

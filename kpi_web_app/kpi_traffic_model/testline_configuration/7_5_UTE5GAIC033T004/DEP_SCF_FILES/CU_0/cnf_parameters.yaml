@@ -1,0 +1,66 @@
+# if start
+ENV:  env 1
+IP:   https://api.hzdc-ranpz-h106-or18-2.ocp.hz.nsn-rdnet.net:6443
+namespace:  cran13
+deploymentmode:  SA
+cnflayout:  basic
+cpuecount:  1
+upuecount:  1
+dedicatedCore:  numa_1
+vCU_network:
+  tracing_orderNumber: 1000
+  tracing_subnet: 10.107.109.96/27
+  tracing: 1207
+  tracing_oam_start: "10.107.109.112"
+  tracing_oam_end: "10.107.109.112"
+  oam_subnet: 10.107.109.32/27
+  oam: 1205
+  oam_start: 10.107.109.48
+  oam_end: 10.107.109.48
+  x2u_subnet: 10.107.109.192/27
+  x2u: 1210
+  x2u_start: 10.107.109.208
+  x2u_end: 10.107.109.208
+  x2c_subnet: 10.107.109.160/27
+  x2c: 1209
+  x2c_start: 10.107.109.176
+  x2c_end: 10.107.109.176
+  f1u_subnet: 10.107.110.0/25
+  f1u: 1201
+  f1u_start: 10.107.110.40
+  f1u_end: 10.107.110.40
+  f1c_subnet: 10.107.111.192/27
+  f1c: 1200
+  f1c_start: 10.107.111.208
+  f1c_end: 10.107.111.208
+  s1u_subnet: 10.107.109.224/27
+  s1u: 1211
+  s1u_start: 10.107.109.240
+  s1u_end: 10.107.109.240
+  ngu_subnet: 10.107.111.0/25
+  ngu: 1204
+  ngu_start: 10.107.111.41
+  ngu_end: 10.107.111.41
+  ngc_subnet: 10.107.109.64/27
+  ngc: 1206
+  ngc_start: 10.107.109.80
+  ngc_end: 10.107.109.80
+  xnu_subnet: 10.107.110.128/25
+  xnu: 1203
+  xnu_start: 10.107.110.169
+  xnu_end: 10.107.110.169
+  xnc_subnet: 10.107.111.128/26
+  xnc: 1202
+  xnc_start: 10.107.111.156
+  xnc_end: 10.107.111.156
+  internale1: 1312
+  fastPathDevicePool: openshift.io/sriov_netdevice_ens1f1
+  slowPathDevicePool: openshift.io/sriov_netdevice_ens1f1
+  fastPathDevicePoolBackup: openshift.io/sriov_netdevice_ens1f1
+  slowPathDevicePoolBackup: openshift.io/sriov_netdevice_ens1f1 
+misc:
+  hardAntiAffinity: TRUE
+  timezone: UTC
+  platform_type: OCP
+  storageClassName: ocs-storagecluster-cephfs
+  accessModes: ReadWriteMany

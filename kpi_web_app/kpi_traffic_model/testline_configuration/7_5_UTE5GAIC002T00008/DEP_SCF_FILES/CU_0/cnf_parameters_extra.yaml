@@ -1,0 +1,73 @@
+global:
+  externalNetwork:
+    f1c:
+      ipInfo:
+      - rangeEnd: 10.108.227.123
+        rangeStart: 10.108.227.123
+        role:
+        - F1-C
+        subnet: 10.108.227.120/29
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        mtu: 1500
+        secUnderlyingIface: extcs
+        vid: 306
+        vlName: f1c
+    f1u:
+      ipInfo:
+      - rangeEnd: 10.108.227.131
+        rangeStart: 10.108.227.131
+        role:
+        - F1-U
+        - Tracing
+        subnet: 10.108.227.128/29
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        mtu: 1500
+        secUnderlyingIface: extus
+        vid: 307
+        vlName: f1u
+    oam:
+      ipInfo:
+      - rangeEnd: 10.108.227.107
+        rangeStart: 10.108.227.107
+        role:
+        - oam
+        - certman-server
+        - tracecontroller
+        subnet: 10.108.227.104/29
+      physicalIpGroup:
+        groupA:
+          rangeEnd: ""
+          rangeStart: ""
+        groupB:
+          rangeEnd: ""
+          rangeStart: ""
+        role:
+        - httpd
+        subnet: ""
+        usePhysicalIpGroup: ""
+      policyRouteInfo:
+      - gateway: 10.108.227.105
+        orderNumber: "5"
+        table: "2"
+      vlanInfo:
+        defaultUnderlyingIface: oam
+        mtu: 1500
+        secUnderlyingIface: oams
+        vid: 303
+        vlName: oamvlan
+    tracing:
+      ipInfo:
+      - rangeEnd: 10.108.227.115
+        rangeStart: 10.108.227.115
+        role:
+        - Tracing
+        subnet: 10.108.227.112/29
+      vlanInfo:
+        defaultUnderlyingIface: trace
+        mtu: 1500
+        vid: 305
+        vlName: tracing
+  nodeSelector: {"kubernetes.io/hostname": "worker0.hztt-vrf2-10-108-227-98.ocp.hz.nsn-rdnet.net"}
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<raml version="2.1" xmlns="raml21.xsd">
+  <cmData type="plan" scope="changes" name="FHGW-20">
+    <header>
+      <log action="update" dateTime="2020-05-22T08:57:52+02:00">Creating 1 MO(s)</log>
+    </header>
+	<managedObject distName="HQZ-FHGW/FHGW-20/MNL-1/PMMNL-1" class="com.nokia.fhgw:PMMNL" version="FHGW" operation="update">
+        <p name="miCpuUsage">15</p>
+        <p name="miDiskUsage">15</p>
+        <p name="miMemUsage">15</p>
+	</managedObject>
+
+</cmData>
+</raml>

@@ -1,0 +1,32 @@
+APP_SERVER_1: &APP_SERVER_1                               # application server definition
+    ssh:
+        host: '10.83.178.244'
+        user: 'ute'
+        password: 'ute'
+    lte_network_ip: '40.1.1.254'  # ip of interface used for LTE data transfer
+
+UE_POOLS:
+    QualcommUePool:
+        inline_config:
+            UE_1:                                      # UE name - change if you want
+                CAPABILITIES:                          # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_QUALCOMM_UE
+                CLASS: QualcommUe                       # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: 'f57e6b7d'          # UE serial number (can be obtained via 'adb devices' command on the UE PC)#QC 'b424386b'
+                    configuration:                     # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                      com_port: 4                      # COM port UE diagnostic interface is assigned to
+                      data_transfer: *APP_SERVER_1      # application server parameters
+                      iperf_adb_dir: '/data/data/com.magicandroidapps.iperf/bin/iperf' # path to iperf app on UE
+                      login: 'user-lab0'                     # UE_PC ssh login
+                      password: 'Bts2003'                  # UE_PC ssh password
+                      ue_pc_host: '10.83.179.159'
+                      ue_type: 'LINUX'                # ue type [LINUX, ANROID] - determines way of data transfer handling (Android - iperf on ue, Linux iperf on UE_PC (use of QMICM, UE as a modem)
+                      port_dict:                        # [OPTIONAL] Dictionary containing ports used by ue_pc_server. More details in the link below:
+                        # [OPTIONAL] https://confluence.int.net.nokia.com/pages/viewpage.action?pageId=806895807#UEPCpreparation-Startue_pc_server
+                        heartbeat: 6005               # [OPTIONAL] Port for heartbeat messages
+                        server_command_input: 6007    # [OPTIONAL] Port for command input
+                        server_qxdm_messages: 6008    # [OPTIONAL] Port for QXDM messages output
+                        server_command_output: 6009   # [OPTIONAL] Port for server command output
+                        message_stream_port: 6010     # [OPTIONAL] Port for RRC messages stream (source for ta_messsaging), requires ue_pc_server started with message stream

@@ -1,0 +1,264 @@
+heat_template_version: 2016-10-14
+description: Template to instantiate non-redundant management node instance
+
+parameters:
+  name:
+    description: Name to be used as the host name for the instance
+    type: string
+    default: OAM-0
+  oam_net:
+     description: Public network from which to allocate external OAM IP
+     type: json
+  internal_networks:
+    description: Internal networks
+    type: json
+  external_networks:
+    type: json
+    description: External networks
+  service_ip_meta:
+    type: json
+    description: internal-service-ip-pool metadata parameters
+    default: {}
+  key_name:
+    type: string
+    description: Name of key pair to assign to servers
+    default: rcpkey
+    constraints:
+      - custom_constraint: nova.keypair
+  timezone:
+    type: string
+    constraints:
+      - custom_constraint: timezone
+  dpdk_type:
+    type: string
+    default: none
+  ntp_servers:
+    type: comma_delimited_list
+    constraints:
+      - length: {min: 1, max: 3}
+  ntp_prefer:
+    type: string
+    default: ""
+  cluster_id:
+    type: string
+    description: Cluster identity
+    constraints:
+       - allowed_pattern: "[a-zA-Z0-9-]+"
+  dns_forwarders:
+    description: Comma separated list of servers to forward queries to
+    type: comma_delimited_list
+    constraints:
+      - length: {min: 0, max: 3}
+    default: []
+  cinder_volumes:
+    type: json
+    description: parameters for cinder volumes
+  lvm_local_volumes:
+    type: json
+    description: Local volumes to be attached
+    default:
+      count: 0
+      volumes: []
+  lvm_nfs_volumes:
+    type: json
+    description: Volumes to ba attached an shared via NFS
+    default:
+      count: 0
+      vol_list: []
+  ha_cluster:
+    description: HA nodes acting as etcd member instances and quorate voter
+    type: string
+    default: OAM-0
+  instance_params:
+    type: json
+  roles:
+    description: Deployment roles associated
+    type: comma_delimited_list
+    default: [management, external-connectivity, 5gbts_oam]
+  extra_cloud_config_data:
+    type: json
+    description: custom cloud init configuration
+    default: {}
+  number_of_nodes_redundant:
+    type: json
+    description: node count information
+    default: {}
+  config_drive:
+    description: Use config drive instead of metadata server
+    type: boolean
+    default: true
+  enable_sriov:
+    description: flag of enable sriov vlan tag function
+    type: boolean
+    default: true
+  cloudplatform:
+    description: cloud platform
+    type: string
+  vnfindex:
+    description: count of oam vm
+    type: number
+  vnf_layout:
+    description: vnf_layout
+    type: string
+    default: redundant
+    constraints:
+      - allowed_values: [basic, redundant]
+  enable_internal_dhcp:
+    type: boolean
+    description: Enable internal network dhcp
+    default: False
+  oam_default_gw:
+    description: oam network default gw
+    type: string
+  lo_information:
+    description: lo ipaddress/roles values
+    type: json
+    default:
+      count: 0
+      net_list: []
+  oam_security_group:
+    description: oam port security group
+    type: string
+
+resources:
+## Networking
+  ports:
+    type: 5GBTS::Networks::OAM::In::Redundant
+    properties:
+      oam_network: {get_param: oam_net}
+      oam_default_gw: {get_param: oam_default_gw}
+      internal_networks: {get_param: internal_networks}
+      external_networks: {get_param: external_networks}
+      name_prefix: {get_param: name}
+      vnfindex: {get_param: vnfindex}
+      lo_information: {get_param: lo_information}
+      oam_security_group: {get_param: oam_security_group}
+
+## lvm_nfs disks
+  lvm_nfs_vol:
+    type: RCP::VolumeGroup::LVMNFS
+    properties:
+      lvm_nfs_host:
+        str_replace:
+          template: <name>.local
+          params:
+            <name>: {get_param: name}
+      lvm_volumes:
+        get_param: [lvm_nfs_volumes]
+
+## lvm_local disks
+  lvm_local_vol:
+    type: RCP::VolumeGroup::LVMLocal
+    properties:
+      lvm_volumes:
+        get_param: [lvm_local_volumes]
+
+## lvm disks
+  shared_vol:
+    type: RCP::Volume::Cinder
+    properties:
+      vol_name:
+        get_param: [cinder_volumes, vol_list, 0, name]
+      vol_size:
+        get_param: [cinder_volumes, vol_list, 0, size]
+  shared_vol_attach:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id:
+        get_attr: [shared_vol, cinder_volume_id]
+      instance_uuid: {get_resource: server}
+
+## Native cloud-init parametes
+  cloud_config:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        hostname: {get_param: name}
+        fetch_public_key:
+          - {path: /run/authorized_keys, permissions: '0600'}
+        timezone: {get_param: timezone}
+
+  extra_cloud_config:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        {get_param: extra_cloud_config_data}
+
+  cloud_init:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+        - config: {get_resource: cloud_config}
+          subtype: cloud-config
+        - config: {get_resource: extra_cloud_config}
+          subtype: cloud-config
+
+### OAM Instance
+  server:
+    type: OS::Nova::Server
+    properties:
+      name: {get_param: name}
+      image: {get_param: [instance_params, server, imageId]}
+      flavor: {get_param: [instance_params, server, flavorId]}
+      key_name: {get_param: key_name}
+      availability_zone: {get_param: [instance_params, server, azId]}
+      networks: {get_attr: [ports, ports]}
+      user_data_format: RAW
+      user_data: {get_resource: cloud_init}
+      metadata:
+        map_merge:
+        -
+          database: {get_attr: [ports, internal_ip]}
+          dpdk-conf-type: {get_param: dpdk_type}
+          ntp-servers: {get_param: ntp_servers}
+          ntp-server-prefer: {get_param: ntp_prefer}
+          dns-forwarders: {get_param: dns_forwarders}
+          ha_db_backend: memory
+          ha_db_memory_size: 256
+          roles: {get_param: roles}
+          vnf_layout: {get_param: vnf_layout}
+          cluster-id: {get_param: cluster_id}
+          etcd-instances: [get_param: ha_cluster]
+          quorate-monitor-voter-nodes: [get_param: ha_cluster]
+          storage.install: True
+          cloudplatform: {get_param: cloudplatform}
+          enable-sriov: {get_param: enable_sriov}
+          enable_internal_dhcp: {get_param: enable_internal_dhcp}
+        -
+          get_attr: [ports, ip-info]
+        -
+          get_attr: [ports, oam-info]
+        -
+          internal-service-ip-pool:
+            internal: {get_param: [service_ip_meta, internal-service-ip-pool, internal]}
+            internal_srv: {get_param: [service_ip_meta, internal-service-ip-pool, internal_srv]}
+        - 
+          get_attr: [shared_vol, cinder_volume_map]
+        - 
+          get_attr: [lvm_local_vol, provider_map]
+        - 
+          get_attr: [lvm_nfs_vol, provider_map]
+        -
+          get_param: number_of_nodes_redundant
+      config_drive: {get_param: config_drive}
+
+outputs:
+  oam_ip:
+    description: OAM IP address allocated to access the system
+    value: {get_attr: [ports, oam_ip]}
+  internal_ip:
+    description: Internal IP address allocated to access the node
+    value: {get_attr: [ports, internal_ip]}
+  volume_map:
+    description: Storage user metadata map for shared NFS disks
+    value: {get_attr: [lvm_nfs_vol, user_map]}
+  ports:
+    value: {get_attr: [ports, ports]}
+  ip-info:
+    value: {get_attr: [ports, ip-info]}
+  int_ports:
+    value: {get_attr: [ports, int_ports]}
+  ext_ports:
+    value: {get_attr: [ports, ext_ports]}
+  oam_port:
+    value: {get_attr: [ports, oam_port]}

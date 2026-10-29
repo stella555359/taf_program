@@ -1,0 +1,29 @@
+APP_SERVER: &APP_1
+    address: '10.83.249.132'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.83.249.162'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'RFCWC0Z585D'
+                    configuration:
+                        ue_pc_address: 'PLKR-SC5G-PC124.d01.krk-lab.nsn-rdnet.net'
+                        login: 'pzkrk'
+                        password: 'NokiaBts2003'
+                        ue_pc_port: '5000'
+                        network_mode_switch_method: 'ADB'
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                binary_path: '/data/data/com.nokia.android.application/'
+
+
+

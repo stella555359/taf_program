@@ -1,0 +1,34 @@
+[
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRCELL-1",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "actExhaustiveScheduling",
+				"value": "DL",
+				"operation": "update"
+			},
+			{
+				"parameterName": "maxPrbsPerNbrUe",
+				"value": "30",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB-19",
+		"operation": "update",
+		"parameters": [
+			{
+				"parameterName": "nrDrbMacDN",
+				"value": "MRBTS-1/NRBTS-1/NRDRB_MAC-1",
+				"operation": "update"
+			}
+		]
+	},
+	{
+		"distName": "MRBTS-1/NRBTS-1/NRDRB_MAC-6",
+		"operation": "delete",
+		"parameters": []
+	}
+]

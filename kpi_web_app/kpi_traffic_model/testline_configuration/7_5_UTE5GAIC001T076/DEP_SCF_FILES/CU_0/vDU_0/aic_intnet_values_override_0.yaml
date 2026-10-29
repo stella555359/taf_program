@@ -1,0 +1,50 @@
+# - Override values for deployment in cloud-development enviromnent
+# - Operator need to set the values base on the real scenario.
+# - This is a YAML-formatted file.
+# - Declare variables to be passed into your templates.
+# - This YAML file is used by Caas-98 environement
+# - Description: Infrasturcture type. Support value: NCIR_CaaS or WebScale_CaaS
+# - Default value: NCIR_CaaS
+cloudInfraType: "NCIR_CaaS"
+# Preconditon: tenant's configuration is ready before deploy internal, l1bip and l2bip networks 
+# internal network
+internal:
+  #Description: the master interface of ipvlan, mandatory.
+  #Value range: string, no default value.
+  #Note: This value need to match with the tenant's configuration. eg."ens1f1"
+  hostDevice: "ens1f1"
+
+  #Description: IPv4 allocation pool, mandatory.
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.0/24"
+  cidr: "192.168.1.0/24"
+
+  #Description: IPv4 allocation pool start, optional, must be used together with cidr and allocationPoolEnd.
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.2"
+  allocationPoolStart: "192.168.1.2"
+
+  #Description: IPv4 allocation pool end, optional, must be used together with cidr and allocationPoolStart. 
+  #Value range: string, no default value.
+  #Note: eg."192.168.1.254"
+  allocationPoolEnd: "192.168.1.254"
+
+# l1bip network
+l1bip:
+  #Description: Name of a network Device Plugin resource pool.
+  #Value range: string, no default value.
+  #Note: The device_pool parameter generally represents the base resource name of the Kubernetes Devices connected to this network. 
+  #      It represents the K8s Virtual Function Device pool connecting Pods are getting their VFs from.
+  #      If defined, DANM chooses the interface profile from the tenant's configuration with the matching name, mandatory.
+  #      eg."nokia.k8s.io/sriov_ens1f1"
+  devicePool: "nokia.k8s.io/sriov_ens1f1"
+
+# l2bip network
+l2bip:
+  #Description: Name of a network Device Plugin resource pool.
+  #Value range: string, no default value.
+  #Note: The device_pool parameter generally represents the base resource name of the Kubernetes Devices connected to this network. 
+  #      It represents the K8s Virtual Function Device pool connecting Pods are getting their VFs from.
+  #      If defined, DANM chooses the interface profile from the tenant's configuration with the matching name, mandatory.
+  #      eg."nokia.k8s.io/sriov_ens1f1"
+  devicePool: "nokia.k8s.io/sriov_ens1f1"

@@ -1,0 +1,73 @@
+APP_SERVER: &APP_SERVER
+    address: '10.84.168.70'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.54'
+
+
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:                                    # UE name - change if you want (but better not)
+                CAPABILITIES:                             # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL:  1283833857               # Cell ID to which UE should attach
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: 'de307db0'     # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                        # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: '10.84.174.96'
+                        ue_pc_port: '80'
+                        login: 'pzkrk'                # SSH login to UE PC
+                        password: 'NokiaBts2003'               # SSH password to UE PC
+                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copiedC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'yes'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        clear_logs: True
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER
+                                interval: 1
+                        processes_to_kill: # processes to kill on UE PC - anything that may interrupt a test case
+                            - 'uemanager'
+                            - 'putty'
+
+
+DELAY_BOX:
+    host: 'SKA-ZF18-23-P09.p09.ska-lab.nsn-rdnet.net'
+    login: 'ute'
+    password: 'ute2025UTE!'
+
+
+UE_APN:
+    DEFAULT: '5gsakrk2'
+    APN_CA_ELIGIBLE: '5qi56-krk'
+    APN_CA_NON_ELIGIBLE: '5qi78-krk'
+
+
+CELLS:
+    GN1:
+        CELL1:
+            PCI: 591
+            NRCELLID: 1311686657
+        CELL2:
+            PCI: 592
+            NRCELLID: 1311686658
+        CELL3:
+            PCI: 593
+            NRCELLID: 1311686659
+    GN2:
+        CELL1:
+            PCI: 601
+            NRCELLID: 1311703041
+        CELL2:
+            PCI: 602
+            NRCELLID: 1311703042
+        CELL3:
+            PCI: 603
+            NRCELLID: 1311703043

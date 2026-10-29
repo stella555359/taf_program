@@ -1,0 +1,53 @@
+# ##########################################################################################
+#
+#    7_20_UTE5GCLASSSV511  -  IV_PS_327  -  CV327
+#
+#    2020-06-08
+#
+# ##########################################################################################
+
+AppServer1: &APP_1                              # 1st application server definition - iperf
+   address: '10.0.106.47'
+   user: 'ran5g'
+   password: 'nokia2018'
+   bind_interface_ip: '10.11.70.188'              # OPTIONAL ip of interface used for LTE data transfer
+   expected_prompt: 'ran5g@traffic-IV-PS258:~'        # OPTIONAL regex that should match prompt on App Server
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:                          # Capabilities that UE has. (as a list)
+                    - REAL_UE_1
+                    - REAL_ANDROID_UE
+                CLASS: AndroidUe                # UE type is QualcommNoLicenseUe
+                CONSTRUCTOR_PARAMETERS:                # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '483c64ea'          # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                     # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: '10.28.1.47'
+                        data_transfer:
+                            iperf:                        
+                                app_server: *APP_1
+                                interval: 1
+                                #binary_path: '/data/data/com.nokia.android.application/'                        # OPTIONAL
+                                #interface_name: 'some_interface_name'           # OPTIONAL
+                                #server_close_delay: 50                          # OPTIONAL
+                                #bind_ue_ip: '1.1.1.1'                           # OPTIONAL
+                                #version: 3       
+
+                            #iperf_path: '/data/data/com.nokia.android.application/'
+                            #iperf_options:
+                            #    packet: '1350B'
+                                #buffer: '20M'
+                            #    qci:
+                            #        9: 34021 #-p
+                            #        3: 5005 #-p
+                                #Client options
+                                #packet_size: 1280 #-l
+                                #ttl: #-T
+                                #parallel_thread:  #-P
+                                #parallel_streams: #-P
+                                #parallel: 1 #-P
+                                #max_segment_size: 4480  #-M
+                                #Server options
+                                #buffer:    '8M' #-w

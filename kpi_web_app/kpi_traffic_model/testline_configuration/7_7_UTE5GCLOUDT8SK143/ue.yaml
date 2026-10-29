@@ -1,0 +1,33 @@
+APP_SERVER: &APP_SERVER_1
+    address: '10.84.168.120'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.60'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE_S22
+                STARTING_CELL: '1296678913'
+                STARTING_CELL_5G_PCI: 143
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CT34BHC7Z'
+                    configuration:
+                        ue_pc_address: 'PLKR-P08-UE011.intra.noklab.net'
+                        ue_pc_port: '80'                        # TCP Port number on UE PC on which Pyro server will be started
+                        login: '.\user-lab0'
+                        password: 'Bts2003'
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe' #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        qualcomm_prototype: 'yes'               # set to 'yes' if this is a Qualcomm prototype
+                        service_call_attach: '16'               # service call which will be used for attaching UE. Use this or airplane_mode_switcher_text
+                        #                        service_call_detach: '16'               # service call which will be used for detaching UE. Use this or airplane_mode_switcher_text
+                        network_mode_switch_method: 'adb'       # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        voice_call_dialing_timeout: '30'        # Timeout for dialing (calling) state
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                binary_path: '/data/data/com.nokia.android.application/'

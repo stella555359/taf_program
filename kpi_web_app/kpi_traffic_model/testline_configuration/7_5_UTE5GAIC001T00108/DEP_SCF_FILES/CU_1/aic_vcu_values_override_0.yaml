@@ -1,0 +1,230 @@
+coredumpPath: ''
+global:
+  cnfLayout: basic
+  coredumppath: ''
+  cpuDevicePool:
+    dedicatedCore: numa_0
+    sharedCore: none
+  cpuecount: 2
+  deploymentmode: SA
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_ens1f1
+    fastPathDevicePoolBackup: ''
+    slowPathDevicePool: openshift.io/sriov_netdevice_ens1f1
+    slowPathDevicePoolBackup: ''
+  externalNetwork:
+    cp:
+      vlanInfo:
+      - defaultUnderlyingIface: mhc
+        ipInfo:
+        - rangeEnd: 10.107.90.138
+          rangeStart: 10.107.90.138
+          role:
+          - F1-C
+          subnet: 10.107.90.128/26
+        secUnderlyingIface: mhcs
+        vid: '1341'
+        vlName: f1c
+      - defaultUnderlyingIface: mhc
+        ipInfo:
+        - rangeEnd: 10.107.115.76
+          rangeStart: 10.107.115.76
+          role:
+          - X2-C
+          subnet: 10.107.115.64/27
+        secUnderlyingIface: mhcs
+        vid: '1004'
+        vlName: x2c
+      - defaultUnderlyingIface: bhc
+        ipInfo:
+        - rangeEnd: 10.107.92.74
+          rangeStart: 10.107.92.74
+          role:
+          - NG-C
+          subnet: 10.107.92.64/26
+        - rangeEnd: ''
+          rangeStart: ''
+          role:
+          - NG-C
+          subnet: ''
+        secUnderlyingIface: bhcs
+        vid: '1347'
+        vlName: ngc
+      - defaultUnderlyingIface: bhc
+        ipInfo:
+        - rangeEnd: 10.107.90.203
+          rangeStart: 10.107.90.203
+          role:
+          - Xn-C
+          subnet: 10.107.90.192/26
+        - rangeEnd: ''
+          rangeStart: ''
+          role:
+          - Xn-C
+          subnet: ''
+        secUnderlyingIface: bhcs
+        vid: '1343'
+        vlName: xnc
+    oam:
+      policyRouteInfo:
+      - gateway: 10.107.92.1
+        orderNumber: '5'
+        table: '2'
+      vlanInfo:
+      - defaultUnderlyingIface: oam
+        ipInfo:
+        - rangeEnd: 10.107.92.10
+          rangeStart: 10.107.92.10
+          role:
+          - oam
+          - certman-server
+          subnet: 10.107.92.0/26
+        secUnderlyingIface: oams
+        vid: 1346
+        vlName: oamvlan
+    tracing:
+      vlanInfo:
+      - defaultUnderlyingIface: trace
+        ipInfo:
+        - ipAddress:
+            cpcl:
+              rangeEnd: 10.107.88.123
+              rangeStart: 10.107.88.123
+            cpif:
+              rangeEnd: 10.107.88.122
+              rangeStart: 10.107.88.122
+            cpnb:
+              rangeEnd: 10.107.88.124
+              rangeStart: 10.107.88.124
+            cpnrt:
+              rangeEnd: 10.107.88.125
+              rangeStart: 10.107.88.125
+            cpue:
+              rangeEnd: 10.107.88.126
+              rangeStart: 10.107.88.126
+            oamasm:
+              rangeEnd: 10.107.88.117
+              rangeStart: 10.107.88.117
+            oamcm:
+              rangeEnd: 10.107.88.118
+              rangeStart: 10.107.88.118
+            oamconfig:
+              rangeEnd: 10.107.88.119
+              rangeStart: 10.107.88.119
+            oamext:
+              rangeEnd: 10.107.88.116
+              rangeStart: 10.107.88.116
+            oamfm:
+              rangeEnd: 10.107.88.120
+              rangeStart: 10.107.88.120
+            oampm:
+              rangeEnd: 10.107.88.121
+              rangeStart: 10.107.88.121
+          role:
+          - Tracing
+          - tracecontroller
+          subnet: 10.107.88.0/23
+        vid: '1340'
+        vlName: tracing
+    up:
+      vlanInfo:
+      - defaultUnderlyingIface: mhu
+        ipInfo:
+        - rangeEnd: 10.107.90.45
+          rangeStart: 10.107.90.43
+          role:
+          - F1-U
+          - Tracing
+          subnet: 10.107.90.0/25
+        secUnderlyingIface: mhus
+        vid: '1342'
+        vlName: f1u
+      - defaultUnderlyingIface: mhu
+        ipInfo:
+        - rangeEnd: 10.107.116.30
+          rangeStart: 10.107.116.28
+          role:
+          - X2-U
+          subnet: 10.107.116.0/25
+        secUnderlyingIface: mhus
+        vid: '1005'
+        vlName: x2u
+      - defaultUnderlyingIface: bhu
+        ipInfo:
+        - rangeEnd: 10.107.116.158
+          rangeStart: 10.107.116.156
+          role:
+          - S1-U
+          subnet: 10.107.116.128/25
+        vid: '1006'
+        vlName: s1u
+      - defaultUnderlyingIface: bhu
+        ipInfo:
+        - rangeEnd: 10.107.91.173
+          rangeStart: 10.107.91.171
+          role:
+          - NG-U
+          subnet: 10.107.91.128/25
+        - rangeEnd: ''
+          rangeStart: ''
+          role:
+          - NG-U
+          subnet: ''
+        vid: '1345'
+        vlName: ngu
+      - defaultUnderlyingIface: bhu
+        ipInfo:
+        - rangeEnd: 10.107.91.45
+          rangeStart: 10.107.91.43
+          role:
+          - Xn-U
+          subnet: 10.107.91.0/25
+        - rangeEnd: ''
+          rangeStart: ''
+          role:
+          - Xn-U
+          subnet: ''
+        vid: '1344'
+        vlName: xnu
+  highPerformanceRunTimeClass: nokia-performance
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000/cran6
+  internale1Network:
+    internale1:
+      vlanInfo:
+      - defaultUnderlyingIface: e1
+        ipInfo:
+        - ipAddress:
+            cpif:
+              rangeEnd: 192.168.200.4
+              rangeStart: 192.168.200.4
+            cpnrt:
+              rangeEnd: 192.168.200.5
+              rangeStart: 192.168.200.5
+          role:
+          - E1-C
+          subnet: 192.168.200.0/24
+        vid: 1106
+        vlName: internale1
+  name_convention:
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+  privilegedMode: 'true'
+  timezone: UTC
+  upuecount: 2
+healing-controller:
+  storage:
+    storageClassName: ocs-storagecluster-cephfs
+rcpsdl:
+  cluster:
+    hardAntiAffinity: true

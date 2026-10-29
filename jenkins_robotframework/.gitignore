@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+.env
+.env.*
+dist/
+build/
+*.log
+*.sqlite3
+*.db
+data/
+uploads/
+reports/
+*.swp
+*.swo
+# Internal-only captures (contain testline names, internal IPs, hardcoded CSRF tokens)
+issue/jenkins_capture/
+

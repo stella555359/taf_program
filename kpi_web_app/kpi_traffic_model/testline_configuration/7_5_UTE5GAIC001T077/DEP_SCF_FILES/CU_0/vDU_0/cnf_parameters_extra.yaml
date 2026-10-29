@@ -1,0 +1,64 @@
+global:
+  externalNetwork:
+    f1:
+      vlanInfo:
+        vlanId: "2515"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.179.11'
+        rangeStart: '10.71.179.11'
+        subnet: '10.71.179.8/29'
+        type: physical
+    f1c:
+      vlanInfo:
+        vlanId: "2515"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.179.10'
+        rangeStart: '10.71.179.10'
+        subnet: '10.71.179.8/29'
+        type: physical
+    oam:
+      vlanInfo:
+        vlanId: "2516"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.179.18'
+        rangeStart: '10.71.179.18'
+        role:
+        - oam
+        - certman-server
+        subnet: '10.71.179.16/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.179.17'
+        orderNumber: '5'
+        table: '2'
+    tracing:
+      vlanInfo:
+        vlanId: "2514"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.179.27'
+        rangeStart: '10.71.179.27'
+        role:
+        - Tracing
+        subnet: '10.71.179.24/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.179.25'
+        orderNumber: '1000'
+        table: '3'
+aic-vdu-up:
+  l1hi:
+    l1_default_scs: "15"
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"

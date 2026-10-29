@@ -1,0 +1,901 @@
+aic-oamext:
+  lripRoundcheckInfo:
+  - instanceId: '1'
+    vlanId: ''
+aic-vcu-cpe2:
+  lripRoundcheckInfo:
+  - instanceId: '1'
+    vlanId: ''
+aic-vcu-cpif:
+  lripRoundcheckInfo:
+  - instanceId: '1'
+    vlanId: ''
+aic-vcu-upue:
+  lripRoundcheckInfo:
+  - instanceId: '1'
+    vlanId: ''
+certman-auto-cmp:
+  configuration:
+    cmp:
+      ca_subject_name: null
+      cmp_psk: ''
+      cmp_refnum: ''
+      cmp_secret_name: ''
+      ee_subject_fqdn: []
+      ee_subject_ip_addr: []
+      ee_subject_name: null
+      ip: null
+      path: null
+      port: null
+global:
+  accessModes: ReadWriteMany
+  agentIP: ''
+  cnfLayout: basic
+  coredumppath: ''
+  cpclInstanceCount: 1
+  cpe2Count: 0
+  cpifInstanceCount: 1
+  cpuecount: 1
+  devicePoolList:
+    fastPathDevicePool: openshift.io/sriov_netdevice_ens2f0
+    fastPathDevicePoolBackup: ''
+    slowPathDevicePool: openshift.io/sriov_netdevice_ens2f0
+    slowPathDevicePoolBackup: ''
+  externalNetwork:
+    e2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - E2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: e2
+    f1c:
+      ipInfo:
+      - rangeEnd: 10.110.81.134
+        rangeStart: 10.110.81.133
+        role:
+        - F1-C
+        subnet: 10.110.81.0/24
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: 2101
+        vlName: f1c
+    f1u:
+      ipInfo:
+      - rangeEnd: 10.110.81.136
+        rangeStart: 10.110.81.135
+        role:
+        - F1-U
+        - Tracing
+        subnet: 10.110.81.0/24
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: 2101
+        vlName: f1u
+    f1u_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_op1
+    f1u_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_op2
+    f1u_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_op3
+    f1u_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_op4
+    f1u_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_op5
+    f1u_slice1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - F1-U_slice1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: f1u_slice1
+    ngc:
+      ipInfo:
+      - rangeEnd: 10.110.99.46
+        rangeStart: 10.110.99.45
+        role:
+        - NG-C
+        subnet: 10.110.99.0/24
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: 2106
+        vlName: ngc
+    ngc_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_1
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: ngc_op1
+    ngc_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_2
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: ngc_op2
+    ngc_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_3
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: ngc_op3
+    ngc_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_4
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: ngc_op4
+    ngc_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_5
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-C_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: ngc_op5
+    ngu:
+      ipInfo:
+      - rangeEnd: 10.110.83.93
+        rangeStart: 10.110.83.92
+        role:
+        - NG-U
+        subnet: 10.110.83.0/25
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: 2104
+        vlName: ngu
+    ngu_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_1
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_op1
+    ngu_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_2
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_op2
+    ngu_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_3
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_op3
+    ngu_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_4
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_op4
+    ngu_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_5
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_op5
+    ngu_slice1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_slice1
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - NG-U_slice1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: ngu_slice1
+    oam:
+      ipInfo:
+      - rangeEnd: 10.110.83.152
+        rangeStart: 10.110.83.152
+        role:
+        - oam
+        - certman-server
+        - tracecontroller
+        subnet: 10.110.83.128/25
+      policyRouteInfo:
+      - gateway: 10.110.83.129
+        orderNumber: '5'
+        table: '2'
+      vlanInfo:
+        defaultUnderlyingIface: oam
+        secUnderlyingIface: oams
+        vid: 2105
+        vlName: oamvlan
+    s1u:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u
+    s1u_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_op1
+    s1u_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_op2
+    s1u_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_op3
+    s1u_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_op4
+    s1u_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_op5
+    s1u_slice1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - S1-U_slice1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: s1u_slice1
+    tracing:
+      ipInfo:
+      - rangeEnd: 10.110.101.46
+        rangeStart: 10.110.101.45
+        role:
+        - Tracing
+        subnet: 10.110.101.0/23
+      vlanInfo:
+        defaultUnderlyingIface: trace
+        vid: 2107
+        vlName: tracing
+    twamp_f1c:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - twamp_f1c
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: twamp
+        secUnderlyingIface: twamps
+        vid: ''
+        vlName: twamp_f1c
+    x2c:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c
+    x2c_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c_op1
+    x2c_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c_op2
+    x2c_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c_op3
+    x2c_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c_op4
+    x2c_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-C_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: x2c_op5
+    x2u:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u
+    x2u_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u_op1
+    x2u_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u_op2
+    x2u_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u_op3
+    x2u_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u_op4
+    x2u_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - X2-U_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: x2u_op5
+    xnc:
+      ipInfo:
+      - rangeEnd: 10.110.82.46
+        rangeStart: 10.110.82.45
+        role:
+        - Xn-C
+        subnet: 10.110.82.0/25
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: 2102
+        vlName: xnc
+    xnc_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_1
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: xnc_op1
+    xnc_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_2
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: xnc_op2
+    xnc_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_3
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: xnc_op3
+    xnc_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_4
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: xnc_op4
+    xnc_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_5
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-C_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extc
+        secUnderlyingIface: extcs
+        vid: ''
+        vlName: xnc_op5
+    xnu:
+      ipInfo:
+      - rangeEnd: 10.110.82.221
+        rangeStart: 10.110.82.220
+        role:
+        - Xn-U
+        subnet: 10.110.82.128/25
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: 2103
+        vlName: xnu
+    xnu_op1:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_1
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_1
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: xnu_op1
+    xnu_op2:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_2
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_2
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: xnu_op2
+    xnu_op3:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_3
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_3
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: xnu_op3
+    xnu_op4:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_4
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_4
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: xnu_op4
+    xnu_op5:
+      ipInfo:
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_5
+        subnet: ''
+      - rangeEnd: ''
+        rangeStart: ''
+        role:
+        - Xn-U_5
+        subnet: ''
+      vlanInfo:
+        defaultUnderlyingIface: extu
+        secUnderlyingIface: extus
+        vid: ''
+        vlName: xnu_op5
+  externalNetworkInterfaceEnabled: 'true'
+  highPerformanceRunTimeClass: nokia-performance
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000/cran21
+  internale1Network:
+    internale1:
+      ipInfo:
+      - ipAddress:
+          cpif:
+            rangeEnd: 192.168.200.4
+            rangeStart: 192.168.200.4
+          cpnrt:
+            rangeEnd: 192.168.200.5
+            rangeStart: 192.168.200.5
+        role:
+        - E1-C
+        subnet: 192.168.200.0/24
+      lripInternalE1Info:
+        gatewayList:
+        - 192.168.200.1
+      vlanInfo:
+        defaultUnderlyingIface: e1
+        secUnderlyingIface: e1s
+        vid: 2221
+        vlName: internale1
+  minCapacityCPUE: 1
+  minCapacityUPUE: 1
+  name_convention:
+    container_prefix:
+    - ctr
+    - _NAMESPACE_
+    deployment_prefix:
+    - po
+    - _NAMESPACE_
+    pod_prefix:
+    - po
+    - _NAMESPACE_
+    statefulset_prefix:
+    - po
+    - _NAMESPACE_
+  nodeSelector: {}
+  seLinux: 'true'
+  securityContext:
+    fsGroup: 9999
+    runAsGroup: 9999
+    runAsUser: 9999
+  siteDescription: MRBTS-1234
+  stackTraceEnabled: 'false'
+  storageClassName: ocs-storagecluster-cephfs
+  timezone: Asia/Shanghai
+  upuecount: 1
+  urlNMS:
+  - ''
+  - ''

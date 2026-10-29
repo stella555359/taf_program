@@ -1,0 +1,56 @@
+global:
+  externalNetwork:
+    f1:
+      vlanInfo:
+        vlanId: "1415"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.166.203'
+        rangeStart: '10.71.166.203'
+        subnet: '10.71.166.200/29'
+        type: physical
+    f1c:
+      vlanInfo:
+        vlanId: "1415"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.166.202'
+        rangeStart: '10.71.166.202'
+        subnet: '10.71.166.200/29'
+        type: physical
+    oam:
+      vlanInfo:
+        vlanId: "1416"
+      ipInfo:
+      - family: ipv4
+        rangeEnd: '10.71.166.210'
+        rangeStart: '10.71.166.210'
+        role:
+        - oam
+        - certman-server
+        subnet: '10.71.166.208/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.166.209'
+        orderNumber: '5'
+        table: '2'
+    tracing:
+      vlanInfo:
+        vlanId: "219"
+      ipInfo:
+      - family: ipv4
+        ipAddress:
+          cprt:
+            rangeEnd: '10.71.171.211'
+            rangeStart: '10.71.171.211'
+          oam:
+            rangeEnd: '10.71.171.210'
+            rangeStart: '10.71.171.210'
+        role:
+        - Tracing
+        subnet: '10.71.171.208/29'
+        type: physical
+      policyRouteInfo:
+      - gateway: '10.71.171.209'
+        orderNumber: '1000'
+        table: '3'

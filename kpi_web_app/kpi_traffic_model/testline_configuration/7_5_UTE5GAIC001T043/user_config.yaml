@@ -1,0 +1,49 @@
+version: FHGW_20.004_2003101546_e707afc_base
+description: FHGW
+time:
+  timezone: Asia/Kolkata
+users:
+  admin_user_name: "_nokfhgwoperator"
+  admin_user_password: $1$J8k5aLu5$vhl1J3d0ekBcbos3XwPfk1
+  admin_user_password_plain: root
+  root_password: $1$6vfgeYys$Fx3CSTNjKYyMaiACHtc.p.
+  root_password_plain: root
+  admin_user_fallback: $1$/O/qO8pg$6yCFqsFdUdR7uqks0mjBQ1
+  admin_user_fallback_password_plain: root
+networking:
+  mtu: 1500
+  infra_internal:
+    cidr: 169.254.10.0/24
+  infra_external:
+    cidr: 169.254.10.0/24
+    vlan: 1000
+    gateway: 10.43.70.225
+    ip_range_start: 10.43.70.232
+    ip_range_end:y: 10.43.70.199
+    netmask: 255.255.255.240
+    ssh_interface: eth0
+    linux_ip: 192.168.0.2/16
+    linux_interface: ens224
+    boot_type: pxe
+    bmc_ip: 10.43.70.165
+    session: fhgw
+  infra_internal_radio:
+    cidr: 169.254.10.0/24
+    pre_allocated_mac: aa:bb:cc:dd:ee:ff
+hosts:
+  hostname: controller
+  ssh_ip: 10.71.160.73
+  cluster_id: FHGW
+  namespace: default
+caas:
+  max_vf_count: 32
+  upstream_nameserver: 10.58.112.113
+  proxy_url: http://10.158.100.6:8080
+  helm:
+    registry_store: https://bhisoj70.apac.nsn-net.net/artifactory/fhgw-releasedhelms-virtual
+    encrypted_ca: None
+    encrypted_ca_key: None
+  docker:
+    registry_store: fhgw-releaseddockers-local.bhisoj70.apac.nsn-net.net
+    encrypted_ca: None
+    encrypted_ca_key: None

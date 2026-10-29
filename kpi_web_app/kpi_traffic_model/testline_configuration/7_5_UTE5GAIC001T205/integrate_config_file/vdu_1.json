@@ -1,0 +1,16 @@
+{
+  "neType": "MRBTS",
+  "neId": "5315",
+  "neVersion": "VDU20",
+  "host": "10.71.165.18",
+  "port": "8060",
+  "timezone": "Europe/Helsinki",
+  "username": "wsuser",
+  "password": "A0zY~rP#8Mx@",
+  "smLaunchUrl": "https://10.71.165.18",
+  "neoNotificationEndpoint": "http://10.39.156.88/NE3S/1.0",
+  "neoDownloadServiceEndpoint": "http://10.39.156.88/files",
+  "agentId": "HQZ-VDU5315",
+  "integratedId": "HQZ-VDU/MRBTS-5315"
+}
+

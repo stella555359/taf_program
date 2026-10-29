@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<raml xmlns="raml21.xsd" version="2.1">
+ <cmData type="plan" scope="changes" name="FHGW-36907config">
+  <header>
+   <log dateTime="2022-08-01T01:56:30.966082Z" action="export"></log>
+  </header>
+  <managedObject distName="FHGW-36907/MNL-1/SYNC-1" class="com.nokia.fhgw:SYNC" version="FHGW23R3_006" operation="update">
+   <p name="actEcpriMasterClock">1</p>
+   <list name="eCpriMasterPortConfDNList">
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_16</p>
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_17</p>
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_18</p>
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_27</p>
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_28</p>
+    <p>FHGW-36907/TNL-1/INTF-frontPanelPort_29</p>
+	<p>FHGW-36907/TNL-1/INTF-frontPanelPort_31</p>
+	<p>FHGW-36907/TNL-1/INTF-frontPanelPort_32</p>
+	<p>FHGW-36907/TNL-1/INTF-frontPanelPort_33</p>
+	<p>FHGW-36907/TNL-1/INTF-frontPanelPort_34</p>
+	
+   </list>
+  </managedObject>
+  <managedObject class="com.nokia.fhgw:CLOCK" version="FHGW23R3_2306_100" operation="update" distName="FHGW-36907/MNL-1/SYNC-1/CLOCK-1">
+   <list name="syncInputList">
+    <item>
+     <p name="syncInputPrio">1</p>
+     <p name="syncInputType">2</p>
+    </item>
+   </list>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_16" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>  
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_17" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_18" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_19" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_27" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_28" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_29" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>  
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_31" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_32" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_33" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_34" class="com.nokia.fhgw:INTF" version="FHGW23R3_006" operation="update">
+   <p name="adminState">1</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_19/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">0</p>      <!--0:none; 1:rs -->
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>    <!--0:untagged; 1:tagged-->
+     <p name="vlan">414-419,514-516,519-519,521-522,531-536</p>
+    </item>
+   </list>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_16/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">295-295,301-301</p>
+    </item>
+   </list>
+  </managedObject>
+    <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_17/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">295-295,301-301</p>
+    </item>
+   </list>
+  </managedObject>
+    <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_18/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">295-295,301-301</p>
+    </item>
+   </list>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_27/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">301-301</p>
+    </item>
+   </list>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_28/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">301-301</p>
+    </item>
+   </list>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_29/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="mtu">1500</p>
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">301-301</p>
+    </item>
+   </list>
+  </managedObject>  
+  <managedObject operation="update" distName="FHGW-36907/TNL-1/INTF-frontPanelPort_31/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006">
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">512-516,519-519,522-522,531-536</p>
+    </item>
+   </list>
+   <p name="mtu">1500</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_32/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">521-521</p>
+    </item>
+   </list>
+   <p name="mtu">1500</p>
+  </managedObject>
+  <managedObject operation="update" distName="FHGW-36907/TNL-1/INTF-frontPanelPort_33/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006">
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">295-295,301-301,411-419,522-522</p>
+    </item>
+   </list>
+   <p name="mtu">1500</p>
+  </managedObject>
+  <managedObject distName="FHGW-36907/TNL-1/INTF-frontPanelPort_34/ETHIF-1" class="com.nokia.fhgw:ETHIF" version="FHGW23R3_006" operation="update">
+   <p name="fecCode">1</p>
+   <list name="switchPort">
+    <item>
+     <p name="mode">0</p>
+     <p name="vlan">&#34;&#34;</p>
+    </item>
+    <item>
+     <p name="mode">1</p>
+     <p name="vlan">521-521</p>
+    </item>
+   </list>
+   <p name="mtu">1500</p>
+  </managedObject>
+
+ </cmData>
+</raml>

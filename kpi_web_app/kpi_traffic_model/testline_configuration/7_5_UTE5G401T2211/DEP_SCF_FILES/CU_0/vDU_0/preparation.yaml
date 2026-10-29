@@ -1,0 +1,5 @@
+USER-SUPPLIED VALUES:
+global:
+  image:
+    registry: harbor-vrf34.ocp.hz.nsn-rdnet.net:443/vrf34
+sccName: cnf5g

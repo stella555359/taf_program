@@ -1,0 +1,92 @@
+APP_SERVER: &APP_SERVER
+    ssh: &APP_SERV_CRED
+        host: '10.84.168.120'
+        user: '5g'
+        password: '5g'
+        iperf_interface_ip: '10.84.169.60'
+    lte_network_ip: '10.84.169.60'
+
+UE_POOLS:
+    AndroidUePool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: '19520513'
+                STARTING_CELL_5G_PCI: 51
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CR10LMX5X'
+                    configuration: # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+#                        ue_pc_ip: 'plkr-wmp-ue31.intra.noklab.net'
+                        ue_pc_ip: '10.84.174.119'
+                        pyro_port: '9090'                 # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'user-lab0'  #  'PLKR-WMP-UE31+user-lab0'
+                        password: 'Bts2003'
+                        server_dir: 'C:/pyro_server'      # UE PC directory where all server files will be copied (create empty directory on UE-PC)
+                        server_python: 'C:/Python363/python.exe'     # UE PC python location
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe'    #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        diag_cfg_path: 'C:/pyro_server/DIAG.cfg'         # PATH to DIAG.cfg file on UE PC (required to filter qualcomm messages)
+                        voice_call_dialing_timeout: '30'  # Timeout for dialing (calling) state
+                        qualcomm_prototype: 'yes'          # set to 'yes' if this is a Qualcomm prototype
+                        network_mode_switch_method: 'adb' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        service_call_attach: '14' # service call which will be used for attaching UE
+                        service_call_detach: '14' # service call which will be used for detaching UE
+                        data_transfer: # Application Server (for Iperf) details
+                            iperf_path: '/data/data/com.nokia.android.application/'
+                            app_servers:
+                                SKA_1: *APP_SERV_CRED
+                            iperf_interval: '1'
+                            iperf_options:
+                                packet: '1200B'
+                                buffer: '4M'
+
+CELLS:
+    GNB1:
+        CELL1:
+            ID: 1
+            PCI: 51
+        CELL2:
+            ID: 2
+            PCI: 52
+        CELL3:
+            ID: 3
+            PCI: 53
+        CELL4:
+            ID: 4
+            PCI: 54
+        CELL9:
+            ID: 9
+            PCI: 61
+        CELL10:
+            ID: 10
+            PCI: 62
+        CELL11:
+            ID: 11
+            PCI: 63
+        CELL12:
+            ID: 12
+            PCI: 64
+ATTENUATORS:
+    JFW:                                      # attenuator name - change if you want
+        TYPE: JFW                               # attenuator type to use; or you may give it directly: ta_attenuator.attenuators_impl.hytem.HytemAttenuator
+        CONSTRUCTOR_PARAMETERS:                       # Parameters that will be passed to Attenuator constructor when Attenuator instance is created.
+            ip: '10.255.10.22'                        # IP address of attenuator device
+            port: 3001                               # TCP Port number of attenuator device
+            min_attenuation: 0
+            max_attenuation: 60
+
+CELLS_ATTENUATION:
+    ENB_CELL_1:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 1
+            - 2
+    ENB_CELL_2:
+        rf_paths_of_cell:
+        -   used_attenuator: JFW
+            rf_paths_at_attenuator:
+            - 3
+            - 4

@@ -1,0 +1,39 @@
+APP_SERVER: &APP_SERVER_1
+    address: '10.84.168.120'
+    user: '5g'
+    password: '5g'
+    bind_interface_ip: '10.84.169.60'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:
+                CAPABILITIES:
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 1296146
+                STARTING_CELL_5G_PCI: 60
+                CLASS: AndroidUe
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'R5CT5090F3N'
+                    configuration:
+                        ue_pc_address: 'PLKR-TP-UE37.p09.ska-lab.nsn-rdnet.net'
+                        ue_pc_port: '8080'                        # TCP Port number on UE PC on which Pyro server will be started
+                        qcat_exe_path: 'C:/Program Files (x86)/Qualcomm/QCAT 6.x/Bin/qcat.exe' #PATH TO QCAT EXE APPLICATION (required to decode qmdl file)
+                        qualcomm_prototype: 'yes'               # set to 'yes' if this is a Qualcomm prototype
+                        service_call_attach: '16'               # service call which will be used for attaching UE. Use this or airplane_mode_switcher_text
+#                        service_call_detach: '14'               # service call which will be used for detaching UE. Use this or airplane_mode_switcher_text
+                        network_mode_switch_method: 'adb'       # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+#                        voice_call_dialing_timeout: '30'        # Timeout for dialing (calling) state
+#                        airplane_mode_switcher_text: 'Airplane'                 # OPTIONAL Text next to switcher turning airplane mode on or off; essential for attemp to attach with key events;
+                        #   it's usually 'Airplane' or 'AIRPLANE'
+#                        airplane_mode_confirm_button_text: 'OK'
+                        data_transfer:                          # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                iperf_interval: '1'
+                                binary_path: '/data/data/com.nokia.android.application/'
+#                                interface_name: '5gkrk2/rmnet_data1'
+#                                iperf_options:
+#                                    packet: '1200B'
+#                                    buffer: '4M'

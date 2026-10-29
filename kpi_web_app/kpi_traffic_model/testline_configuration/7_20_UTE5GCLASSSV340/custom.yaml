@@ -1,0 +1,22 @@
+
+# ##########################################################################################
+#
+#    7_20_CLOUD5GPSIV340  -  IV_PS_340  -  CV340
+#
+#    2022-03-29
+#    
+#
+# ##########################################################################################
+
+
+custom:
+  GNB_Friendly_TL_Name: 'CV340'
+  TL_TECHNOLOGY: 'FDD'
+  TL_RMOD: 'AHPE'
+  TL_FB: 'n28'
+  TL_SECTOR: '3'
+  TL_CC: '1CC'
+  Repeat_CM_Upload: '1'
+  RFSHARINGENABLED: False
+  DEDICATEDENB: False
+  RMOD_BTSLOG: False

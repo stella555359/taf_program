@@ -1,0 +1,61 @@
+#global:
+#  externalNetwork:
+#    f1:
+#      ipInfo:
+#      - family: ipv4
+#        rangeEnd: '10.71.178.203'
+#        rangeStart: '10.71.178.203'
+#        subnet: '10.71.178.200/29'
+#        type: physical
+#    f1c:
+#      ipInfo:
+#      - family: ipv4
+#        rangeEnd: '10.71.178.202'
+#        rangeStart: '10.71.178.202'
+#        subnet: '10.71.178.200/29'
+#        type: physical
+#    oam:
+#      ipInfo:
+#      - family: ipv4
+#        rangeEnd: '10.71.178.210'
+#        rangeStart: '10.71.178.210'
+#        role:
+#        - oam
+#        - certman-server
+#        subnet: '10.71.178.208/29'
+#        type: physical
+#      policyRouteInfo:
+#      - gateway: '10.71.178.209'
+#        orderNumber: '5'
+#        table: '2'
+#    tracing:
+#      ipInfo:
+#      - family: ipv4
+#        ipAddress:
+#          cprt:
+#            rangeEnd: '10.71.178.218'
+#            rangeStart: '10.71.178.218'
+#          oam:
+#            rangeEnd: '10.71.178.219'
+#            rangeStart: '10.71.178.219'
+#        role:
+#        - Tracing
+#        subnet: '10.71.178.216/29'
+#        type: physical
+#      policyRouteInfo:
+#      - gateway: '10.71.178.217'
+#        orderNumber: '1000'
+#        table: '3'
+
+aic-vdu-up:
+  l1hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "false"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "single"
+    activeSiblingCore: "false"

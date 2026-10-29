@@ -1,0 +1,13 @@
+aic-vdu-up:
+  l1hi:
+    cellFlag: "multi"
+    activeSiblingCore: "true"
+  l2hi:
+    cellFlag: "single"
+    activeSiblingCore: "true"
+    securityContext:
+      privilegedMode: "true"
+  l2rt:
+    cellFlag: "multi"
+    activeSiblingCore: "true"
+

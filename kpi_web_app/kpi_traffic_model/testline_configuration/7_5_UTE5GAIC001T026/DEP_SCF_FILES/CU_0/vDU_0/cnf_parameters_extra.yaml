@@ -1,0 +1,185 @@
+global:
+  cnfLayout: "CRAN"
+  upcount: 2
+
+  externalNetwork:
+    fhm:
+      vlanInfo:
+        vid: 297
+        pcp: 2
+      ipInfo:
+      - rangeStart: "192.168.252.33"
+        rangeEnd: "192.168.252.33"
+        subnet: "192.168.252.0/26"
+        type: "physical"
+        role:
+        - "fhm"
+    f1:
+      vlanInfo:
+        vlName: "f1uplane"
+        vid: 193
+      ipInfo:
+      - rangeStart: "10.106.150.146"
+        rangeEnd: "10.106.150.147"
+        subnet: "10.106.150.144/28"
+        type: "physical"
+        role:
+        - "Tracing"
+        - "F1-U"
+    f1c:
+      vlanInfo:
+        vid: 183
+      ipInfo:
+      - rangeStart: "10.106.150.106"
+        rangeEnd: "10.106.150.106"
+        subnet: "10.106.150.104/30"
+        type: "physical"
+        role:
+        - "F1-C"
+    twamp_f1:
+      vlanInfo:
+        # vlName should be set the same as the VLAN interface name in SCF
+        vlName: "twamp_f1"
+        defaultUnderlyingIface: "twamp"
+        vid: ""
+      ipInfo:
+      - rangeStart: ""
+        rangeEnd: ""
+        subnet: ""
+        type: "physical"
+        role:
+        - "twamp_f1"
+
+
+    # - End example for network slice
+    # - currently, fhuc max support 18 interface.
+    fhuc1:
+      vlanInfo:
+        vid: 317
+        pcp: ""
+    fhuc2:
+      vlanInfo:
+        vid: 318
+        pcp: ""
+    fhuc3:
+      vlanInfo:
+        vid: 319
+        pcp: ""
+    fhuc4:
+      vlanInfo:
+        vid: 320
+        pcp: ""
+    fhuc5:
+      vlanInfo:
+        vid: 321
+        pcp: ""
+    fhuc6:
+      vlanInfo:
+        vid: 322
+        pcp: ""
+    fhuc7:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc8:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc9:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc10:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc11:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc12:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc13:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc14:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc15:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc16:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc17:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    fhuc18:
+      vlanInfo:
+        vid: ""
+        pcp: ""
+    l1bipl1:
+      vlanInfo:
+        vid: 125
+    l1biprt:
+      vlanInfo:
+        vid: 125
+    l2biprt:
+      vlanInfo:
+        vid: 126
+    l2biphi:
+      vlanInfo:
+        vid: 126
+
+  # - Description: network attribute definition for each network.
+  #   This section is provide to set the MTU for each network
+  networkInfo:
+    fhm:
+      mtu: 1500
+    tracing:
+      mtu: 1500
+    oam:
+      mtu: 1500
+    f1c:
+      mtu: 1500
+    bip:
+      mtu: 9000
+    fhuc:
+      mtu: 1500
+    f1:
+      mtu: 1500
+
+  # service configuration
+  service:
+    sdl:
+      deploymode: sentinel
+
+# ========configuration oamfh POD =========
+aic-oamfh:
+  # ========configuration about dhcp container ========
+  dhcp:
+    service:
+      # Indicate internal or external dhcp server to be used, the default value is internal
+      dhcpServerLocation: "internal"
+      # v4PoolsStart and v4PoolsEnd define the actual part of your subnet that is governed
+      v4PoolsStart: 192.168.252.34
+      v4PoolsEnd: 192.168.252.60
+      # v4Subnet define the whole subnet.
+      v4Subnet: 192.168.252.0/26
+
+      # DHCP vendor specific information of master agent ip and port number
+      option43_vendor_specific_information_master_agent_ip: "192.168.252.33"
+      option43_vendor_specific_information_port_number: "13001"
+
+
+# - Description: sub chart rcpsdl private configuration
+rcpsdl:
+  cluster:
+    enabled: true

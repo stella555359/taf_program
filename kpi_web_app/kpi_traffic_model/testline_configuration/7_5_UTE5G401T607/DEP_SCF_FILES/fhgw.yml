@@ -1,0 +1,10 @@
+dns_server: 10.110.23.119
+fhgw_time_zone: Asia/Shanghai
+fhgw_installation_interface: p4p1
+fhgw_installation_vlan_tag: 2711
+fhgw_oam_ssh_vlan: 99999
+fhgw_ssh_ip: 10.71.109.xx
+fhgw_oam_net_netmask: 28
+fhgw_ssh_gw: 10.71.109.1
+fhgw_bmc_ip: 10.71.109.1x
+fhgw_bmc_redfish_api_passwd: Superuser11111

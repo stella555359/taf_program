@@ -1,0 +1,86 @@
+heat_template_version: 2016-10-14
+description: Template for creating network interfaces allocated for an instance
+
+parameters:
+  internal_networks:
+    type: json
+    description: Internal networks
+    default:
+      count: 0
+      net_list: []
+  external_networks:
+    type: json
+    description: External networks
+    default:
+      count: 0
+      net_list: []
+  name_prefix:
+    type: string
+    description: The prefix name of ports
+    default: vbts
+  vnfindex:
+    description: count of vm
+    type: number
+  lo_information:
+    type: json
+    description: lo ipaddress/roles value
+    default:
+      count: 0
+      net_list: []
+
+resources:
+  int_ports:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: {get_param: [internal_networks, count]}
+      resource_def:
+        type: 5GBTS::Network::IntInterface
+        properties:
+          role: internal
+          index: "%index%"
+          networks: {get_param: [internal_networks, net_list]}
+          name_prefix: {get_param: name_prefix}
+
+  ext_ports:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: {get_param: [external_networks, count]}
+      resource_def:
+        type: 5GBTS::Network::ExtInterface::Nplus
+        properties:
+          role: external
+          index: "%index%"
+          networks: {get_param: [external_networks, net_list]}
+          name_prefix: {get_param: name_prefix}
+          vnfindex: {get_param: vnfindex}
+
+  loop_resource:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: {get_param: [lo_information, count]}
+      resource_def:
+        type: 5GBTS::Network::loInform::Nplus
+        properties:
+          index: '%index%'
+          lo_info_list: {get_param: [lo_information, net_list]}
+          vnfindex: {get_param: vnfindex}
+
+outputs:
+  ports:
+    value:
+      repeat:
+        for_each:
+          <%port%>:
+            str_split:
+            - ','
+            - {list_join: [',', get_attr: [int_ports, port], get_attr: [ext_ports, port]]}
+        template:
+          port: <%port%>
+  ip-info:
+    value:
+      map_merge:
+      - {map_merge: {get_attr: [int_ports, ip-info]}}
+      - {map_merge: {get_attr: [ext_ports, ip-ext-info]}}
+      - {map_merge: {get_attr: [loop_resource, loop_info]}}
+  internal_ip:
+    value: {get_attr: [int_ports, resource.0, ip_address]}

@@ -1,0 +1,6 @@
+mcs_ip: '10.57.240.247'
+mcs_pc_ip: '10.57.240.247'
+#mcs_db_path: 'C:\\mcsTA\\CSN30019080016_2600_1_ALL.db'
+mcs_db_path: 'D:\\MCSMonitor_DataBase\\CSN30022030079_3500_0.25_ALL.db'
+mcs_pc_username: 'SG-tester'
+mcs_pc_pwd: 'Nokia123!'

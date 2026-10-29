@@ -1,0 +1,11 @@
+aic-vcu-cpif:
+  nftmgmt:
+    configTmpDir: /tmp
+    resources:
+      sharedCpuPool: "cpu"
+      limits:
+        sharedCpuNum: "1000m"
+        memory: 128Mi
+      requests:
+        sharedCpuNum: "100m"
+        memory: 128Mi

@@ -1,0 +1,41 @@
+AppServer1: &APP_SERVER_1                              # application server definition
+  address: '10.84.168.121'
+  user: '5g'
+  password: '5g'
+  bind_interface_ip: '10.84.169.61'                      # ip of interface used for LTE data transfer
+  expected_prompt: '5g@SKA-HC14-16-AppServer2'
+
+AppServer2: &APP_SERVER_2                              # application server definition
+  address: '10.84.168.120'
+  user: '5g'
+  password: '5g'
+  bind_interface_ip: '10.84.169.60'                      # ip of interface used for LTE data transfer
+  expected_prompt: '5g@SKA-HC14-15-AppServer'
+
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            ANDROID_UE_1:                                  # UE name - change if you want (but better not)
+                CAPABILITIES:
+                    - REAL_UE
+                CLASS: AndroidUe                          # UE type is Android so AndroidUe class will be used
+                CONSTRUCTOR_PARAMETERS:                   # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    serial_number: '79b4ba17'             # UE serial number (can be obtained via 'adb devices' command on the UE PC)
+                    configuration:                        # By Default ue key ('UE_FOR_TA' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'plkr-tp-ue32.p04.ska-lab.nsn-rdnet.net'          # UE PC IP address
+                        login: 'pzkrk'                    # SSH login to UE PC
+                        password: 'NokiaBts2003'          # SSH password to UE PC
+                        ue_pc_port: '8080'
+                        clear_logs: True
+                        network_mode_switch_method: 'ADB' # available values: adb, xposed. In case of adb - no rooting and xposed installation required
+                        data_transfer:                                 # Application Server (for Iperf) details
+                            iperf:
+                                app_server: *APP_SERVER_2
+                                interval: '1'           # Iperf interval in seconds
+                                binary_path: '/data/data/com.nokia.android.application/'
+                        # OPTIONAL, default is False, if True dt is run from interface on ue pc
+                        ping:
+                            app_server: *APP_SERVER_2
+                            interval: 1
+                        ftp:
+                            app_server: *APP_SERVER_2

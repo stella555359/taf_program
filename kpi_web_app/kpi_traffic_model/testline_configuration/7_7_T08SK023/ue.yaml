@@ -1,0 +1,41 @@
+UE_POOLS:
+    TafUeAndroidPool:
+        inline_config:
+            UE_1:                            # UE_PC_50_UE - UE name
+                CAPABILITIES:                      # Capabilities that UE has. (as a list)
+                    - REAL_UE
+                    - REAL_ANDROID_UE
+                STARTING_CELL: 0x1253C01 # 1233914909 19217409
+                CLASS: AndroidUe                        # UE type.
+                CONSTRUCTOR_PARAMETERS:
+                    serial_number: 'c01258a'
+                    configuration:
+                        ue_pc_address: 'PLKR-SG06-05.intra.noklab.net'
+                        ue_pc_port: 80                      # UE PC IP address
+                        port_dict:                         # Dictionary containing ports that the UePcServer uses for QXDM control
+                            heartbeat: 6005               # Port for heartbeat messages
+                            server_command_input: 6007    # Port for command input
+                            server_qxdm_messages: 6008    # Port for QXDM messages output
+                            server_command_output: 6009    # Port for server command output
+                            message_stream_port: 6010
+                        login: 'NOKLAB\pzkrk'
+                        password: 'NokiaBts2003'
+                        qxdm_version: 5
+                        licence_type: '5G'
+                        attach_type: 'NSA'
+                        starting_5g_cell_id: 1233914909
+                        voice_call_technology_timeout: '65'
+                        com_port: 7
+                        ue_type: 'ANDROID'
+                        #iperf_adb_dir: 'su 0 /data/data/com.nokia.android.application/iperf'
+                        data_transfer:
+                            iperf:
+                                app_server:
+                                    address: '10.84.169.60'
+                                    user: '5g'
+                                    password: '5g'
+                                    expected_prompt: 'AppServer'
+                                    bind_interface_ip: '10.83.249.161'
+                                lte_network_ip: '10.83.249.161'
+
+

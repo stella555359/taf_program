@@ -1,0 +1,31 @@
+vlan:
+  oam: 107
+  f1: 105
+  l1bip: 102
+  l2bip: 103
+  internal_range: 118-118
+  tracing: 104
+network:
+  # fast path device
+  fastPathBipPool: openshift.io/sriov_vfio_1
+  fastPathF1uPool: openshift.io/sriov_vfio_0
+  #slow path device
+  slowPathCommonPool: openshift.io/sriov_netdevice_0
+
+  f1subnet: 10.69.183.32/29
+  f1csubnet: 10.69.183.24/29
+  f1usubnet: 10.69.183.32/29
+  oamsubnet: 10.69.183.40/29
+  oam_ordernumber: 5 
+  tracingsubnet: 10.69.183.16/29
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: vdupvc
+  fecVFNum: 0
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  # you can get it by command "kubectl get storageclasses.storage.k8s.io“
+  storage_class_name: lvms-vg1
+oct_server: 10.109.3.195
+cloudRanVersion: 4.0

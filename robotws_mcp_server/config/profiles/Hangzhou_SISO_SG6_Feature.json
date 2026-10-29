@@ -1,0 +1,51 @@
+{
+  "name": "Hangzhou_SISO_SG6_Feature",
+  "description": "Hangzhou SISO RAN_PZ_HAZ_34 SG6 feature testcase style profile.",
+  "profile_type": "case",
+  "area": "SISO",
+  "case_type": "Feature",
+  "path_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "case_candidate_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34"
+  ],
+  "confirmed_case_scopes": [
+    "testsuite/Hangzhou/SISO/RAN_PZ_HAZ_34/None_Feature_SG6"
+  ],
+  "allowed_resource_scopes": [
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG6",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/python",
+    "testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/robot"
+  ],
+  "feature_allowlist": {
+    "SISO": [
+      "CB009275_AEHC"
+    ]
+  },
+  "preferred_keywords": {},
+  "negative_patterns": [
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG1",
+      "message": "Do not use SG1 resource keywords for SG6 SISO feature testcase generation."
+    },
+    {
+      "pattern": "Resource    testsuite/Hangzhou/resources/RAN_PZ_HAZ_34/lines/SG11",
+      "message": "Do not use SG11 resource keywords for SG6 SISO feature testcase generation."
+    }
+  ],
+  "style_rules": [
+    "Use SG6 ownership filtering before ranking SISO feature cases.",
+    "Use feature-local Resources only after the feature is confirmed in the SG6 allowlist.",
+    "Prefer SG6 common resources under lines/SG6, python, and robot."
+  ],
+  "required_fields": [
+    "Documentation",
+    "Tags",
+    "Setup",
+    "Teardown"
+  ]
+}

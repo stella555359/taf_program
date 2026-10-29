@@ -1,0 +1,36 @@
+AppServer1: &APP_SERVER_1
+   address: '10.83.249.130'
+   user: '5g'
+   password: '5g'
+   bind_interface_ip: '10.83.249.189'
+   expected_prompt: 'Appserver'
+
+UE_POOLS:
+    TafUeAtPool:                                  # Ue Pool class defined by library
+        inline_config:
+            Waveshare:                           # UE name
+                CAPABILITIES:                       # Capabilities that UE has (used to find select UE with Require Ue keyword)
+                    - REAL_UE
+                CLASS: Quectel                       # UE type is Android so AndroidUe class will be used (QualcommNoLicense)
+                CONSTRUCTOR_PARAMETERS:             # Parameters that will be passed to AndroidUe constructor when Ue instance is created.
+                    com_port: '10'
+                    configuration:                  # By Default ue key ('ANDROID_UE_1' for this ue) is passed to constructor as a name
+                        ue_pc_address: 'PLKR-SG01-25.intra.noklab.net'    # UE PC IP address
+                        ue_pc_port: '80'           # TCP Port number on UE PC on which Pyro server will be started
+                        login: 'pzkrk'            # SSH login to UE PC
+                        password: 'NokiaBts2003'         # SSH password to UE PC
+                        data_transfer:
+                            iperf:
+                                app_server: *APP_SERVER_1
+                                interval: '1'           # Iperf interval in seconds (default: 1)
+                                interface_name: 'Cellular 3'
+                                dt_from_uepc: True
+                            ping:
+                                app_server: *APP_SERVER_1
+                                interval: 1
+                            ftp:
+                                app_server: *APP_SERVER_1
+                        #   ========= At specific: =========
+                        ue_pc_login: 'pzkrk'            # SSH login to UE PC
+                        ue_pc_password: 'NokiaBts2003'         # SSH password to UE PC
+                        ue_pc_expected_prompt: 'pzkrk@PLKR-SG01-25$'              # OPTIONAL, but if you want to run data transfer from UE PC interface is mandatory

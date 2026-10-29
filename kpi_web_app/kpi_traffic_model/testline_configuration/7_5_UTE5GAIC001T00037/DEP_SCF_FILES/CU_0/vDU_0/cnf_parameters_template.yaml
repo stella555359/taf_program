@@ -1,0 +1,41 @@
+# if scc_name is not configured, will install scc chart with privileged.
+# if scc_name is configured, the name rule must be followed: a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')
+scc_name:  privileged
+upInstanceCount: 1
+l2nrtCount: 1
+vlan:
+  oam: 616
+# f1 corresponds to f1u
+  f1: 615
+  fhm:
+  fhuc:
+  l2bip: 613
+  internal_range: 611-611
+  tracing: 614
+network:
+  fastPathCommonPool: openshift.io/sriov_vfio_ens1f1
+  slowPathCommonPool: openshift.io/sriov_netdevice_ens1f1
+  fastPathRANNICPool:
+  slowPathRANNICPool:
+  f1subnet: 10.71.171.8/29
+  f1csubnet: 10.71.171.8/29
+  f1usubnet: 10.71.171.8/29
+  oamsubnet: 10.71.171.16/29
+  oam_ordernumber: 5
+  tracingsubnet: 10.71.171.32/29
+  tracing_ordernumber: 1000
+misc:
+  pvc_name: pvc1012
+  fhmSiso: switch-network
+  timezone: Asia/Shanghai
+  platform_type: OCP
+  access_mode: ReadWriteOnce
+  l1hi_dedicated_core: 6
+
+  # you can get it by command "kubectl get storageclasses.storage.k8s.io“
+  storage_class_name: localfs-lvm-sc
+  # NR_L2RT_2CL2PS_2CL2LO NR_L2RT_8CL2PS_4CL2LO for TDD, NR_L2RT_4CL2PS_2CL2LO for FDD
+  l2rtDeploymentType: NR_L2RT_2CL2PS_2CL2LO
+  l2nrtDeploymentType: NR_L2NRT_3CL2HI
+  upCellFlag: single
+  upActiveSiblingCore: false

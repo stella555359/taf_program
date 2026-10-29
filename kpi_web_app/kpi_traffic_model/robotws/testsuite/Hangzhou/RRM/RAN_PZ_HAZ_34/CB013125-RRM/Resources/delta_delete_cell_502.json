@@ -1,0 +1,53 @@
+[
+  {
+    "distName": "MRBTS-10580/MNL-1/MNLENT-1/CELLMAPPING-1/LCELNR-2",
+    "operation": "delete",
+    "parameters": []
+  },
+  {
+    "distName": "MRBTS-10580/NRBTS-10580/NRCELL-502",
+    "operation": "delete",
+    "parameters": []
+  },
+  {
+    "distName": "MRBTS-10580/NRBTS-10580/NRCELLGRP-2",
+    "operation": "delete",
+    "parameters": []
+  },
+  {
+    "distName": "MRBTS-10580/NRBTS-10580/NRDU-1",
+    "operation": "update",
+    "parameters": [
+      {
+        "parameterName": "refNrCellGroup",
+        "value": [
+          "1",
+          "3"
+        ],
+        "operation": "update"
+      }
+    ]
+  },
+  {
+    "distName": "MRBTS-10580/NRBTS-10580/NRCELL-503",
+    "operation": "update",
+    "parameters": [
+      {
+        "parameterName": "actVoNR",
+        "value": "true",
+        "operation": "update"
+      }
+    ]
+  },
+  {
+    "distName": "MRBTS-10580/NRBTS-10580/NRCELL-503/NRREL-1",
+    "operation": "update",
+    "parameters": [
+      {
+        "parameterName": "lcrId",
+        "value": "1",
+        "operation": "update"
+      }
+    ]
+  }
+]

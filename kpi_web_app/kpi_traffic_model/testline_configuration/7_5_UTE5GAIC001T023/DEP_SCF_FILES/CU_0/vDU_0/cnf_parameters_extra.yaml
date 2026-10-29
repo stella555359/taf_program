@@ -1,0 +1,4 @@
+global:
+  fhmSiso: "direct-connect"
+  image:
+    autoGetSecret: true
